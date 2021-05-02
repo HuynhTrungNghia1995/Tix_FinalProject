@@ -1,6 +1,8 @@
 .application {
-  background: url("./images/backapp.jpg") no-repeat center center;
+  /* background: url("./images/backapp.jpg"); */
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .application .container {
@@ -36,6 +38,10 @@
 .application .left span a {
   color: white;
   text-decoration: underline;
+}
+
+.application .phone {
+  overflow: hidden;
 }
 
 .application .right .slick__slider {
