@@ -1,20 +1,18 @@
-import React from 'react';
-import { Route } from 'react-router';
+import React, { Component } from "react";
+import { Route } from "react-router";
 function LayoutHome(props) {
-    return (
-        <>
-            {props.children}
-        </>
-    )
+  return <>{props.children}</>;
 }
 
 export default function HomeTemplate({ Component, ...props }) {
-    return (<Route
-        {...props}
-        render={(propsComponent) => (
-            <LayoutHome>
-                <Component {...propsComponent} />
-            </LayoutHome>
-        )}
-    />)
+  return (
+    <Route
+      {...props}
+      render={(propsComponent) => (
+        <LayoutHome>
+          <Component {...propsComponent} />
+        </LayoutHome>
+      )}
+    />
+  );
 }
