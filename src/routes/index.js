@@ -1,4 +1,4 @@
-import { Home } from "@material-ui/icons";
+import Home from "../containers/HomeTemPlate/Home";
 import Dashboard from "../containers/AdminTemplate/DashBoard";
 import Login from "../containers/AdminTemplate/Login";
 
