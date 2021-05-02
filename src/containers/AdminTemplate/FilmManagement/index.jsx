@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -17,7 +17,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import { Grid, InputBase, TableHead } from '@material-ui/core';
+import { Button, Grid, InputBase, TableHead } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
@@ -98,7 +98,7 @@ const useStyles2 = makeStyles((theme) => ({
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
-            border: "solid 2px red",
+            border: "solid 1px rgba(0,0,0,0.4)"
         },
         marginLeft: 0,
         width: '100%',
@@ -116,6 +116,13 @@ const useStyles2 = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    closeIcon: {
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        top: 0,
+        right: 0
+    },
     inputRoot: {
         color: 'inherit',
     },
@@ -125,12 +132,12 @@ const useStyles2 = makeStyles((theme) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            width: '28ch',
-            '&:focus': {
-                width: '29ch',
-            },
+            width: '22ch',
         },
     },
+    addBtn: {
+        color: "#4BB543"
+    }
 
 }));
 
@@ -138,7 +145,9 @@ export default function FilmManagement() {
     const classes = useStyles2();
     const dispatch = useDispatch();
     const filmList = useSelector(state => state.fetchFilmListReducer.data);
-    const [page, setPage] = React.useState(0);
+    const [page, setPage] = useState(0);
+    const [isDisable, setIsDisable] = useState(true);
+    const [handleAddFilm, setHandleAddFilm] = useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     useEffect(() => {
         dispatch(fetchFilmList());
@@ -194,7 +203,7 @@ export default function FilmManagement() {
                     <TableCell style={{ width: 160 }} align="center">
                         {row.ngayKhoiChieu}
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="center">
+                    <TableCell style={{ width: 120 }} align="center">
                         {row.danhGia}
                     </TableCell>
                 </TableRow>
@@ -206,14 +215,13 @@ export default function FilmManagement() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
     return (
         <div >
             <Grid container directions="row" alignItems="center" className="mb-3">
-                <Grid item xs={6}>
+                <Grid item md={6} xs={12}>
                     <h4>Manage Film</h4>
                 </Grid>
-                <Grid item xs={4} >
+                <Grid item md={4} xs={12} >
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -226,14 +234,15 @@ export default function FilmManagement() {
                             }}
                             inputProps={{ 'aria-label': 'search' }}
                         />
+                        <Button color="inherit" className={classes.closeIcon} disabled={isDisable}>
+                            <CloseIcon color="secondary" />
+                        </Button>
                     </div>
+
                 </Grid>
-                <Grid item xs={2} className="p-2" >
-                    <IconButton color="inherit">
-                        <CloseIcon color="secondary" />
-                    </IconButton>
-                    <IconButton color="inherit">
-                        <PlaylistAddIcon color="secondary" />
+                <Grid item md={2} xs={12} className="p-2" >
+                    <IconButton color="inherit" onClick={() => { setHandleAddFilm(true) }}>
+                        <PlaylistAddIcon className={classes.addBtn} />
                     </IconButton>
                 </Grid>
             </Grid>
