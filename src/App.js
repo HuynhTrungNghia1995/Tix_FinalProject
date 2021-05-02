@@ -4,9 +4,7 @@ import PageNotFound from "./containers/PageNotFound";
 import { routeHome, routeAdmin } from "./routes";
 import "./App.css";
 import AdminTemplate from "./containers/AdminTemplate";
-
 import "./App.css";
-import Home from "./containers/HomeTemPlate/Home";
 
 function App() {
   const showLayoutHome = (routes) => {
@@ -38,14 +36,13 @@ function App() {
     }
   };
   return (
-    // <BrowserRouter>
-    //   <Switch>
-    //     {showLayoutHome(routeHome)}
-    //     {showLayoutAdmin(routeAdmin)}
-    //     <Route path="" component={PageNotFound} />
-    //   </Switch>
-    // </BrowserRouter>
-    <Home />
+    <BrowserRouter>
+      <Switch>
+        {showLayoutHome(routeHome)}
+        {showLayoutAdmin(routeAdmin)}
+        <Route path="" component={PageNotFound} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 

@@ -1,6 +1,6 @@
-import { Home } from "@material-ui/icons";
 import Dashboard from "../containers/AdminTemplate/DashBoard";
 import Login from "../containers/AdminTemplate/Login";
+import Home from "../containers/HomeTemPlate/Home";
 
 const routeHome = [
   {
