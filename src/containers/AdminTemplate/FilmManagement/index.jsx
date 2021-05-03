@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { fade, makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,14 +10,19 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
+import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import { Button, Grid, InputBase, TableHead } from '@material-ui/core';
+import { Button, Grid, InputBase, TableHead, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
@@ -28,7 +33,15 @@ const useStyles1 = makeStyles((theme) => ({
         marginLeft: theme.spacing(2.5),
     },
 }));
-
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
+}))(TableCell);
 function TablePaginationActions(props) {
     const classes = useStyles1();
     const theme = useTheme();
@@ -93,12 +106,10 @@ const useStyles2 = makeStyles((theme) => ({
     },
     search: {
         position: 'relative',
-        border: "solid 1px black",
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
-            border: "solid 1px rgba(0,0,0,0.4)"
         },
         marginLeft: 0,
         width: '100%',
@@ -123,21 +134,21 @@ const useStyles2 = makeStyles((theme) => ({
         top: 0,
         right: 0
     },
-    inputRoot: {
-        color: 'inherit',
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '22ch',
-        },
+    searchBox: {
+        width: "100%"
     },
     addBtn: {
         color: "#4BB543"
-    }
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 200,
+    },
 
 }));
 
@@ -146,13 +157,16 @@ export default function FilmManagement() {
     const dispatch = useDispatch();
     const filmList = useSelector(state => state.fetchFilmListReducer.data);
     const [page, setPage] = useState(0);
-    const [isDisable, setIsDisable] = useState(true);
     const [handleAddFilm, setHandleAddFilm] = useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     useEffect(() => {
         dispatch(fetchFilmList());
     }, []);
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -166,6 +180,59 @@ export default function FilmManagement() {
             )
         }
 
+    }
+    const renderAddFilm = () => {
+        if (handleAddFilm) {
+            return (
+                <TableRow>
+                    <TableCell>
+                        <Grid container justify="space-between">
+                            <Grid item>
+                                <IconButton color="primary" >
+                                    <CheckIcon />
+                                </IconButton>
+                            </Grid>
+                            <Grid item>
+                                <IconButton color="inherit" onClick={() => { setHandleAddFilm(false) }}>
+                                    <CloseIcon color="secondary" />
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+                    </TableCell>
+                    <TableCell>
+                        <TextField fullWidth variant="outlined" label="Tên" name="tenPhim" type="name" />
+                    </TableCell>
+                    <TableCell>
+                        <TextField fullWidth variant="outlined" label="Trailer" name="trailer" type="name" />
+                    </TableCell>
+                    <TableCell>
+                    </TableCell>
+                    <TableCell>
+                        <TextField
+                            fullWidth
+                            multiline
+                            rows={4}
+                            label="Mô tả"
+                            variant="outlined"
+                        />
+                    </TableCell>
+                    <TableCell>
+                        <form className={classes.container} noValidate>
+                            <TextField
+                                id="datetime-local"
+                                label="Next appointment"
+                                type="datetime-local"
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </form>
+                    </TableCell>
+                    <TableCell></TableCell>
+                </TableRow>
+            )
+        }
     }
     const renderTableRow = () => {
         if (filmList) {
@@ -218,29 +285,15 @@ export default function FilmManagement() {
     return (
         <div >
             <Grid container directions="row" alignItems="center" className="mb-3">
-                <Grid item md={6} xs={12}>
+                <Grid item md={8} xs={12}>
                     <h4>Manage Film</h4>
                 </Grid>
-                <Grid item md={4} xs={12} >
+                <Grid item md={3} xs={8} >
                     <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                        <Button color="inherit" className={classes.closeIcon} disabled={isDisable}>
-                            <CloseIcon color="secondary" />
-                        </Button>
+                        <TextField id="outlined-search" variant="filled" className={classes.searchBox} label="Search" type="search" />
                     </div>
-
                 </Grid>
-                <Grid item md={2} xs={12} className="p-2" >
+                <Grid item md={1} xs={4} className="p-2" >
                     <IconButton color="inherit" onClick={() => { setHandleAddFilm(true) }}>
                         <PlaylistAddIcon className={classes.addBtn} />
                     </IconButton>
@@ -252,16 +305,17 @@ export default function FilmManagement() {
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">Actions</TableCell>
-                            <TableCell align="center">Tên Phim</TableCell>
-                            <TableCell align="center">Trailer</TableCell>
-                            <TableCell align="center">Hình Ảnh</TableCell>
-                            <TableCell align="center">Mô Tả</TableCell>
-                            <TableCell align="center">Ngày Khởi Chiếu</TableCell>
-                            <TableCell align="center">Đánh Giá</TableCell>
+                            <StyledTableCell align="center">Actions</StyledTableCell>
+                            <StyledTableCell align="center">Tên Phim</StyledTableCell>
+                            <StyledTableCell align="center">Trailer</StyledTableCell>
+                            <StyledTableCell align="center">Hình Ảnh</StyledTableCell>
+                            <StyledTableCell align="center">Mô Tả</StyledTableCell>
+                            <StyledTableCell align="center">Ngày Khởi Chiếu</StyledTableCell>
+                            <StyledTableCell align="center">Đánh Giá</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
+                        {renderAddFilm()}
                         {renderTableRow()}
                         {handleEmptyRow()}
                     </TableBody>

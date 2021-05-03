@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -25,6 +25,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Redirect } from 'react-router';
+import { Button } from '@material-ui/core';
 
 function Copyright() {
     return (
@@ -122,8 +123,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
+    const [render, setRender] = useState(false);
     const user = JSON.parse(localStorage.getItem("User"));
+    if (user === null) return <Redirect to="/" />
     if (user.maLoaiNguoiDung !== "QuanTri") return <Redirect to="/" />
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -149,11 +152,10 @@ export default function Dashboard() {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         Dashboard
                     </Typography>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
+                    <Button variant="contained" onClick={() => {
+                        localStorage.clear();
+                        setRender(!render);
+                    }} color="secondary">Logout</Button>
                 </Toolbar>
             </AppBar>
             <Drawer
