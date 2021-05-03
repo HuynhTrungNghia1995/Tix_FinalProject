@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { fade, makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
@@ -13,20 +14,15 @@ import IconButton from '@material-ui/core/IconButton';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardTimePicker,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import { Button, Grid, InputBase, TableHead, TextField } from '@material-ui/core';
+import { Grid, TableHead, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { fetchFilmList } from "./modules/action";
+import { addFilm, fetchFilmList, deleteFilm } from "./modules/action";
 const useStyles1 = makeStyles((theme) => ({
     root: {
         flexShrink: 0,
@@ -156,20 +152,32 @@ export default function FilmManagement() {
     const classes = useStyles2();
     const dispatch = useDispatch();
     const filmList = useSelector(state => state.fetchFilmListReducer.data);
+    const err = useSelector(state => state.addFilmReducer.err);
     const [page, setPage] = useState(0);
     const [handleAddFilm, setHandleAddFilm] = useState(false);
+    const [render, setRender] = useState(false);
+    const [filmItem, setFilmItem] = useState({
+        maPhim: 0,
+        tenPhim: "",
+        biDanh: "",
+        trailer: "",
+        hinhAnh: "test.png",
+        moTa: "",
+        maNhom: "",
+        ngayKhoiChieu: "",
+        danhGia: 0
+    })
+    const [fileImage, setFileImage] = useState({})
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     useEffect(() => {
         dispatch(fetchFilmList());
-    }, []);
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
+    }, [render]);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
+    if (err) {
+        alert(err.response.data)
+    }
     const handleEmptyRow = () => {
         if (filmList) {
             const emptyRows = rowsPerPage - Math.min(rowsPerPage, filmList.length - page * rowsPerPage);
@@ -181,6 +189,49 @@ export default function FilmManagement() {
         }
 
     }
+    const handleFile = (e) => {
+        const name = e.target.name;
+        const value = e.target.files[0].name;
+        const object = e.target.files[0];
+        setFilmItem({
+            ...filmItem,
+            [name]: value
+        })
+        setFileImage({
+            ...fileImage,
+            [name]: object
+        })
+    }
+    const handleOnChangeAddFilm = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        if (name === "ngayKhoiChieu") {
+            setFilmItem({
+                ...filmItem,
+                [name]: format(new Date(value), 'dd/MM/yyyy')
+            })
+        } else {
+            setFilmItem({
+                ...filmItem,
+                [name]: value
+            })
+        }
+        console.log(fileImage);
+    }
+    const handlePopupAddFilm = () => {
+        setHandleAddFilm(false);
+        setFilmItem({});
+    }
+    const handleSubmitAddFilm = (e) => {
+        e.preventDefault();
+        dispatch(addFilm(filmItem, fileImage));
+        handlePopupAddFilm();
+        setRender(!render);
+    }
+    const handleDeleteFilm = (id) => {
+        dispatch(deleteFilm(id));
+        setRender(!render);
+    }
     const renderAddFilm = () => {
         if (handleAddFilm) {
             return (
@@ -188,24 +239,27 @@ export default function FilmManagement() {
                     <TableCell>
                         <Grid container justify="space-between">
                             <Grid item>
-                                <IconButton color="primary" >
+                                <IconButton color="primary" onClick={handleSubmitAddFilm} >
                                     <CheckIcon />
                                 </IconButton>
                             </Grid>
                             <Grid item>
-                                <IconButton color="inherit" onClick={() => { setHandleAddFilm(false) }}>
+                                <IconButton color="inherit" onClick={handlePopupAddFilm}>
                                     <CloseIcon color="secondary" />
                                 </IconButton>
                             </Grid>
                         </Grid>
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth variant="outlined" label="Tên" name="tenPhim" type="name" />
+                        <TextField fullWidth onChange={handleOnChangeAddFilm} multiline variant="outlined" label="Tên" name="tenPhim" type="name" />
+                        <TextField className="mt-1" onChange={handleOnChangeAddFilm} fullWidth multiline variant="outlined" label="Bí Danh" name="biDanh" type="name" />
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth variant="outlined" label="Trailer" name="trailer" type="name" />
+                        <TextField fullWidth multiline onChange={handleOnChangeAddFilm} variant="outlined" label="Nhóm" name="maNhom" type="name" />
+                        <TextField className="mt-1" onChange={handleOnChangeAddFilm} fullWidth multiline variant="outlined" label="Trailer" name="trailer" type="name" />
                     </TableCell>
                     <TableCell>
+                        <TextField fullWidth type="file" name="hinhAnh" onChange={handleFile} />
                     </TableCell>
                     <TableCell>
                         <TextField
@@ -214,14 +268,18 @@ export default function FilmManagement() {
                             rows={4}
                             label="Mô tả"
                             variant="outlined"
+                            name="moTa"
+                            onChange={handleOnChangeAddFilm}
                         />
                     </TableCell>
                     <TableCell>
                         <form className={classes.container} noValidate>
                             <TextField
-                                id="datetime-local"
-                                label="Next appointment"
-                                type="datetime-local"
+                                id="date"
+                                label="Ngày Khởi Chiếu"
+                                type="date"
+                                name="ngayKhoiChieu"
+                                onChange={handleOnChangeAddFilm}
                                 className={classes.textField}
                                 InputLabelProps={{
                                     shrink: true,
@@ -229,7 +287,15 @@ export default function FilmManagement() {
                             />
                         </form>
                     </TableCell>
-                    <TableCell></TableCell>
+                    <TableCell>
+                        <TextField
+                            fullWidth
+                            label="Đánh giá"
+                            name="danhGia"
+                            onChange={handleOnChangeAddFilm}
+                            variant="outlined"
+                        />
+                    </TableCell>
                 </TableRow>
             )
         }
@@ -249,19 +315,19 @@ export default function FilmManagement() {
                                 </IconButton>
                             </Grid>
                             <Grid item>
-                                <IconButton color="inherit">
+                                <IconButton color="inherit" onClick={() => handleDeleteFilm(row.maPhim)}>
                                     <DeleteForeverIcon color="secondary" />
                                 </IconButton>
                             </Grid>
                         </Grid>
                     </TableCell>
-                    <TableCell style={{ width: 40 }} align="center">
+                    <TableCell style={{ width: 120 }} align="center">
                         {row.tenPhim}
                     </TableCell>
-                    <TableCell style={{ width: 50 }} align="center">
+                    <TableCell style={{ width: 140 }} align="center">
                         <a href={row.trailer}>Trailer</a>
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="center">
+                    <TableCell style={{ width: 210 }} align="center">
                         <img src={row.hinhAnh} style={{ width: "auto", height: 50 }} alt="anhPhim" />
                     </TableCell>
                     <TableCell style={{ width: 400 }} align="center">
@@ -270,7 +336,7 @@ export default function FilmManagement() {
                     <TableCell style={{ width: 160 }} align="center">
                         {row.ngayKhoiChieu}
                     </TableCell>
-                    <TableCell style={{ width: 120 }} align="center">
+                    <TableCell style={{ width: 180 }} align="center">
                         {row.danhGia}
                     </TableCell>
                 </TableRow>
@@ -299,7 +365,6 @@ export default function FilmManagement() {
                     </IconButton>
                 </Grid>
             </Grid>
-
             <TableContainer component={Paper}>
 
                 <Table className={classes.table} aria-label="custom pagination table">
