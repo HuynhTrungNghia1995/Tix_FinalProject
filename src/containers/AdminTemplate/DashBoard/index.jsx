@@ -249,7 +249,7 @@ export default function Dashboard() {
         if (switchComponent === 1) {
             return <FilmManagement />
         }
-        if (switchComponent === 2) {
+        if (switchComponent === 3) {
             return <UserManagement />
         }
     }
