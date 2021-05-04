@@ -18,11 +18,11 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import { Grid, TableHead, TextField } from '@material-ui/core';
+import { FormControl, Grid, InputLabel, Select, TableHead, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { addFilm, fetchFilmList, deleteFilm } from "./modules/action";
+import { addFilm, fetchFilmList, deleteFilm, updateFilm } from "./modules/action";
 const useStyles1 = makeStyles((theme) => ({
     root: {
         flexShrink: 0,
@@ -155,7 +155,11 @@ export default function FilmManagement() {
     const err = useSelector(state => state.addFilmReducer.err);
     const [page, setPage] = useState(0);
     const [handleAddFilm, setHandleAddFilm] = useState(false);
+    const [isEditFilm, setIsEditFilm] = useState(false);
+    const [editFilmItem, setEditFilmItem] = useState({});
     const [render, setRender] = useState(false);
+    const [searchFilmName, setSearchFilmName] = useState("");
+    const [filmGroup, setFilmGroup] = useState("GP01");
     const [filmItem, setFilmItem] = useState({
         maPhim: 0,
         tenPhim: "",
@@ -170,7 +174,8 @@ export default function FilmManagement() {
     const [fileImage, setFileImage] = useState({})
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     useEffect(() => {
-        dispatch(fetchFilmList());
+        dispatch(fetchFilmList(filmGroup));
+        // eslint-disable-next-line
     }, [render]);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -202,6 +207,34 @@ export default function FilmManagement() {
             [name]: object
         })
     }
+    const handleUpdateFile = (e) => {
+        const name = e.target.name;
+        const value = e.target.files[0].name;
+        const object = e.target.files[0];
+        setEditFilmItem({
+            ...editFilmItem,
+            [name]: value
+        })
+        setFileImage({
+            ...fileImage,
+            [name]: object
+        })
+    }
+    const handleOnChangeUpdateFilm = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        if (name === "ngayKhoiChieu") {
+            setEditFilmItem({
+                ...editFilmItem,
+                [name]: format(new Date(value), 'dd/MM/yyyy')
+            })
+        } else {
+            setEditFilmItem({
+                ...editFilmItem,
+                [name]: value
+            })
+        }
+    }
     const handleOnChangeAddFilm = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -216,11 +249,18 @@ export default function FilmManagement() {
                 [name]: value
             })
         }
-        console.log(fileImage);
     }
     const handlePopupAddFilm = () => {
         setHandleAddFilm(false);
         setFilmItem({});
+    }
+    const handlePopupEditFilm = () => {
+        setIsEditFilm(false);
+        setEditFilmItem({});
+    }
+    const handleOnChangeSearch = (e) => {
+        const value = e.target.value;
+        setSearchFilmName(value);
     }
     const handleSubmitAddFilm = (e) => {
         e.preventDefault();
@@ -300,63 +340,216 @@ export default function FilmManagement() {
             )
         }
     }
-    const renderTableRow = () => {
-        if (filmList) {
-            return (rowsPerPage > 0
-                ? filmList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : filmList
-            ).map((row) => (
-                <TableRow key={row.maPhim}>
-                    <TableCell style={{ width: 170 }} align="center">
+    const handleSubmitEditFilm = (e) => {
+        e.preventDefault();
+        dispatch(updateFilm(editFilmItem, fileImage));
+        handlePopupEditFilm();
+        setRender(!render);
+    }
+    const renderEditFilm = () => {
+        if (isEditFilm) {
+            return (
+                <TableRow>
+                    <TableCell>
                         <Grid container justify="space-between">
                             <Grid item>
-                                <IconButton color="inherit">
-                                    <EditIcon variant="contained" color="primary" />
+                                <IconButton color="primary" onClick={handleSubmitEditFilm} >
+                                    <CheckIcon />
                                 </IconButton>
                             </Grid>
                             <Grid item>
-                                <IconButton color="inherit" onClick={() => handleDeleteFilm(row.maPhim)}>
-                                    <DeleteForeverIcon color="secondary" />
+                                <IconButton color="inherit" onClick={handlePopupEditFilm}>
+                                    <CloseIcon color="secondary" />
                                 </IconButton>
                             </Grid>
                         </Grid>
                     </TableCell>
-                    <TableCell style={{ width: 120 }} align="center">
-                        {row.tenPhim}
+                    <TableCell>
+                        <TextField fullWidth defaultValue={editFilmItem.tenPhim} onChange={handleOnChangeUpdateFilm} multiline variant="outlined" label="Tên" name="tenPhim" type="name" />
+                        <TextField className="mt-1" defaultValue={editFilmItem.biDanh} onChange={handleOnChangeUpdateFilm} fullWidth multiline variant="outlined" label="Bí Danh" name="biDanh" type="name" />
                     </TableCell>
-                    <TableCell style={{ width: 140 }} align="center">
-                        <a href={row.trailer}>Trailer</a>
+                    <TableCell>
+                        <TextField fullWidth multiline defaultValue={editFilmItem.maNhom} onChange={handleOnChangeUpdateFilm} variant="outlined" label="Nhóm" name="maNhom" type="name" />
+                        <TextField className="mt-1" defaultValue={editFilmItem.trailer} onChange={handleOnChangeUpdateFilm} fullWidth multiline variant="outlined" label="Trailer" name="trailer" type="name" />
                     </TableCell>
-                    <TableCell style={{ width: 210 }} align="center">
-                        <img src={row.hinhAnh} style={{ width: "auto", height: 50 }} alt="anhPhim" />
+                    <TableCell>
+                        <TextField fullWidth type="file" name="hinhAnh" onChange={handleUpdateFile} />
                     </TableCell>
-                    <TableCell style={{ width: 400 }} align="center">
-                        {row.moTa}
+                    <TableCell>
+                        <TextField
+                            fullWidth
+                            multiline
+                            rows={4}
+                            label="Mô tả"
+                            variant="outlined"
+                            defaultValue={editFilmItem.moTa}
+                            name="moTa"
+                            onChange={handleOnChangeUpdateFilm}
+                        />
                     </TableCell>
-                    <TableCell style={{ width: 160 }} align="center">
-                        {row.ngayKhoiChieu}
+                    <TableCell>
+                        <form className={classes.container} noValidate>
+                            <TextField
+                                id="date"
+                                label="Ngày Khởi Chiếu"
+                                type="date"
+                                name="ngayKhoiChieu"
+                                onChange={handleOnChangeUpdateFilm}
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </form>
                     </TableCell>
-                    <TableCell style={{ width: 180 }} align="center">
-                        {row.danhGia}
+                    <TableCell>
+                        <TextField
+                            fullWidth
+                            label="Đánh giá"
+                            name="danhGia"
+                            defaultValue={editFilmItem.danhGia}
+                            onChange={handleOnChangeUpdateFilm}
+                            variant="outlined"
+                        />
                     </TableCell>
                 </TableRow>
-
-            ))
+            )
         }
+    }
+    const renderTableRow = () => {
+        if (filmList && searchFilmName !== "") {
+            // eslint-disable-next-line
+            return filmList.map((item) => {
+                let res = item.tenPhim.toLowerCase().match(searchFilmName.toLowerCase())
+                if (res !== null && searchFilmName !== "") {
+                    return (
+                        <TableRow key={item.maPhim}>
+                            <TableCell style={{ width: 170 }} align="center">
+                                <Grid container justify="space-between">
+                                    <Grid item>
+                                        <IconButton color="inherit" onClick={() => {
+                                            setEditFilmItem({
+                                                ...item,
+                                                ngayKhoiChieu: format(new Date(item.ngayKhoiChieu), 'dd/MM/yyyy')
+                                            })
+                                            setIsEditFilm(true);
+                                        }}>
+                                            <EditIcon variant="contained" color="primary" />
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item>
+                                        <IconButton color="inherit" onClick={() => handleDeleteFilm(item.maPhim)}>
+                                            <DeleteForeverIcon color="secondary" />
+                                        </IconButton>
+                                    </Grid>
+                                </Grid>
+                            </TableCell>
+                            <TableCell style={{ width: 120 }} align="center">
+                                {item.tenPhim}
+                            </TableCell>
+                            <TableCell style={{ width: 140 }} align="center">
+                                <a href={item.trailer}>Trailer</a>
+                            </TableCell>
+                            <TableCell style={{ width: 210 }} align="center">
+                                <img src={item.hinhAnh} style={{ width: "auto", height: 50 }} alt="anhPhim" />
+                            </TableCell>
+                            <TableCell style={{ width: 400 }} align="center">
+                                {item.moTa}
+                            </TableCell>
+                            <TableCell style={{ width: 160 }} align="center">
+                                {item.ngayKhoiChieu}
+                            </TableCell>
+                            <TableCell style={{ width: 180 }} align="center">
+                                {item.danhGia}
+                            </TableCell>
+                        </TableRow>
+                    )
+                }
+            })
+        } else
+            if (filmList) {
+                return (rowsPerPage > 0
+                    ? filmList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : filmList
+                ).map((row) => (
+                    <TableRow key={row.maPhim}>
+                        <TableCell style={{ width: 170 }} align="center">
+                            <Grid container justify="space-between">
+                                <Grid item>
+                                    <IconButton color="inherit" onClick={() => {
+                                        setEditFilmItem({
+                                            ...row,
+                                            ngayKhoiChieu: format(new Date(row.ngayKhoiChieu), 'dd/MM/yyyy')
+                                        })
+                                        setIsEditFilm(true);
+                                    }}>
+                                        <EditIcon variant="contained" color="primary" />
+                                    </IconButton>
+                                </Grid>
+                                <Grid item>
+                                    <IconButton color="inherit" onClick={() => handleDeleteFilm(row.maPhim)}>
+                                        <DeleteForeverIcon color="secondary" />
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+                        </TableCell>
+                        <TableCell style={{ width: 120 }} align="center">
+                            {row.tenPhim}
+                        </TableCell>
+                        <TableCell style={{ width: 140 }} align="center">
+                            <a href={row.trailer}>Trailer</a>
+                        </TableCell>
+                        <TableCell style={{ width: 210 }} align="center">
+                            <img src={row.hinhAnh} style={{ width: "auto", height: 50 }} alt="anhPhim" />
+                        </TableCell>
+                        <TableCell style={{ width: 400 }} align="center">
+                            {row.moTa}
+                        </TableCell>
+                        <TableCell style={{ width: 160 }} align="center">
+                            {row.ngayKhoiChieu}
+                        </TableCell>
+                        <TableCell style={{ width: 180 }} align="center">
+                            {row.danhGia}
+                        </TableCell>
+                    </TableRow>
+
+                ))
+            }
     }
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+    const handleGroupFilm = (e) => {
+        const value = e.target.value;
+        setFilmGroup(value);
+        setRender(!render);
+    }
     return (
         <div >
             <Grid container directions="row" alignItems="center" className="mb-3">
-                <Grid item md={8} xs={12}>
+                <Grid item md={4} xs={12}>
                     <h4>Manage Film</h4>
+                </Grid>
+                <Grid item md={4} xs={12}>
+                    <FormControl variant="outlined">
+                        <InputLabel htmlFor="outlined-role-native-simple">Nhóm</InputLabel>
+                        <Select
+                            native
+                            label="Role"
+                            defaultValue="GP01"
+                            onChange={handleGroupFilm}
+                            name="newRoles"
+                        >
+                            <option value={"GP01"}>GP01</option>
+                            <option value={"GP02"}>GP02</option>
+                            <option value={"GP03"}>GP03</option>
+                        </Select>
+                    </FormControl>
                 </Grid>
                 <Grid item md={3} xs={8} >
                     <div className={classes.search}>
-                        <TextField id="outlined-search" variant="filled" className={classes.searchBox} label="Search" type="search" />
+                        <TextField id="outlined-search" onChange={handleOnChangeSearch} variant="filled" className={classes.searchBox} label="Search" type="search" />
                     </div>
                 </Grid>
                 <Grid item md={1} xs={4} className="p-2" >
@@ -381,6 +574,7 @@ export default function FilmManagement() {
                     </TableHead>
                     <TableBody>
                         {renderAddFilm()}
+                        {renderEditFilm()}
                         {renderTableRow()}
                         {handleEmptyRow()}
                     </TableBody>

@@ -79,6 +79,7 @@ export default function Login(props) {
             taiKhoan: "",
             matKhau: ""
         });
+        // eslint-disable-next-line
     }, [render])
     const handleChange = (e) => {
         const name = e.target.name;

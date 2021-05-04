@@ -1,10 +1,10 @@
 import axios from "axios";
 import * as actionTypes from "./constants";
-export const fetchFilmList = () => {
+export const fetchFilmList = (group) => {
     return (dispatch) => {
         dispatch(fetchFilmListRequest())
         axios({
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=GP03`,
+            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=${group}`,
             method: "GET",
         })
             .then((res) => {
@@ -150,3 +150,73 @@ export const deleteFilmFailed = (err) => {
     }
 
 }
+
+
+export const updateFilm = (film, file) => {
+
+    let accessToken = "";
+
+    if (localStorage.getItem("User")) {
+        if (JSON.parse(localStorage.getItem("User")).maLoaiNguoiDung === "QuanTri") {
+            accessToken = JSON.parse(localStorage.getItem("User")).accessToken;
+        }
+    }
+    return (dispatch) => {
+        dispatch(updateFilmRequest())
+        axios({
+            url: `https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/CapNhatPhim`,
+            method: "POST",
+            data: film,
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            }
+        })
+            .then((res) => {
+                if (file !== undefined) {
+                    const formData = new FormData()
+                    formData.append('File', file.hinhAnh, file.hinhAnh.name)
+                    formData.append('tenPhim', film.tenPhim)
+                    formData.append('maNhom', film.maNhom)
+                    axios({
+                        url: `https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/UploadHinhAnhPhim`,
+                        method: "POST",
+                        data: formData,
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        }
+                    })
+                        .then((res) => {
+                            console.log(res);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                }
+                dispatch(updateFilmSuccess(res.data));
+            })
+            .catch((err) => {
+                dispatch(updateFilmFailed(err));
+            })
+    }
+}
+export const updateFilmRequest = () => {
+    return {
+        type: actionTypes.UPDATE_FILM_REQUEST
+    }
+
+}
+export const updateFilmSuccess = (data) => {
+    return {
+        type: actionTypes.UPDATE_FILM_SUCCESS,
+        payload: data
+    }
+
+}
+export const updateFilmFailed = (err) => {
+    return {
+        type: actionTypes.UPDATE_FILM_FAILED,
+        payload: err
+    }
+
+}
+

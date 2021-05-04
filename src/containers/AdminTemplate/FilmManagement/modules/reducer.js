@@ -16,7 +16,7 @@ export const fetchFilmListReducer = (state = filmList, { payload, type, ...actio
             state.data = payload;
             state.err = null;
             return { ...state };
-        case actionTypes.FETCH_FILM_LIST_REQUEST:
+        case actionTypes.FETCH_FILM_LIST_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;
@@ -69,6 +69,33 @@ export const deleteFilmReducer = (state = deleteFilm, { payload, type, ...action
             state.err = null;
             return { ...state };
         case actionTypes.DELETE_FILM_FAILED:
+            state.loading = false;
+            state.data = null;
+            state.err = payload;
+            return { ...state };
+        default: return { ...state };
+    }
+}
+
+
+const updateFilm = {
+    loading: false,
+    data: null,
+    err: null
+}
+export const updateFilmReducer = (state = updateFilm, { payload, type, ...action }) => {
+    switch (type) {
+        case actionTypes.UPDATE_FILM_REQUEST:
+            state.loading = true;
+            state.data = null;
+            state.err = null;
+            return { ...state };
+        case actionTypes.UPDATE_FILM_SUCCESS:
+            state.loading = false;
+            state.data = payload;
+            state.err = null;
+            return { ...state };
+        case actionTypes.UPDATE_FILM_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;
