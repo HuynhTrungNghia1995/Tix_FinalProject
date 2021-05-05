@@ -4,7 +4,6 @@ import PageNotFound from "./containers/PageNotFound";
 import { routeHome, routeAdmin } from "./routes";
 import "./App.css";
 import AdminTemplate from "./containers/AdminTemplate";
-import "./App.css";
 
 function App() {
   const showLayoutHome = (routes) => {

@@ -1,6 +1,6 @@
+import Home from "../containers/HomeTemPlate/Home";
 import Dashboard from "../containers/AdminTemplate/DashBoard";
 import Login from "../containers/AdminTemplate/Login";
-import Home from "../containers/HomeTemplate/Home";
 
 const routeHome = [
   {
