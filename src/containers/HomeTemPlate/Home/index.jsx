@@ -4,6 +4,7 @@ import Carousel from "../../../components/Carousel";
 import Footer from "../../../components/Footer";
 import NavbarHome from "../../../components/NavbarHome";
 import "./style.css";
+import Schedule from "../../../components/Schedule";
 
 export default function Home(props) {
   const handleBackToTop = () => {

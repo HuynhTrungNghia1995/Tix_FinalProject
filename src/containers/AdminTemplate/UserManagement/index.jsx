@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { fade, makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
@@ -22,7 +21,7 @@ import { FormControl, Grid, InputLabel, Select, TableHead, TextField } from '@ma
 import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { addFilm, fetchFilmList, deleteFilm, updateFilm } from "./modules/action";
+import { fetchUserList, addUser, deleteUser, updateUser } from './modules/action';
 const useStyles1 = makeStyles((theme) => ({
     root: {
         flexShrink: 0,
@@ -148,40 +147,30 @@ const useStyles2 = makeStyles((theme) => ({
 
 }));
 
-export default function FilmManagement() {
+export default function UserManagement() {
     const classes = useStyles2();
     const dispatch = useDispatch();
-    const filmList = useSelector(state => state.fetchFilmListReducer.data);
+    const userList = useSelector(state => state.fetchUserListReducer.data);
+    const err = useSelector(state => state.deleteUserReducer.err);
     const [page, setPage] = useState(0);
-    const [handleAddFilm, setHandleAddFilm] = useState(false);
-    const [isEditFilm, setIsEditFilm] = useState(false);
-    const [editFilmItem, setEditFilmItem] = useState({});
+    const [handleAddUser, setHandleAddUser] = useState(false);
+    const [userItem, setUserItem] = useState(false);
+    const [isEditUser, setIsEditUser] = useState(false);
+    const [editUserItem, setEditUserItem] = useState({});
     const [render, setRender] = useState(false);
-    const [searchFilmName, setSearchFilmName] = useState("");
-    const [filmGroup, setFilmGroup] = useState("GP01");
-    const [filmItem, setFilmItem] = useState({
-        maPhim: 0,
-        tenPhim: "",
-        biDanh: "",
-        trailer: "",
-        hinhAnh: "test.png",
-        moTa: "",
-        maNhom: "",
-        ngayKhoiChieu: "",
-        danhGia: 0
-    })
-    const [fileImage, setFileImage] = useState({})
+    const [searchUserName, setSearchUserName] = useState("");
+    const [userGroup, setUserGroup] = useState("GP01");
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     useEffect(() => {
-        dispatch(fetchFilmList(filmGroup));
+        dispatch(fetchUserList(userGroup));
         // eslint-disable-next-line
     }, [render]);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
     const handleEmptyRow = () => {
-        if (filmList) {
-            const emptyRows = rowsPerPage - Math.min(rowsPerPage, filmList.length - page * rowsPerPage);
+        if (userList) {
+            const emptyRows = rowsPerPage - Math.min(rowsPerPage, userList.length - page * rowsPerPage);
             return emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
                     <TableCell colSpan={6} />
@@ -190,322 +179,238 @@ export default function FilmManagement() {
         }
 
     }
-    const handleFile = (e) => {
+    const handlePopupAddUser = () => {
+        setHandleAddUser(false);
+        setUserItem({});
+    }
+    const handlePopupEditUser = () => {
+        setIsEditUser(false);
+        setEditUserItem({});
+    }
+    const handleOnChangeAddUser = (e) => {
         const name = e.target.name;
-        const value = e.target.files[0].name;
-        const object = e.target.files[0];
-        setFilmItem({
-            ...filmItem,
+        const value = e.target.value;
+        setUserItem({
+            ...userItem,
+            maNhom: userGroup,
             [name]: value
         })
-        setFileImage({
-            ...fileImage,
-            [name]: object
-        })
     }
-    const handleUpdateFile = (e) => {
+    const handleOnChangeEditUser = (e) => {
         const name = e.target.name;
-        const value = e.target.files[0].name;
-        const object = e.target.files[0];
-        setEditFilmItem({
-            ...editFilmItem,
+        const value = e.target.value;
+        setEditUserItem({
+            ...editUserItem,
+            maNhom: userGroup,
             [name]: value
         })
-        setFileImage({
-            ...fileImage,
-            [name]: object
-        })
     }
-    const handleOnChangeUpdateFilm = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-        if (name === "ngayKhoiChieu") {
-            setEditFilmItem({
-                ...editFilmItem,
-                [name]: format(new Date(value), 'dd/MM/yyyy')
-            })
-        } else {
-            setEditFilmItem({
-                ...editFilmItem,
-                [name]: value
-            })
-        }
-    }
-    const handleOnChangeAddFilm = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-        if (name === "ngayKhoiChieu") {
-            setFilmItem({
-                ...filmItem,
-                [name]: format(new Date(value), 'dd/MM/yyyy')
-            })
-        } else {
-            setFilmItem({
-                ...filmItem,
-                [name]: value
-            })
-        }
-    }
-    const handlePopupAddFilm = () => {
-        setHandleAddFilm(false);
-        setFilmItem({});
-    }
-    const handlePopupEditFilm = () => {
-        setIsEditFilm(false);
-        setEditFilmItem({});
-    }
-    const handleOnChangeSearch = (e) => {
-        const value = e.target.value;
-        setSearchFilmName(value);
-    }
-    const handleSubmitAddFilm = (e) => {
+    const handleSubmitAddUser = (e) => {
         e.preventDefault();
-        dispatch(addFilm(filmItem, fileImage));
-        handlePopupAddFilm();
+        dispatch(addUser(userItem));
+        handlePopupAddUser();
         setRender(!render);
     }
-    const handleDeleteFilm = (id) => {
-        dispatch(deleteFilm(id));
+    const handleSubmitEditUser = (e) => {
+        e.preventDefault();
+        dispatch(updateUser(editUserItem));
+        handlePopupEditUser();
         setRender(!render);
     }
-    const renderAddFilm = () => {
-        if (handleAddFilm) {
+    const renderAddUser = () => {
+        if (handleAddUser) {
             return (
                 <TableRow>
                     <TableCell>
                         <Grid container justify="space-between">
                             <Grid item>
-                                <IconButton color="primary" onClick={handleSubmitAddFilm} >
+                                <IconButton color="primary" onClick={handleSubmitAddUser} >
                                     <CheckIcon />
                                 </IconButton>
                             </Grid>
                             <Grid item>
-                                <IconButton color="inherit" onClick={handlePopupAddFilm}>
+                                <IconButton color="inherit" onClick={handlePopupAddUser}>
                                     <CloseIcon color="secondary" />
                                 </IconButton>
                             </Grid>
                         </Grid>
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth onChange={handleOnChangeAddFilm} multiline variant="outlined" label="Tên" name="tenPhim" type="name" />
-                        <TextField className="mt-1" onChange={handleOnChangeAddFilm} fullWidth multiline variant="outlined" label="Bí Danh" name="biDanh" type="name" />
+                        <TextField fullWidth onChange={handleOnChangeAddUser} multiline variant="outlined" name="taiKhoan" type="name" />
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth multiline onChange={handleOnChangeAddFilm} variant="outlined" label="Nhóm" name="maNhom" type="name" />
-                        <TextField className="mt-1" onChange={handleOnChangeAddFilm} fullWidth multiline variant="outlined" label="Trailer" name="trailer" type="name" />
+                        <TextField fullWidth multiline onChange={handleOnChangeAddUser} variant="outlined" name="matKhau" type="name" />
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth type="file" name="hinhAnh" onChange={handleFile} />
+                        <TextField fullWidth multiline onChange={handleOnChangeAddUser} variant="outlined" name="hoTen" type="name" />
                     </TableCell>
                     <TableCell>
-                        <TextField
-                            fullWidth
-                            multiline
-                            rows={4}
-                            label="Mô tả"
-                            variant="outlined"
-                            name="moTa"
-                            onChange={handleOnChangeAddFilm}
-                        />
+                        <TextField fullWidth multiline onChange={handleOnChangeAddUser} variant="outlined" name="soDt" type="name" />
                     </TableCell>
                     <TableCell>
-                        <form className={classes.container} noValidate>
-                            <TextField
-                                id="date"
-                                label="Ngày Khởi Chiếu"
-                                type="date"
-                                name="ngayKhoiChieu"
-                                onChange={handleOnChangeAddFilm}
-                                className={classes.textField}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                        </form>
+                        <FormControl variant="outlined">
+                            <Select
+                                native
+                                onChange={handleOnChangeAddUser}
+                                name="maLoaiNguoiDung"
+                            >
+                                <option aria-label="None" value="" />
+                                <option value={"KhachHang"}>Khách Hàng</option>
+                                <option value={"QuanTri"}>Quản Trị</option>
+                            </Select>
+                        </FormControl>
                     </TableCell>
                     <TableCell>
-                        <TextField
-                            fullWidth
-                            label="Đánh giá"
-                            name="danhGia"
-                            onChange={handleOnChangeAddFilm}
-                            variant="outlined"
-                        />
+                        <TextField fullWidth multiline onChange={handleOnChangeAddUser} variant="outlined" name="email" type="name" />
                     </TableCell>
                 </TableRow>
             )
         }
     }
-    const handleSubmitEditFilm = (e) => {
-        e.preventDefault();
-        dispatch(updateFilm(editFilmItem, fileImage));
-        handlePopupEditFilm();
-        setRender(!render);
-    }
-    const renderEditFilm = () => {
-        if (isEditFilm) {
+    const renderEditUser = () => {
+        if (isEditUser) {
             return (
                 <TableRow>
                     <TableCell>
                         <Grid container justify="space-between">
                             <Grid item>
-                                <IconButton color="primary" onClick={handleSubmitEditFilm} >
+                                <IconButton color="primary" onClick={handleSubmitEditUser} >
                                     <CheckIcon />
                                 </IconButton>
                             </Grid>
                             <Grid item>
-                                <IconButton color="inherit" onClick={handlePopupEditFilm}>
+                                <IconButton color="inherit" onClick={handlePopupEditUser}>
                                     <CloseIcon color="secondary" />
                                 </IconButton>
                             </Grid>
                         </Grid>
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth defaultValue={editFilmItem.tenPhim} onChange={handleOnChangeUpdateFilm} multiline variant="outlined" label="Tên" name="tenPhim" type="name" />
-                        <TextField className="mt-1" defaultValue={editFilmItem.biDanh} onChange={handleOnChangeUpdateFilm} fullWidth multiline variant="outlined" label="Bí Danh" name="biDanh" type="name" />
+                        <TextField fullWidth defaultValue={editUserItem.taiKhoan} onChange={handleOnChangeEditUser} multiline variant="outlined" name="taiKhoan" type="name" />
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth multiline defaultValue={editFilmItem.maNhom} onChange={handleOnChangeUpdateFilm} variant="outlined" label="Nhóm" name="maNhom" type="name" />
-                        <TextField className="mt-1" defaultValue={editFilmItem.trailer} onChange={handleOnChangeUpdateFilm} fullWidth multiline variant="outlined" label="Trailer" name="trailer" type="name" />
+                        <TextField fullWidth defaultValue={editUserItem.matKhau} multiline onChange={handleOnChangeEditUser} variant="outlined" name="matKhau" type="name" />
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth type="file" name="hinhAnh" onChange={handleUpdateFile} />
+                        <TextField fullWidth defaultValue={editUserItem.hoTen} multiline onChange={handleOnChangeEditUser} variant="outlined" name="hoTen" type="name" />
                     </TableCell>
                     <TableCell>
-                        <TextField
-                            fullWidth
-                            multiline
-                            rows={4}
-                            label="Mô tả"
-                            variant="outlined"
-                            defaultValue={editFilmItem.moTa}
-                            name="moTa"
-                            onChange={handleOnChangeUpdateFilm}
-                        />
+                        <TextField fullWidth defaultValue={editUserItem.soDt} multiline onChange={handleOnChangeEditUser} variant="outlined" name="soDt" type="name" />
                     </TableCell>
                     <TableCell>
-                        <form className={classes.container} noValidate>
-                            <TextField
-                                id="date"
-                                label="Ngày Khởi Chiếu"
-                                type="date"
-                                name="ngayKhoiChieu"
-                                onChange={handleOnChangeUpdateFilm}
-                                className={classes.textField}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                        </form>
+                        <FormControl variant="outlined">
+                            <Select
+                                native
+                                defaultValue={editUserItem.maLoaiNguoiDung}
+                                onChange={handleOnChangeEditUser}
+                                name="maLoaiNguoiDung"
+                            >
+                                <option aria-label="None" value="" />
+                                <option value={"KhachHang"}>Khách Hàng</option>
+                                <option value={"QuanTri"}>Quản Trị</option>
+                            </Select>
+                        </FormControl>
                     </TableCell>
                     <TableCell>
-                        <TextField
-                            fullWidth
-                            label="Đánh giá"
-                            name="danhGia"
-                            defaultValue={editFilmItem.danhGia}
-                            onChange={handleOnChangeUpdateFilm}
-                            variant="outlined"
-                        />
+                        <TextField fullWidth multiline defaultValue={editUserItem.email} onChange={handleOnChangeEditUser} variant="outlined" name="email" type="name" />
                     </TableCell>
                 </TableRow>
             )
         }
     }
     const renderTableRow = () => {
-        if (filmList && searchFilmName !== "") {
+        if (userList && searchUserName !== "") {
             // eslint-disable-next-line
-            return filmList.map((item) => {
-                let res = item.tenPhim.toLowerCase().match(searchFilmName.toLowerCase())
-                if (res !== null && searchFilmName !== "") {
+            return userList.map((row, index) => {
+                let res = row.taiKhoan.toLowerCase().match(searchUserName.toLowerCase())
+                if (res !== null && searchUserName !== "") {
                     return (
-                        <TableRow key={item.maPhim}>
-                            <TableCell style={{ width: 170 }} align="center">
+                        <TableRow key={index}>
+                            <TableCell style={{ width: 200 }} align="center">
                                 <Grid container justify="space-between">
                                     <Grid item>
                                         <IconButton color="inherit" onClick={() => {
-                                            setEditFilmItem({
-                                                ...item,
-                                                ngayKhoiChieu: format(new Date(item.ngayKhoiChieu), 'dd/MM/yyyy')
+                                            setEditUserItem({
+                                                ...row,
                                             })
-                                            setIsEditFilm(true);
+                                            setIsEditUser(true);
                                         }}>
                                             <EditIcon variant="contained" color="primary" />
                                         </IconButton>
                                     </Grid>
                                     <Grid item>
-                                        <IconButton color="inherit" onClick={() => handleDeleteFilm(item.maPhim)}>
+                                        <IconButton color="inherit" onClick={() => { dispatch(deleteUser(row)); setRender(!render); }}>
                                             <DeleteForeverIcon color="secondary" />
                                         </IconButton>
                                     </Grid>
                                 </Grid>
                             </TableCell>
                             <TableCell style={{ width: 120 }} align="center">
-                                {item.tenPhim}
+                                {row.taiKhoan}
                             </TableCell>
                             <TableCell style={{ width: 140 }} align="center">
-                                <a href={item.trailer}>Trailer</a>
+                                {row.matKhau}
                             </TableCell>
                             <TableCell style={{ width: 210 }} align="center">
-                                <img src={item.hinhAnh} style={{ width: "auto", height: 50 }} alt="anhPhim" />
+                                {row.hoTen}
                             </TableCell>
-                            <TableCell style={{ width: 400 }} align="center">
-                                {item.moTa}
+                            <TableCell style={{ width: 200 }} align="center">
+                                {row.soDt}
                             </TableCell>
-                            <TableCell style={{ width: 160 }} align="center">
-                                {item.ngayKhoiChieu}
+                            <TableCell style={{ width: 300 }} align="center">
+                                {row.maLoaiNguoiDung}
                             </TableCell>
                             <TableCell style={{ width: 180 }} align="center">
-                                {item.danhGia}
+                                {row.email}
                             </TableCell>
                         </TableRow>
+
                     )
                 }
             })
         } else
-            if (filmList) {
+            if (userList) {
                 return (rowsPerPage > 0
-                    ? filmList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    : filmList
-                ).map((row) => (
-                    <TableRow key={row.maPhim}>
-                        <TableCell style={{ width: 170 }} align="center">
+                    ? userList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : userList
+                ).map((row, index) => (
+                    <TableRow key={index}>
+                        <TableCell style={{ width: 200 }} align="center">
                             <Grid container justify="space-between">
                                 <Grid item>
                                     <IconButton color="inherit" onClick={() => {
-                                        setEditFilmItem({
+                                        setEditUserItem({
                                             ...row,
-                                            ngayKhoiChieu: format(new Date(row.ngayKhoiChieu), 'dd/MM/yyyy')
                                         })
-                                        setIsEditFilm(true);
+                                        setIsEditUser(true);
                                     }}>
                                         <EditIcon variant="contained" color="primary" />
                                     </IconButton>
                                 </Grid>
                                 <Grid item>
-                                    <IconButton color="inherit" onClick={() => handleDeleteFilm(row.maPhim)}>
+                                    <IconButton color="inherit" onClick={() => { dispatch(deleteUser(row)); setRender(!render); }}>
                                         <DeleteForeverIcon color="secondary" />
                                     </IconButton>
                                 </Grid>
                             </Grid>
                         </TableCell>
                         <TableCell style={{ width: 120 }} align="center">
-                            {row.tenPhim}
+                            {row.taiKhoan}
                         </TableCell>
                         <TableCell style={{ width: 140 }} align="center">
-                            <a href={row.trailer}>Trailer</a>
+                            {row.matKhau}
                         </TableCell>
                         <TableCell style={{ width: 210 }} align="center">
-                            <img src={row.hinhAnh} style={{ width: "auto", height: 50 }} alt="anhPhim" />
+                            {row.hoTen}
                         </TableCell>
-                        <TableCell style={{ width: 400 }} align="center">
-                            {row.moTa}
+                        <TableCell style={{ width: 200 }} align="center">
+                            {row.soDt}
                         </TableCell>
-                        <TableCell style={{ width: 160 }} align="center">
-                            {row.ngayKhoiChieu}
+                        <TableCell style={{ width: 300 }} align="center">
+                            {row.maLoaiNguoiDung}
                         </TableCell>
                         <TableCell style={{ width: 180 }} align="center">
-                            {row.danhGia}
+                            {row.email}
                         </TableCell>
                     </TableRow>
 
@@ -516,24 +421,27 @@ export default function FilmManagement() {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-    const handleGroupFilm = (e) => {
+    const handleGroupUser = (e) => {
         const value = e.target.value;
-        setFilmGroup(value);
+        setUserGroup(value);
         setRender(!render);
+    }
+    const handleSearchUser = (e) => {
+        const value = e.target.value;
+        setSearchUserName(value);
     }
     return (
         <div >
             <Grid container directions="row" alignItems="center" className="mb-3">
                 <Grid item md={4} xs={12}>
-                    <h4>Manage Film</h4>
+                    <h4>Manage User</h4>
                 </Grid>
                 <Grid item md={4} xs={12}>
                     <FormControl variant="outlined">
                         <Select
                             native
                             defaultValue="GP01"
-                            onChange={handleGroupFilm}
-                            name="maNhom"
+                            onChange={handleGroupUser}
                         >
                             <option value={"GP01"}>GP01</option>
                             <option value={"GP02"}>GP02</option>
@@ -543,11 +451,11 @@ export default function FilmManagement() {
                 </Grid>
                 <Grid item md={3} xs={8} >
                     <div className={classes.search}>
-                        <TextField id="outlined-search" onChange={handleOnChangeSearch} variant="filled" className={classes.searchBox} label="Search" type="search" />
+                        <TextField id="outlined-search" variant="filled" onChange={handleSearchUser} className={classes.searchBox} label="Search" type="search" />
                     </div>
                 </Grid>
                 <Grid item md={1} xs={4} className="p-2" >
-                    <IconButton color="inherit" onClick={() => { setHandleAddFilm(true) }}>
+                    <IconButton color="inherit" onClick={() => { setHandleAddUser(true) }}>
                         <PlaylistAddIcon className={classes.addBtn} />
                     </IconButton>
                 </Grid>
@@ -558,17 +466,17 @@ export default function FilmManagement() {
                     <TableHead>
                         <TableRow>
                             <StyledTableCell align="center">Actions</StyledTableCell>
-                            <StyledTableCell align="center">Tên Phim</StyledTableCell>
-                            <StyledTableCell align="center">Trailer</StyledTableCell>
-                            <StyledTableCell align="center">Hình Ảnh</StyledTableCell>
-                            <StyledTableCell align="center">Mô Tả</StyledTableCell>
-                            <StyledTableCell align="center">Ngày Khởi Chiếu</StyledTableCell>
-                            <StyledTableCell align="center">Đánh Giá</StyledTableCell>
+                            <StyledTableCell align="center">Tài Khoản</StyledTableCell>
+                            <StyledTableCell align="center">Mật Khẩu</StyledTableCell>
+                            <StyledTableCell align="center">Họ Tên</StyledTableCell>
+                            <StyledTableCell align="center">Số Điện Thoại</StyledTableCell>
+                            <StyledTableCell align="center">Mã Loại Người Dùng</StyledTableCell>
+                            <StyledTableCell align="center">Email</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {renderAddFilm()}
-                        {renderEditFilm()}
+                        {renderAddUser()}
+                        {renderEditUser()}
                         {renderTableRow()}
                         {handleEmptyRow()}
                     </TableBody>
@@ -577,7 +485,7 @@ export default function FilmManagement() {
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                                 colSpan={7}
-                                count={filmList ? filmList.length : 0}
+                                count={userList ? userList.length : 0}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
                                 SelectProps={{

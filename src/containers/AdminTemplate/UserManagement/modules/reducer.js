@@ -1,22 +1,22 @@
 import * as actionTypes from "./constants"
-const filmList = {
+const userList = {
     loading: false,
     data: null,
     err: null
 }
-export const fetchFilmListReducer = (state = filmList, { payload, type, ...action }) => {
+export const fetchUserListReducer = (state = userList, { payload, type, ...action }) => {
     switch (type) {
-        case actionTypes.FETCH_FILM_LIST_REQUEST:
+        case actionTypes.FETCH_USER_LIST_REQUEST:
             state.loading = true;
             state.data = null;
             state.err = null;
             return { ...state };
-        case actionTypes.FETCH_FILM_LIST_SUCCESS:
+        case actionTypes.FETCH_USER_LIST_SUCCESS:
             state.loading = false;
             state.data = payload;
             state.err = null;
             return { ...state };
-        case actionTypes.FETCH_FILM_LIST_FAILED:
+        case actionTypes.FETCH_USER_LIST_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;
@@ -25,24 +25,24 @@ export const fetchFilmListReducer = (state = filmList, { payload, type, ...actio
     }
 }
 
-const addFilm = {
+const addUser = {
     loading: false,
     data: null,
     err: null
 }
-export const addFilmReducer = (state = addFilm, { payload, type, ...action }) => {
+export const addUserReducer = (state = addUser, { payload, type, ...action }) => {
     switch (type) {
-        case actionTypes.ADD_FILM_REQUEST:
+        case actionTypes.ADD_USER_REQUEST:
             state.loading = true;
             state.data = null;
             state.err = null;
             return { ...state };
-        case actionTypes.ADD_FILM_SUCCESS:
+        case actionTypes.ADD_USER_SUCCESS:
             state.loading = false;
             state.data = payload;
             state.err = null;
             return { ...state };
-        case actionTypes.ADD_FILM_FAILED:
+        case actionTypes.ADD_USER_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;
@@ -51,24 +51,24 @@ export const addFilmReducer = (state = addFilm, { payload, type, ...action }) =>
     }
 }
 
-const deleteFilm = {
+const deleteUser = {
     loading: false,
     data: null,
     err: null
 }
-export const deleteFilmReducer = (state = deleteFilm, { payload, type, ...action }) => {
+export const deleteUserReducer = (state = deleteUser, { payload, type, ...action }) => {
     switch (type) {
-        case actionTypes.DELETE_FILM_REQUEST:
+        case actionTypes.DELETE_USER_REQUEST:
             state.loading = true;
             state.data = null;
             state.err = null;
             return { ...state };
-        case actionTypes.DELETE_FILM_SUCCESS:
+        case actionTypes.DELETE_USER_SUCCESS:
             state.loading = false;
             state.data = payload;
             state.err = null;
             return { ...state };
-        case actionTypes.DELETE_FILM_FAILED:
+        case actionTypes.DELETE_USER_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;
@@ -78,24 +78,24 @@ export const deleteFilmReducer = (state = deleteFilm, { payload, type, ...action
 }
 
 
-const updateFilm = {
+const updateUser = {
     loading: false,
     data: null,
     err: null
 }
-export const updateFilmReducer = (state = updateFilm, { payload, type, ...action }) => {
+export const updateUserReducer = (state = updateUser, { payload, type, ...action }) => {
     switch (type) {
-        case actionTypes.UPDATE_FILM_REQUEST:
+        case actionTypes.UPDATE_USER_REQUEST:
             state.loading = true;
             state.data = null;
             state.err = null;
             return { ...state };
-        case actionTypes.UPDATE_FILM_SUCCESS:
+        case actionTypes.UPDATE_USER_SUCCESS:
             state.loading = false;
             state.data = payload;
             state.err = null;
             return { ...state };
-        case actionTypes.UPDATE_FILM_FAILED:
+        case actionTypes.UPDATE_USER_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;
