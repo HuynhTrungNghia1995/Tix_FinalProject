@@ -7,10 +7,10 @@ import Schedule from "../../../components/Schedule";
 export default function Home(props) {
   return (
     <div>
-      {/* <Schedule /> */}
-      {/* <NavbarHome />
+      <Schedule />
+      <NavbarHome />
       <Application />
-      <Footer /> */}
+      <Footer />
     </div>
   );
 }
