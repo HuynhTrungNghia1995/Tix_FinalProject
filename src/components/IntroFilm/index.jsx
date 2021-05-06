@@ -4,114 +4,114 @@ import "./style.css";
 export default function IntroFilm() {
   return (
     <section id="intro-film" className="intro-film">
-      <div className="container box-ticket">
-        <div className="row border rounded py-4 order-ticker">
-          <div className="col-xl-4">
-            <div className="nav-item dropdown city-drop border-right">
+      <div class="container box-ticket">
+        <div class="row border rounded py-4 order-ticker">
+          <div class="col-xl-4">
+            <div class="nav-item dropdown city-drop border-right">
               <a
-                className="nav-link dropdown-toggle"
-                href="#slider"
+                class="nav-link dropdown-toggle"
+                href="#"
                 id="navbarDropdownMenuLink"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <span className="text-span1">Phim</span>
+                <span class="text-span1">Phim</span>
               </a>
               <div
-                className="dropdown-menu"
+                class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <a className="dropdown-item" href="#slider">
+                <a class="dropdown-item" href="#">
                   Hồ Chí Minh
                 </a>
-                <a className="dropdown-item" href="#slider">
+                <a class="dropdown-item" href="#">
                   Hà Nội
                 </a>
               </div>
             </div>
           </div>
-          <div className="col-xl-2 pl-0">
-            <div className="nav-item dropdown city-drop border-right">
+          <div class="col-xl-2 pl-0">
+            <div class="nav-item dropdown city-drop border-right">
               <a
-                className="nav-link dropdown-toggle text-decoration-none"
-                href="#slider"
+                class="nav-link dropdown-toggle text-decoration-none"
+                href="#"
                 id="navbarDropdownMenuLink"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <span className="text-span2">Rạp</span>
+                <span class="text-span2">Rạp</span>
               </a>
               <div
-                className="dropdown-menu"
+                class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <a className="dropdown-item" href="#slider">
+                <a class="dropdown-item" href="#">
                   Hồ Chí Minh
                 </a>
-                <a className="dropdown-item" href="#slider">
+                <a class="dropdown-item" href="#">
                   Hà Nội
                 </a>
               </div>
             </div>
           </div>
-          <div className="col-xl-2 pl-0">
-            <div className="nav-item dropdown city-drop border-right">
+          <div class="col-xl-2 pl-0">
+            <div class="nav-item dropdown city-drop border-right">
               <a
-                className="nav-link dropdown-toggle"
-                href="#slider"
+                class="nav-link dropdown-toggle"
+                href="#"
                 id="navbarDropdownMenuLink"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <span className="text-span">Ngày Xem</span>
+                <span class="text-span">Ngày Xem</span>
               </a>
               <div
-                className="dropdown-menu"
+                class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <a className="dropdown-item" href="#slider">
+                <a class="dropdown-item" href="#">
                   Hồ Chí Minh
                 </a>
-                <a className="dropdown-item" href="#slider">
+                <a class="dropdown-item" href="#">
                   Hà Nội
                 </a>
               </div>
             </div>
           </div>
-          <div className="col-xl-2 pl-0">
-            <div className="nav-item dropdown city-drop border-right">
+          <div class="col-xl-2 pl-0">
+            <div class="nav-item dropdown city-drop border-right">
               <a
-                className="nav-link dropdown-toggle"
-                href="#slider"
+                class="nav-link dropdown-toggle"
+                href="#"
                 id="navbarDropdownMenuLink"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <span className="text-span">Xuất Chiếu</span>
+                <span class="text-span">Xuất Chiếu</span>
               </a>
               <div
-                className="dropdown-menu"
+                class="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <a className="dropdown-item" href="#slider">
+                <a class="dropdown-item" href="#">
                   Hồ Chí Minh
                 </a>
-                <a className="dropdown-item" href="#slider">
+                <a class="dropdown-item" href="#">
                   Hà Nội
                 </a>
               </div>
             </div>
           </div>
-          <div className="col-xl-2">
-            <button type="button" className="btn px-3">
+          <div class="col-xl-2">
+            <button type="button" class="btn px-3">
               Mua Vé Ngay
             </button>
           </div>
