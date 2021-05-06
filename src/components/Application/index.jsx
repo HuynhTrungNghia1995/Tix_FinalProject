@@ -35,8 +35,8 @@ export default function Application() {
             </p>
             <button className="btn d-block">App miễn phí - Tải về ngay</button>
             <span className="d-block">
-              TIX có hai phiên bản <a href="#header">iOS</a> &amp;
-              <a href="#header">Android</a>
+              TIX có hai phiên bản <a href="#slider">iOS</a> &amp;
+              <a href="#slider">Android</a>
             </span>
           </div>
           <div className="col-lg-6 right p-0">

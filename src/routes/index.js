@@ -1,4 +1,4 @@
-import Home from "../containers/HomeTemPlate/Home";
+import Home from "../containers/HomeTemplate/Home";
 import Dashboard from "../containers/AdminTemplate/DashBoard";
 import Login from "../containers/AdminTemplate/Login";
 
