@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        border: "1px solid rgba(0,0,0,0.3)",
+        background: "transparent"
     },
     form: {
         width: '100%',
@@ -129,7 +130,7 @@ export default function Login(props) {
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <Avatar alt="Logo" src={logo} />
+                    <Avatar className="p-1 mt-1" alt="Logo" src={logo} />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Đăng Nhập
