@@ -152,7 +152,6 @@ export default function FilmManagement() {
     const classes = useStyles2();
     const dispatch = useDispatch();
     const filmList = useSelector(state => state.fetchFilmListReducer.data);
-    const err = useSelector(state => state.addFilmReducer.err);
     const [page, setPage] = useState(0);
     const [handleAddFilm, setHandleAddFilm] = useState(false);
     const [isEditFilm, setIsEditFilm] = useState(false);
@@ -180,9 +179,6 @@ export default function FilmManagement() {
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-    if (err) {
-        alert(err.response.data)
-    }
     const handleEmptyRow = () => {
         if (filmList) {
             const emptyRows = rowsPerPage - Math.min(rowsPerPage, filmList.length - page * rowsPerPage);
@@ -533,13 +529,11 @@ export default function FilmManagement() {
                 </Grid>
                 <Grid item md={4} xs={12}>
                     <FormControl variant="outlined">
-                        <InputLabel htmlFor="outlined-role-native-simple">Nhóm</InputLabel>
                         <Select
                             native
-                            label="Role"
                             defaultValue="GP01"
                             onChange={handleGroupFilm}
-                            name="newRoles"
+                            name="maNhom"
                         >
                             <option value={"GP01"}>GP01</option>
                             <option value={"GP02"}>GP02</option>

@@ -126,6 +126,7 @@ export const deleteFilm = (id) => {
                 dispatch(deleteFilmSuccess(res.data));
             })
             .catch((err) => {
+                alert(err.response.data);
                 dispatch(deleteFilmFailed(err));
             })
     }
