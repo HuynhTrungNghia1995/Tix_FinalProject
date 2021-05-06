@@ -5,6 +5,7 @@ import Footer from "../../../components/Footer";
 import IntroFilm from "../../../components/IntroFilm";
 import NavbarHome from "../../../components/NavbarHome";
 import "./style.css";
+import Schedule from "../../../components/Schedule";
 
 export default function Home(props) {
   const handleBackToTop = () => {
