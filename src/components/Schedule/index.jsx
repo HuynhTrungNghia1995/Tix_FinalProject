@@ -73,6 +73,7 @@ export default function Schedule() {
         </ul>
 
         <div className="tab-content" id="myTabContent2">
+          {/* Truyen agents.data[0],[1] */}
           <ListMovieAgents cumRap={item} />
         </div>
       </div>
