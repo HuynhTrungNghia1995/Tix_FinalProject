@@ -28,7 +28,6 @@ import { Button } from '@material-ui/core';
 import UserManagement from '../UserManagement';
 import ShowTimesManagement from '../ShowTimesManagement';
 
-
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
