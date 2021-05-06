@@ -1,22 +1,22 @@
 import * as actionTypes from "./constants"
-const filmList = {
+const fetchShowtime = {
     loading: false,
     data: null,
     err: null
 }
-export const fetchFilmListReducer = (state = filmList, { payload, type, ...action }) => {
+export const fetchShowtimeReducer = (state = fetchShowtime, { payload, type, ...action }) => {
     switch (type) {
-        case actionTypes.FETCH_FILM_LIST_REQUEST:
+        case actionTypes.FETCH_FILM_SHOWTIME_REQUEST:
             state.loading = true;
             state.data = null;
             state.err = null;
             return { ...state };
-        case actionTypes.FETCH_FILM_LIST_SUCCESS:
+        case actionTypes.FETCH_FILM_SHOWTIME_SUCCESS:
             state.loading = false;
             state.data = payload;
             state.err = null;
             return { ...state };
-        case actionTypes.FETCH_FILM_LIST_FAILED:
+        case actionTypes.FETCH_FILM_SHOWTIME_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;
@@ -25,55 +25,50 @@ export const fetchFilmListReducer = (state = filmList, { payload, type, ...actio
     }
 }
 
-const addFilm = {
+const fetchCinema = {
     loading: false,
     data: null,
     err: null
 }
-export const addFilmReducer = (state = addFilm, { payload, type, ...action }) => {
+export const fetchCinemaReducer = (state = fetchCinema, { payload, type, ...action }) => {
     switch (type) {
-        case actionTypes.ADD_FILM_REQUEST:
+        case actionTypes.FETCH_CINEMA_REQUEST:
             state.loading = true;
             state.data = null;
             state.err = null;
             return { ...state };
-        case actionTypes.ADD_FILM_SUCCESS:
+        case actionTypes.FETCH_CINEMA_SUCCESS:
             state.loading = false;
             state.data = payload;
             state.err = null;
             return { ...state };
-        case actionTypes.ADD_FILM_FAILED:
+        case actionTypes.FETCH_CINEMA_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;
-            return { ...state };
-        case actionTypes.ADD_FILM_RESET:
-            state.loading = false;
-            state.data = null;
-            state.err = null;
             return { ...state };
         default: return { ...state };
     }
 }
 
-const deleteFilm = {
+const fetchCinemaSystem = {
     loading: false,
     data: null,
     err: null
 }
-export const deleteFilmReducer = (state = deleteFilm, { payload, type, ...action }) => {
+export const fetchCinemaSystemReducer = (state = fetchCinemaSystem, { payload, type, ...action }) => {
     switch (type) {
-        case actionTypes.DELETE_FILM_REQUEST:
+        case actionTypes.FETCH_CINEMA_SYSTEM_REQUEST:
             state.loading = true;
             state.data = null;
             state.err = null;
             return { ...state };
-        case actionTypes.DELETE_FILM_SUCCESS:
+        case actionTypes.FETCH_CINEMA_SYSTEM_SUCCESS:
             state.loading = false;
             state.data = payload;
             state.err = null;
             return { ...state };
-        case actionTypes.DELETE_FILM_FAILED:
+        case actionTypes.FETCH_CINEMA_SYSTEM_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;
@@ -83,24 +78,24 @@ export const deleteFilmReducer = (state = deleteFilm, { payload, type, ...action
 }
 
 
-const updateFilm = {
+const addShowTime = {
     loading: false,
     data: null,
     err: null
 }
-export const updateFilmReducer = (state = updateFilm, { payload, type, ...action }) => {
+export const addShowTimeReducer = (state = addShowTime, { payload, type, ...action }) => {
     switch (type) {
-        case actionTypes.UPDATE_FILM_REQUEST:
+        case actionTypes.ADD_SHOWTIME_REQUEST:
             state.loading = true;
             state.data = null;
             state.err = null;
             return { ...state };
-        case actionTypes.UPDATE_FILM_SUCCESS:
+        case actionTypes.ADD_SHOWTIME_SUCCESS:
             state.loading = false;
             state.data = payload;
             state.err = null;
             return { ...state };
-        case actionTypes.UPDATE_FILM_FAILED:
+        case actionTypes.ADD_SHOWTIME_FAILED:
             state.loading = false;
             state.data = null;
             state.err = payload;

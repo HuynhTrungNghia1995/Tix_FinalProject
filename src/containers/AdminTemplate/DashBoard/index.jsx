@@ -25,6 +25,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
 import UserManagement from '../UserManagement';
+import ShowTimesManagement from '../ShowTimesManagement';
 
 function Copyright() {
     return (
@@ -137,6 +138,9 @@ export default function Dashboard() {
     const handleRenderComponent = () => {
         if (switchComponent === 1) {
             return <FilmManagement />
+        }
+        if (switchComponent === 2) {
+            return <ShowTimesManagement />
         }
         if (switchComponent === 3) {
             return <UserManagement />

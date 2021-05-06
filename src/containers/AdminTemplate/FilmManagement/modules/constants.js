@@ -5,6 +5,8 @@ export const FETCH_FILM_LIST_FAILED = "filmReducer/FETCH_FILM_LIST_FAILED";
 export const ADD_FILM_REQUEST = "filmReducer/ADD_FILM_REQUEST";
 export const ADD_FILM_SUCCESS = "filmReducer/ADD_FILM_SUCCESS";
 export const ADD_FILM_FAILED = "filmReducer/ADD_FILM_FAILED";
+export const ADD_FILM_RESET = "filmReducer/ADD_FILM_RESET";
+
 
 export const DELETE_FILM_REQUEST = "filmReducer/DELETE_FILM_REQUEST";
 export const DELETE_FILM_SUCCESS = "filmReducer/DELETE_FILM_SUCCESS";

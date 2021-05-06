@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import authReducer from "../../containers/AdminTemplate/Login/modules/reducer"
 import { fetchFilmListReducer, addFilmReducer, deleteFilmReducer, updateFilmReducer } from "../../containers/AdminTemplate/FilmManagement/modules/reducer";
 import { fetchUserListReducer, addUserReducer, deleteUserReducer, updateUserReducer } from "../../containers/AdminTemplate/UserManagement/modules/reducer";
+import { fetchShowtimeReducer, fetchCinemaSystemReducer, fetchCinemaReducer, addShowTimeReducer } from "../../containers/AdminTemplate/ShowTimesManagement/modules/reducer";
 const store = combineReducers({
     authReducer,
     fetchFilmListReducer,
@@ -12,6 +13,10 @@ const store = combineReducers({
     addUserReducer,
     deleteUserReducer,
     updateUserReducer,
+    fetchShowtimeReducer,
+    fetchCinemaSystemReducer,
+    fetchCinemaReducer,
+    addShowTimeReducer
 });
 
 export default store;
