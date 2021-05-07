@@ -16,6 +16,7 @@ export default function Home(props) {
       <NavbarHome />
       <Carousel />
       <IntroFilm />
+      <Schedule />
       <Application />
       <Footer />
       <span onClick={handleBackToTop} id="backtotop" className="backtotop">
