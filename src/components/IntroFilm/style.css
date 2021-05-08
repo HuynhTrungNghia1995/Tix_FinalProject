@@ -6,6 +6,7 @@
 }
 
 .intro-film .container .row a {
+  text-decoration: none;
   color: #000;
 }
 
@@ -247,14 +248,18 @@
   .container
   .item
   .hidden-content
-  img {
+  .play-trailer {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -80%);
+  z-index: 10;
+  background-color: transparent;
+  border: none;
+}
+.play-trailer img {
   width: 4rem;
   height: 4rem;
-  z-index: 10;
 }
 
 .intro-film

@@ -10,12 +10,11 @@ export default function Schedule() {
     dispatch(fetchSystemCinemaAgents());
   }, []);
   const state = useSelector((rootState) => rootState.systemCinemaReducer);
-  console.log(state);
   const renderLogos = () => {
     return state.system.data?.map((item, index) => (
       <li key={index} className="nav-item">
         <a
-          className={index == 0 ? "nav-link active" : "nav-link"}
+          className={index === 0 ? "nav-link active" : "nav-link"}
           data-toggle="tab"
           href={"#" + `${item.maHeThongRap}`}
           role="tab"

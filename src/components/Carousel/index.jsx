@@ -4,16 +4,9 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import "./style.css";
+import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 
 export default function Carousel() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchFilmList("GP01"));
-  // }, []);
-
-  // const state = useSelector((state) => state.fetchFilmListReducer);
-  // const sliders = state.data?.slice(0, 3);
-  // console.log(sliders);
   const useStyles = makeStyles((theme) => ({
     modal: {
       display: "flex",
@@ -21,9 +14,7 @@ export default function Carousel() {
       justifyContent: "center",
     },
     paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: "2px solid #000",
-      boxShadow: theme.shadows[5],
+      backgroundColor: "transparent",
       padding: theme.spacing(2, 4, 3),
     },
   }));
@@ -32,11 +23,14 @@ export default function Carousel() {
   const [open, setOpen] = React.useState(false);
 
   const [trailer, setTrailer] = useState();
+  const [id, setId] = useState();
   const handleOpen = (id) => {
     setOpen(true);
     let index = sliders.findIndex((slider) => slider.maPhim === id);
     if (index !== -1) {
+      setId(id);
       setTrailer(sliders[index].trailer);
+      console.log("carousel_trailer", trailer);
     }
   };
 
@@ -82,7 +76,7 @@ export default function Carousel() {
               aria-labelledby="transition-modal-title"
               aria-describedby="transition-modal-description"
               className={classes.modal}
-              open={open}
+              open={slider.maPhim === id ? open : false}
               onClose={handleClose}
               closeAfterTransition
               BackdropComponent={Backdrop}
@@ -90,16 +84,28 @@ export default function Carousel() {
                 timeout: 500,
               }}
             >
-              <Fade in={open}>
-                <iframe
-                  width="1120"
-                  height="630"
-                  src={trailer}
-                  title="YouTube video player"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+              <Fade in={slider.maPhim === id ? open : false}>
+                <div className={classes.paper}>
+                  <button type="button" className="close" onClick={handleClose}>
+                    <HighlightOffOutlinedIcon
+                      style={{
+                        color: "white",
+                        fontSize: 50,
+                        marginTop: -30,
+                        marginLeft: -25,
+                      }}
+                    />
+                  </button>
+                  <iframe
+                    width="1120"
+                    height="630"
+                    src={trailer}
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
               </Fade>
             </Modal>
           </div>
