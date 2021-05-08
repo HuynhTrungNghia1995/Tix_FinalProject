@@ -12,6 +12,35 @@ export default function Application() {
     draggable: true,
   };
 
+  const items = [
+    "./images/slide1.jpg",
+    "./images/slide2.jpg",
+    "./images/slide3.jpg",
+    "./images/slide4.jpg",
+    "./images/slide5.jpg",
+    "./images/slide6.jpg",
+    "./images/slide7.jpg",
+    "./images/slide8.jpg",
+    "./images/slide9.jpg",
+    "./images/slide10.jpg",
+    "./images/slide11.jpg",
+    "./images/slide12.jpg",
+    "./images/slide13.jpg",
+    "./images/slide14.jpg",
+    "./images/slide15.jpg",
+    "./images/slide16.jpg",
+  ];
+
+  const renderItems = () => {
+    return items.map((item, index) => {
+      return (
+        <div key={index} className="item">
+          <img src={item} alt="slide" />
+        </div>
+      );
+    });
+  };
+
   return (
     <section
       id="application"
@@ -47,54 +76,7 @@ export default function Application() {
                 alt="mobile"
               />
               <Slider {...settings} className="slick__slider">
-                <div className="item">
-                  <img src="./images/slide1.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide2.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide3.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide4.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide5.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide6.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide7.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide8.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide9.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide10.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide11.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide12.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide13.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide14.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide15.jpg" alt="slide" />
-                </div>
-                <div className="item">
-                  <img src="./images/slide16.jpg" alt="slide" />
-                </div>
+                {renderItems()}
               </Slider>
             </div>
           </div>

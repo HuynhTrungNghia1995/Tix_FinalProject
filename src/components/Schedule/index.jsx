@@ -44,7 +44,7 @@ export default function Schedule() {
             role="tab"
             aria-selected="true"
           >
-            <img src="images/bhd-star-bitexco-15379552241200.jpg" />
+            <img src="images/bhd-star-bitexco-15379552241200.jpg" alt="" />
             <div className="content">
               <h1>
                 <span className="name">{subName[0]}</span> - {subName[1]}{" "}
@@ -73,7 +73,6 @@ export default function Schedule() {
         </ul>
 
         <div className="tab-content" id="myTabContent2">
-          {/* Truyen agents.data[0],[1] */}
           <ListMovieAgents cumRap={item} />
         </div>
       </div>
@@ -81,7 +80,7 @@ export default function Schedule() {
   };
 
   return (
-    <section className="schedule">
+    <section id="schedule" className="schedule">
       <div
         className="container div-background"
         style={{
