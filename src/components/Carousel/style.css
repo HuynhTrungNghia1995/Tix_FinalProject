@@ -9,6 +9,10 @@
 .slider .carousel-indicators li {
   background-color: white;
   opacity: 1;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 
 .slider .carousel-indicators .active {
@@ -32,25 +36,30 @@
 }
 
 .slider .carousel-inner img {
+  max-width: auto;
   height: 600px;
 }
 
-.slider .carousel-inner .fa-play {
+.slider .carousel-inner .play-trailer {
   visibility: hidden;
-  width: 4.5rem;
-  height: 4.5rem;
-  border: 3px solid white;
-  border-radius: 50%;
-  z-index: 10;
-  padding-top: 1.3rem;
-  padding-left: 0.4rem;
-  font-size: 1.6rem;
+  /* z-index: 10; */
   position: absolute;
   left: 50%;
   bottom: initial;
   top: -600%;
   transform: translate(-50%, -50%);
+}
+
+.slider .carousel-inner .fa-play {
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 3px solid white;
+  border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  padding-top: 1.3rem;
+  padding-left: 0.4rem;
+  font-size: 1.6rem;
 }
 
 .slider .carousel-inner .fa-play:hover {

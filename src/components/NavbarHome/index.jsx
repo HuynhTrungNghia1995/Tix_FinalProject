@@ -33,7 +33,7 @@ export default function NavbarHome() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#header">
+              <a className="nav-link" href="#schedule">
                 Cụm rạp
               </a>
             </li>
