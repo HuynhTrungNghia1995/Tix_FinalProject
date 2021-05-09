@@ -28,12 +28,12 @@ export default function NavbarHome() {
         >
           <ul className="navbar-nav item-left col-md-7">
             <li className="nav-item">
-              <a className="nav-link" href="#header">
+              <a className="nav-link" href="#intro-film">
                 Lịch Chiếu
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#header">
+              <a className="nav-link" href="#schedule">
                 Cụm rạp
               </a>
             </li>
