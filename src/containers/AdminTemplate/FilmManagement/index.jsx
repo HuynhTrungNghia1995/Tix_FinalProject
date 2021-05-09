@@ -18,11 +18,12 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import { FormControl, Grid, InputLabel, Select, TableHead, TextField } from '@material-ui/core';
+import { Button, FormControl, Grid, Select, TableHead, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { addFilm, fetchFilmList, deleteFilm, updateFilm } from "./modules/action";
+import { addFilm, fetchFilmList, deleteFilm, updateFilm, setFilmReset } from "./modules/action";
+import { Alert } from '@material-ui/lab';
 const useStyles1 = makeStyles((theme) => ({
     root: {
         flexShrink: 0,
@@ -145,13 +146,19 @@ const useStyles2 = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
         width: 200,
     },
-
+    input: {
+        display: 'none',
+    },
 }));
 
 export default function FilmManagement() {
     const classes = useStyles2();
     const dispatch = useDispatch();
     const filmList = useSelector(state => state.fetchFilmListReducer.data);
+    const addFilmErr = useSelector(state => state.addFilmReducer.err);
+    const deleteFilmErr = useSelector(state => state.deleteFilmReducer.err);
+    const updateFilmErr = useSelector(state => state.updateFilmReducer.err);
+    const addImageErr = useSelector(state => state.addImageReducer.err);
     const [page, setPage] = useState(0);
     const [handleAddFilm, setHandleAddFilm] = useState(false);
     const [isEditFilm, setIsEditFilm] = useState(false);
@@ -159,6 +166,7 @@ export default function FilmManagement() {
     const [render, setRender] = useState(false);
     const [searchFilmName, setSearchFilmName] = useState("");
     const [filmGroup, setFilmGroup] = useState("GP01");
+    const [isDisableAddFilm, setIsDisableAddFilm] = useState(true);
     const [filmItem, setFilmItem] = useState({
         maPhim: 0,
         tenPhim: "",
@@ -176,6 +184,7 @@ export default function FilmManagement() {
         dispatch(fetchFilmList(filmGroup));
         // eslint-disable-next-line
     }, [render]);
+
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -190,6 +199,28 @@ export default function FilmManagement() {
         }
 
     }
+    const resetErrNotice = () => {
+        dispatch(setFilmReset());
+    }
+
+    const renderErrNotice = () => {
+        if (addFilmErr) {
+            setTimeout(resetErrNotice, 2000);
+            return <Alert severity="error">{addFilmErr?.response?.data}</Alert>
+        }
+        if (deleteFilmErr) {
+            setTimeout(resetErrNotice, 2000);
+            return <Alert severity="error">{deleteFilmErr?.response?.data}</Alert>
+        }
+        if (updateFilmErr) {
+            setTimeout(resetErrNotice, 2000);
+            return <Alert severity="error">{updateFilmErr?.response?.data}</Alert>
+        }
+        if (addImageErr) {
+            setTimeout(resetErrNotice, 2000);
+            return <Alert severity="error">{addImageErr?.response?.data}</Alert>
+        }
+    }
     const handleFile = (e) => {
         const name = e.target.name;
         const value = e.target.files[0].name;
@@ -202,6 +233,7 @@ export default function FilmManagement() {
             ...fileImage,
             [name]: object
         })
+        setIsDisableAddFilm(false);
     }
     const handleUpdateFile = (e) => {
         const name = e.target.name;
@@ -260,13 +292,11 @@ export default function FilmManagement() {
     }
     const handleSubmitAddFilm = (e) => {
         e.preventDefault();
-        dispatch(addFilm(filmItem, fileImage));
+        dispatch(addFilm(filmItem, fileImage, filmGroup));
         handlePopupAddFilm();
-        setRender(!render);
     }
     const handleDeleteFilm = (id) => {
-        dispatch(deleteFilm(id));
-        setRender(!render);
+        dispatch(deleteFilm(id, filmGroup));
     }
     const renderAddFilm = () => {
         if (handleAddFilm) {
@@ -275,7 +305,7 @@ export default function FilmManagement() {
                     <TableCell>
                         <Grid container justify="space-between">
                             <Grid item>
-                                <IconButton color="primary" onClick={handleSubmitAddFilm} >
+                                <IconButton disabled={isDisableAddFilm} color="primary" onClick={handleSubmitAddFilm} >
                                     <CheckIcon />
                                 </IconButton>
                             </Grid>
@@ -295,7 +325,20 @@ export default function FilmManagement() {
                         <TextField className="mt-1" onChange={handleOnChangeAddFilm} fullWidth multiline variant="outlined" label="Trailer" name="trailer" type="name" />
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth type="file" name="hinhAnh" onChange={handleFile} />
+                        <input
+                            accept="image/*"
+                            className={classes.input}
+                            id="contained-button-file"
+                            multiple
+                            type="file"
+                            name="hinhAnh"
+                            onChange={handleFile}
+                        />
+                        <label htmlFor="contained-button-file">
+                            <Button variant="contained" color="primary" component="span">
+                                Upload
+                            </Button>
+                        </label>
                     </TableCell>
                     <TableCell>
                         <TextField
@@ -338,9 +381,8 @@ export default function FilmManagement() {
     }
     const handleSubmitEditFilm = (e) => {
         e.preventDefault();
-        dispatch(updateFilm(editFilmItem, fileImage));
+        dispatch(updateFilm(editFilmItem, fileImage, filmGroup));
         handlePopupEditFilm();
-        setRender(!render);
     }
     const renderEditFilm = () => {
         if (isEditFilm) {
@@ -369,7 +411,19 @@ export default function FilmManagement() {
                         <TextField className="mt-1" defaultValue={editFilmItem.trailer} onChange={handleOnChangeUpdateFilm} fullWidth multiline variant="outlined" label="Trailer" name="trailer" type="name" />
                     </TableCell>
                     <TableCell>
-                        <TextField fullWidth type="file" name="hinhAnh" onChange={handleUpdateFile} />
+                        <input
+                            accept="image/*"
+                            className={classes.input}
+                            id="contained-button-file"
+                            multiple
+                            type="file"
+                            name="hinhAnh" onChange={handleUpdateFile}
+                        />
+                        <label htmlFor="contained-button-file">
+                            <Button variant="contained" color="primary" component="span">
+                                Upload
+                            </Button>
+                        </label>
                     </TableCell>
                     <TableCell>
                         <TextField
@@ -440,10 +494,10 @@ export default function FilmManagement() {
                                     </Grid>
                                 </Grid>
                             </TableCell>
-                            <TableCell style={{ width: 120 }} align="center">
+                            <TableCell style={{ width: 160 }} align="center">
                                 {item.tenPhim}
                             </TableCell>
-                            <TableCell style={{ width: 140 }} align="center">
+                            <TableCell style={{ width: 160 }} align="center">
                                 <a href={item.trailer}>Trailer</a>
                             </TableCell>
                             <TableCell style={{ width: 210 }} align="center">
@@ -489,10 +543,10 @@ export default function FilmManagement() {
                                 </Grid>
                             </Grid>
                         </TableCell>
-                        <TableCell style={{ width: 120 }} align="center">
+                        <TableCell style={{ width: 160 }} align="center">
                             {row.tenPhim}
                         </TableCell>
-                        <TableCell style={{ width: 140 }} align="center">
+                        <TableCell style={{ width: 160 }} align="center">
                             <a href={row.trailer}>Trailer</a>
                         </TableCell>
                         <TableCell style={{ width: 210 }} align="center">
@@ -504,7 +558,7 @@ export default function FilmManagement() {
                         <TableCell style={{ width: 160 }} align="center">
                             {row.ngayKhoiChieu}
                         </TableCell>
-                        <TableCell style={{ width: 180 }} align="center">
+                        <TableCell style={{ width: 200 }} align="center">
                             {row.danhGia}
                         </TableCell>
                     </TableRow>
@@ -551,9 +605,11 @@ export default function FilmManagement() {
                         <PlaylistAddIcon className={classes.addBtn} />
                     </IconButton>
                 </Grid>
+                <Grid item>
+                    {renderErrNotice()}
+                </Grid>
             </Grid>
             <TableContainer component={Paper}>
-
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>
                         <TableRow>

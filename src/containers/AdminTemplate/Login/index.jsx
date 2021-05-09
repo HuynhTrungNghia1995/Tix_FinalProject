@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             background: '#fff',
             color: "#82ada9",
+            border: "solid 1px #82ada9",
         }
     },
     root: {
@@ -172,7 +173,7 @@ export default function Login(props) {
                 </form>
                 <Grid container>
                     <Grid item>
-                        <NavLink to={`/signup`} variant="body2" style={{ color: "#82ada9" }}>
+                        <NavLink to={`/register`} variant="body2" style={{ color: "#82ada9" }}>
                             {"Bạn chưa có tài khoản? Đăng kí ngay"}
                         </NavLink>
                     </Grid>
