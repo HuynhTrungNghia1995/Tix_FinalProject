@@ -37,7 +37,7 @@ export const fetchFilmListFailed = (err) => {
 }
 
 
-export const addFilm = (film, file) => {
+export const addFilm = (film, file, filmGroup) => {
     const formData = new FormData()
     formData.append('File', file.hinhAnh, file.hinhAnh.name)
     formData.append('tenPhim', film.tenPhim)
@@ -69,11 +69,16 @@ export const addFilm = (film, file) => {
                     }
                 })
                     .then((res) => {
-                        console.log(res);
+                        dispatch(fetchFilmList(filmGroup));
+                        dispatch(addImageSuccess(res.data))
                     })
                     .catch((err) => {
-                        console.log(err);
+                        if (err) {
+                            alert(err.response.data);
+                        }
+                        dispatch(addImageFailed(err));
                     })
+                dispatch(fetchFilmList(filmGroup));
                 dispatch(addFilmSuccess(res.data));
             })
             .catch((err) => {
@@ -102,9 +107,29 @@ export const addFilmFailed = (err) => {
 
 }
 
+export const addImageRequest = () => {
+    return {
+        type: actionTypes.ADD_IMAGE_REQUEST
+    }
+
+}
+export const addImageSuccess = (data) => {
+    return {
+        type: actionTypes.ADD_IMAGE_SUCCESS,
+        payload: data
+    }
+
+}
+export const addImageFailed = (err) => {
+    return {
+        type: actionTypes.ADD_IMAGE_FAILED,
+        payload: err
+    }
+
+}
 
 
-export const deleteFilm = (id) => {
+export const deleteFilm = (id, filmGroup) => {
     let accessToken = "";
 
     if (localStorage.getItem("User")) {
@@ -122,11 +147,10 @@ export const deleteFilm = (id) => {
             }
         })
             .then((res) => {
-                alert(res.data);
+                dispatch(fetchFilmList(filmGroup))
                 dispatch(deleteFilmSuccess(res.data));
             })
             .catch((err) => {
-                alert(err.response.data);
                 dispatch(deleteFilmFailed(err));
             })
     }
@@ -153,7 +177,7 @@ export const deleteFilmFailed = (err) => {
 }
 
 
-export const updateFilm = (film, file) => {
+export const updateFilm = (film, file, filmGroup) => {
 
     let accessToken = "";
 
@@ -187,12 +211,14 @@ export const updateFilm = (film, file) => {
                         }
                     })
                         .then((res) => {
-                            console.log(res);
+                            dispatch(fetchFilmList(filmGroup));
+                            dispatch(addImageSuccess(res.data))
                         })
                         .catch((err) => {
-                            console.log(err);
+                            dispatch(addImageFailed(err));
                         })
                 }
+                dispatch(fetchFilmList(filmGroup));
                 dispatch(updateFilmSuccess(res.data));
             })
             .catch((err) => {
@@ -219,5 +245,22 @@ export const updateFilmFailed = (err) => {
         payload: err
     }
 
+}
+
+export const setFilmReset = () => {
+    return (dispatch) => {
+        dispatch({
+            type: actionTypes.ADD_FILM_RESET
+        });
+        dispatch({
+            type: actionTypes.ADD_IMAGE_RESET
+        })
+        dispatch({
+            type: actionTypes.UPDATE_FILM_RESET
+        });
+        dispatch({
+            type: actionTypes.DELETE_FILM_RESET
+        });
+    }
 }
 
