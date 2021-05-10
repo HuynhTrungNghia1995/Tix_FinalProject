@@ -55,7 +55,6 @@ export default function ShowTimesManagement() {
     const [filmGroup, setFilmGroup] = useState("GP01");
     const [filmId, setFilmId] = useState("");
     const filmList = useSelector(state => state.fetchFilmListReducer.data);
-    const err = useSelector(state => state.addShowTimeReducer.err);
     const [cinemaSystemItem, setCinemaSystemItem] = useState("");
     const [cinemaItem, setCinemaItem] = useState("");
     const [cinemaRoom, setCinemaRoom] = useState("");
@@ -89,12 +88,12 @@ export default function ShowTimesManagement() {
         setCinemaSystemItem("");
         setCinemaItem("");
         setCinemaRoom("");
-        setDisableCinemaSystem(false);
-        setDisableCinemaItem(false);
-        setDisableCinemaRoom(false);
-        setDisableDateTime(false);
-        setDisablePrice(false);
-        setDisableSubmit(false);
+        setDisableCinemaSystem(true);
+        setDisableCinemaItem(true);
+        setDisableCinemaRoom(true);
+        setDisableDateTime(true);
+        setDisablePrice(true);
+        setDisableSubmit(true);
     }
     const handleGroupFilm = (e) => {
         const value = e.target.value;
@@ -191,7 +190,7 @@ export default function ShowTimesManagement() {
     }
     const handleAddShowTime = (e) => {
         e.preventDefault();
-        dispatch(addShowTime(showTimeItem));
+        dispatch(addShowTime(showTimeItem, filmId));
         handleAfterEvent();
         setRender(!render);
     }
