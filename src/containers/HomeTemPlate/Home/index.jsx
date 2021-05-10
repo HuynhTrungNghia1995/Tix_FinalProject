@@ -6,6 +6,7 @@ import IntroFilm from "../../../components/IntroFilm";
 import NavbarHome from "../../../components/NavbarHome";
 import "./style.css";
 import Schedule from "../../../components/Schedule";
+import News from "../../../components/News";
 
 export default function Home(props) {
   const handleBackToTop = () => {
@@ -17,6 +18,7 @@ export default function Home(props) {
       <Carousel />
       <IntroFilm />
       <Schedule />
+      <News />
       <Application />
       <Footer />
       <span onClick={handleBackToTop} id="backtotop" className="backtotop">
