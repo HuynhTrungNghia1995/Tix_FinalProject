@@ -7,6 +7,7 @@ import NavbarHome from "../../../components/NavbarHome";
 import "./style.css";
 import Schedule from "../../../components/Schedule";
 import ScrollTopArrow from "../../../components/ScrollTopArrow";
+import News from "../../../components/News";
 
 export default function Home(props) {
   return (
@@ -15,6 +16,7 @@ export default function Home(props) {
       <Carousel />
       <IntroFilm />
       <Schedule />
+      <News />
       <Application />
       <Footer />
       <ScrollTopArrow />
