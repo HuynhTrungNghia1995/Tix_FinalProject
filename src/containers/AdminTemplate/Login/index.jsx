@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogin, resetAuth } from './modules/action';
 import { NavLink } from 'react-router-dom';
 import { LinearProgress } from '@material-ui/core';
+import Loading from '../../HomeTemplate/Loading';
 
 function Copyright() {
     return (
@@ -123,7 +124,7 @@ export default function Login(props) {
     }
     if (loading) return (
         <div className={classes.root}>
-            <LinearProgress />
+            <Loading />
         </div>
     );
     return (
@@ -145,7 +146,6 @@ export default function Login(props) {
                         fullWidth
                         label="Tài Khoản"
                         name="taiKhoan"
-                        autoFocus
                         onChange={handleChange}
                         onBlur={handleValidation}
                     />

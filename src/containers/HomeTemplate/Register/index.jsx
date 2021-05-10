@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,13 +11,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from './modules/action';
+import { registerUser, setResetRegister } from './modules/action';
+import { Alert } from '@material-ui/lab';
+import Loading from '../Loading';
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
+            <Link color="inherit" href="https://cybersoft.edu.vn/">
                 CyberSoft
       </Link>{' '}
             {new Date().getFullYear()}
@@ -64,18 +66,37 @@ const useStyles = makeStyles((theme) => ({
 export default function Register() {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const registerErr = useSelector(state => state.registerUserReducer.err);
     const registerSuccess = useSelector(state => state.registerUserReducer.data);
+    const registerLoading = useSelector(state => state.registerUserReducer.loading)
     const logo = process.env.PUBLIC_URL + "images/logo.png";
-    const [isValid, setIsValid] = useState(false);
+    const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
+    const [isDisable, setIsDisable] = useState(true);
+    const [validEmail, setValidEmail] = useState(false);
+    const [validPhone, setValidPhone] = useState(false);
+    const [emptyUsernameNotice, setEmptyUsernameNotice] = useState(false);
+    const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
+    const [isEmailFormatNotice, setIsEmailFormatNotice] = useState(false);
+    const [emptyFullNameNotice, setEmptyFullNameNotice] = useState(false);
     const [registerUserItem, setRegisterUserItem] = useState({
-        hoTen: '',
-        taiKhoan: '',
-        email: '',
-        matKhai: '',
+        hoTen: "",
+        taiKhoan: "",
+        email: "",
+        matKhau: "",
         maNhom: "GP01",
         maLoaiNguoiDung: "KhachHang",
-        soDt: ''
+        soDt: ""
     })
+    const handleDisableNotice = () => {
+        setEmptyUsernameNotice(false);
+        setIsValidPhoneNumber(false);
+        setEmptyPasswordNotice(false);
+        setIsEmailFormatNotice(false);
+        setEmptyFullNameNotice(false);
+    }
+    const handleResetReducer = () => {
+        dispatch(setResetRegister());
+    }
     const handleChangeRegister = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -83,10 +104,101 @@ export default function Register() {
             ...registerUserItem,
             [name]: value
         })
+        if (registerUserItem.taiKhoan !== "") {
+            setEmptyUsernameNotice(false);
+        }
+        if (registerUserItem.matKhau !== "") {
+            setEmptyPasswordNotice(false);
+        }
+        if (registerUserItem.hoTen !== "") {
+            setEmptyFullNameNotice(false);
+        }
+        if (registerUserItem.taiKhoan !== "" && registerUserItem.matKhau !== "" && registerUserItem.hoTen !== "" && validEmail === true && validPhone === true) {
+            setIsDisable(false);
+        }
+    }
+    const validationPhoneNumber = () => {
+        let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+        if (vnf_regex.test(registerUserItem.soDt)) {
+            setIsValidPhoneNumber(false);
+            setValidPhone(true);
+
+        } else {
+            setIsValidPhoneNumber(true);
+            setValidPhone(false);
+            setIsDisable(true);
+        }
+    }
+    if (registerErr) {
+        setTimeout(handleResetReducer, 2000)
+    }
+    const handleValidationEmptyUserName = () => {
+        if (registerUserItem.taiKhoan === "") {
+            setEmptyUsernameNotice(true)
+        }
+    }
+    const handleValidationEmptyPassword = () => {
+        if (registerUserItem.matKhau === "") {
+            setEmptyPasswordNotice(true)
+        }
+    }
+    const handleValidationEmptyFullName = () => {
+        if (registerUserItem.hoTen === "") {
+            setEmptyFullNameNotice(true);
+        }
+    }
+    const handleValidationEmail = () => {
+        const mailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (registerUserItem.email.match(mailFormat)) {
+            setIsEmailFormatNotice(false);
+            setValidEmail(true);
+        }
+        else {
+            setIsEmailFormatNotice(true);
+            setValidEmail(false);
+            setIsDisable(true);
+        }
+    }
+    useEffect(() => {
+        if (registerUserItem.taiKhoan !== "" && registerUserItem.matKhau !== "" && registerUserItem.hoTen !== "" && validEmail === true && validPhone === true) {
+            setIsDisable(false);
+        }
+    }, [validPhone])
+    useEffect(() => {
+        if (registerUserItem.taiKhoan !== "" && registerUserItem.matKhau !== "" && registerUserItem.hoTen !== "" && validEmail === true && validPhone === true) {
+            setIsDisable(false);
+        }
+    }, [validEmail])
+    const handleValidationNotice = () => {
+        if (emptyFullNameNotice) {
+            setTimeout(handleDisableNotice, 1500);
+            return <Alert severity="error">Tên đầy đủ không được để trống</Alert>
+        }
+        if (isValidPhoneNumber) {
+            setTimeout(handleDisableNotice, 1500);
+            return <Alert severity="error">Số điện thoại không đúng</Alert>
+        }
+        if (emptyUsernameNotice) {
+            setTimeout(handleDisableNotice, 1500);
+            return <Alert severity="error">Tài khoản không được để trống</Alert>
+        }
+        if (emptyPasswordNotice) {
+            setTimeout(handleDisableNotice, 1500);
+            return <Alert severity="error">Mật Khẩu không được để trống</Alert>
+        }
+        if (isEmailFormatNotice) {
+            setTimeout(handleDisableNotice, 1500);
+            return <Alert severity="error">Không đúng định dạng email</Alert>
+        }
     }
     const handleRegisterUser = (e) => {
         e.preventDefault();
         dispatch(registerUser(registerUserItem));
+    }
+    if (registerLoading) {
+        return (<div className={classes.root}>
+            <Loading />
+        </div>)
     }
     return (
         <div className={classes.bgRoot}>
@@ -99,6 +211,8 @@ export default function Register() {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
+                    {registerErr ? <Alert severity="error">{registerErr?.response.data}</Alert> : ""}
+                    {handleValidationNotice()}
                     <form className={classes.form} onSubmit={handleRegisterUser} noValidate>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
@@ -108,6 +222,7 @@ export default function Register() {
                                     fullWidth
                                     label="Tên Đầy Đủ"
                                     onChange={handleChangeRegister}
+                                    onBlur={handleValidationEmptyFullName}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -117,6 +232,7 @@ export default function Register() {
                                     fullWidth
                                     label="Tài Khoản"
                                     onChange={handleChangeRegister}
+                                    onBlur={handleValidationEmptyUserName}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -126,6 +242,7 @@ export default function Register() {
                                     fullWidth
                                     label="Email"
                                     onChange={handleChangeRegister}
+                                    onBlur={handleValidationEmail}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -136,6 +253,7 @@ export default function Register() {
                                     label="Mật Khẩu"
                                     type="password"
                                     onChange={handleChangeRegister}
+                                    onBlur={handleValidationEmptyPassword}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -145,6 +263,7 @@ export default function Register() {
                                     fullWidth
                                     label="Số Điện Thoại"
                                     onChange={handleChangeRegister}
+                                    onBlur={validationPhoneNumber}
                                 />
                             </Grid>
                         </Grid>
@@ -154,10 +273,10 @@ export default function Register() {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
-                            disabled={isValid}
+                            disabled={isDisable}
                         >
                             Sign Up
-          </Button>
+                        </Button>
                         <Grid container justify="flex-end">
                             <Grid item>
                                 <NavLink to="/login" variant="body2" style={{ color: "#82ada9" }}>
@@ -170,7 +289,6 @@ export default function Register() {
                         <Copyright />
                     </Box>
                 </div>
-
             </Container>
         </div>
     );
