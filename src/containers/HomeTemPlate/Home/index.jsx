@@ -6,11 +6,9 @@ import IntroFilm from "../../../components/IntroFilm";
 import NavbarHome from "../../../components/NavbarHome";
 import "./style.css";
 import Schedule from "../../../components/Schedule";
+import ScrollTopArrow from "../../../components/ScrollTopArrow";
 
 export default function Home(props) {
-  // const handleBackToTop = () => {
-  //   window.scroll({ top: 0, left: 0, behavior: "smooth" });
-  // };
   return (
     <div className="home">
       <NavbarHome />
@@ -19,9 +17,7 @@ export default function Home(props) {
       <Schedule />
       <Application />
       <Footer />
-      {/* <span onClick={handleBackToTop} id="backtotop" className="backtotop">
-        <i class="fa fa-angle-up"></i>
-      </span> */}
+      <ScrollTopArrow />
     </div>
   );
 }

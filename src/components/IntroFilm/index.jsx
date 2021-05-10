@@ -7,12 +7,30 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
+import Button from "@material-ui/core/Button";
+
+const useStylesButton = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 export default function IntroFilm() {
+  const classesButton = useStylesButton();
+
+  const [IDGroup, setIDGroup] = useState("GP01");
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchFilmList("GP01"));
-  }, []);
+    dispatch(fetchFilmList(IDGroup));
+  }, [IDGroup]);
+
+  const checkTypeGroup = (type) => {
+    if (type === "showing") setIDGroup("GP01");
+    else if (type === "coming") setIDGroup("GP02");
+  };
 
   const state = useSelector((state) => state.fetchFilmListReducer);
   // Tao 1 mang 2 chieu danh sach phim, moi phan tu chua 8 film de lam thanh 1 slider
@@ -198,56 +216,58 @@ export default function IntroFilm() {
   };
 
   const renderArrow = () => {
-    return (
-      <React.Fragment>
-        <a
-          className="carousel-control-prev"
-          href="#carouselExampleInterval"
-          role="button"
-          data-slide="prev"
-          style={{
-            justifyContent: "flex-end",
-          }}
-        >
-          <span className="sr-only">Previous</span>
-          <img
+    if (state.data && state.data.length > 0) {
+      return (
+        <React.Fragment>
+          <a
+            className="carousel-control-prev"
+            href="#carouselExampleInterval"
+            role="button"
+            data-slide="prev"
             style={{
-              width: 50,
-              height: 50,
-              marginRight: -50,
+              justifyContent: "flex-end",
             }}
-            alt=""
-            src="./images/back-session.png"
-            className="back-img"
-          />
-        </a>
-        <a
-          className="carousel-control-next"
-          href="#carouselExampleInterval"
-          role="button"
-          data-slide="next"
-          style={{
-            justifyContent: "flex-start",
-          }}
-        >
-          <span className="sr-only">Next</span>
-          <img
+          >
+            <span className="sr-only">Previous</span>
+            <img
+              style={{
+                width: 50,
+                height: 50,
+                marginRight: -50,
+              }}
+              alt=""
+              src="./images/back-session.png"
+              className="back-img"
+            />
+          </a>
+          <a
+            className="carousel-control-next"
+            href="#carouselExampleInterval"
+            role="button"
+            data-slide="next"
             style={{
-              width: 50,
-              height: 50,
+              justifyContent: "flex-start",
             }}
-            alt=""
-            src="./images/next-session.png"
-            className="next-img"
-          />
-        </a>
-      </React.Fragment>
-    );
+          >
+            <span className="sr-only">Next</span>
+            <img
+              style={{
+                width: 50,
+                height: 50,
+              }}
+              alt=""
+              src="./images/next-session.png"
+              className="next-img"
+            />
+          </a>
+        </React.Fragment>
+      );
+    }
   };
 
   return (
     <section id="intro-film" className="intro-film">
-      <div class="container box-ticket">
+      <div className="container box-ticket">
         <div class="row border rounded py-4 order-ticker">
           <div class="col-xl-4">
             <div class="nav-item dropdown city-drop border-right">
@@ -361,23 +381,44 @@ export default function IntroFilm() {
         </div>
       </div>
       <div className="list-film">
-        <ul className="nav nav-tabs" id="myTab" role="tablist">
-          <li className="nav-item" role="presentation">
-            <a
-              className="nav-link active"
-              data-toggle="tab"
-              href="#showing"
-              role="tab"
-            >
-              Đang Chiếu
-            </a>
-          </li>
-          <li className="nav-item" role="presentation">
-            <a className="nav-link" data-toggle="tab" href="#coming" role="tab">
-              Sắp Chiếu
-            </a>
-          </li>
-        </ul>
+        <div className={classesButton.root}>
+          <ul className="nav nav-tabs" id="myTab" role="tablist">
+            <li className="nav-item" role="presentation">
+              <a
+                className="nav-link active"
+                data-toggle="tab"
+                href="#showing"
+                role="tab"
+              >
+                <Button
+                  type="button"
+                  className="button-link"
+                  onClick={() => checkTypeGroup("showing")}
+                >
+                  Đang Chiếu
+                </Button>
+                {/* Đang Chiếu */}
+              </a>
+            </li>
+            <li className="nav-item" role="presentation">
+              <a
+                className="nav-link"
+                data-toggle="tab"
+                href="#coming"
+                role="tab"
+              >
+                <Button
+                  type="button"
+                  className="button-link"
+                  onClick={() => checkTypeGroup("coming")}
+                >
+                  Sắp Chiếu
+                </Button>
+                {/* Sắp Chiếu */}
+              </a>
+            </li>
+          </ul>
+        </div>
         <div className="tab-content" id="myTabContent">
           <div
             className="tab-pane fade show active"

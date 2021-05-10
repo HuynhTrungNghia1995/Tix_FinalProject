@@ -52,60 +52,13 @@ export default function NavbarHome() {
             <li className="nav-item login border-right">
               <a className="nav-link d-flex" href="#header">
                 <i className="fa fa-user-circle user-icon" />
-                <span className="mt-1 ml-1 px-1">Login</span>
+                <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
               </a>
             </li>
-            <li className="nav-item dropdown city-drop pl-1">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#header"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i className="fa fa-map-marker mr-1 pt-1" />
-                <span className>Hồ Chí Minh</span>
+            <li className="nav-item register">
+              <a className="nav-link d-flex" href="#header">
+                <span className="mt-1 ml-1 px-1">Đăng Ký</span>
               </a>
-              <div
-                className="dropdown-menu mt-2 ml-4"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a className="dropdown-item" href="#header">
-                  Hồ Chí Minh
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Hà Nội
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Đà Nẵng
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Hải Phòng
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Biên Hoà
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Nhà Trang
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Bình Dương
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Phan Thiết
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Hạ Long
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Cần Thơ
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Vũng Tàu
-                </a>
-              </div>
             </li>
           </ul>
         </div>

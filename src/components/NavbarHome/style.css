@@ -16,6 +16,7 @@
 }
 
 .header .navbar-collapse .item-left .nav-item a:hover {
+  transition: 0.2s;
   color: #fb4226 !important;
 }
 
@@ -27,9 +28,16 @@
   font-size: 1.5rem;
 }
 
-.header .navbar-collapse .item-right .nav-item a:hover {
-  color: rgba(0, 0, 0, 0.5);
+.header .navbar-collapse .item-right .nav-item span:hover {
+  color: #fb4226;
+  font-size: 20px;
+  font-weight: 600;
+  transition: all 0.3s;
 }
+
+/* .header .navbar-collapse .item-right .register span {
+  color: #fb4226;
+} */
 
 .header .navbar-collapse .item-right .city-drop:focus {
   box-shadow: transparent;
