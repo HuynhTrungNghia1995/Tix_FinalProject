@@ -96,9 +96,6 @@ export default function ShowTimesManagement() {
         setDisablePrice(false);
         setDisableSubmit(false);
     }
-    if (err) {
-        console.log(err.response.data)
-    }
     const handleGroupFilm = (e) => {
         const value = e.target.value;
         setFilmGroup(value);
@@ -181,7 +178,7 @@ export default function ShowTimesManagement() {
     const handleDataTime = (e) => {
         setShowTimeItem({
             ...showTimeItem,
-            ngayChieuGioChieu: format(new Date(e.target.value), 'dd/MM/yyyy')
+            ngayChieuGioChieu: format(new Date(e.target.value), 'dd/MM/yyyy hh:mm:ss')
         })
         setDisablePrice(false);
     }
@@ -194,10 +191,9 @@ export default function ShowTimesManagement() {
     }
     const handleAddShowTime = (e) => {
         e.preventDefault();
-        console.log(showTimeItem);
-        dispatch(addShowTime(showTimeItem))
-        // setRender(!render);
-        // handleAfterEvent();
+        dispatch(addShowTime(showTimeItem));
+        handleAfterEvent();
+        setRender(!render);
     }
     return (
         <div>
@@ -224,7 +220,7 @@ export default function ShowTimesManagement() {
                             label="Chọn Phim"
                         >
                             <option aria-label="None" value="" />
-                            {filmList ? filmList.map((item) => <option key={item.maPhim} value={`${item.maPhim}`}> {item.tenPhim}</option>) : ""}
+                            {filmList ? filmList?.map((item) => <option key={item.maPhim} value={`${item.maPhim}`}> {item.tenPhim}</option>) : ""}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -239,7 +235,7 @@ export default function ShowTimesManagement() {
                             label="Chọn Hệ Thống Rạp"
                         >
                             <option aria-label="None" value="" />
-                            {cinemaSystem ? cinemaSystem.map((item) => <option key={item.maHeThongRap} value={`${item.maHeThongRap}`}> {item.tenHeThongRap}</option>) : ""}
+                            {cinemaSystem ? cinemaSystem?.map((item) => <option key={item.maHeThongRap} value={`${item.maHeThongRap}`}> {item.tenHeThongRap}</option>) : ""}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -254,7 +250,7 @@ export default function ShowTimesManagement() {
                             label="Chọn Cụm Rạp"
                         >
                             <option aria-label="None" value="" />
-                            {cinemaList ? cinemaList.map((item) => <option key={item.maCumRap} value={`${item.maCumRap}`}> {item.tenCumRap}</option>) : ""}
+                            {cinemaList ? cinemaList?.map((item) => <option key={item.maCumRap} value={`${item.maCumRap}`}> {item.tenCumRap}</option>) : ""}
                         </Select>
                     </FormControl>
                     <FormControl variant="outlined" className={classes.formControl}>

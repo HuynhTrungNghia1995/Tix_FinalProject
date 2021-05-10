@@ -21,7 +21,8 @@ import { FormControl, Grid, InputLabel, Select, TableHead, TextField } from '@ma
 import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { fetchUserList, addUser, deleteUser, updateUser } from './modules/action';
+import { fetchUserList, addUser, deleteUser, updateUser, setUserReset } from './modules/action';
+import { Alert } from '@material-ui/lab';
 const useStyles1 = makeStyles((theme) => ({
     root: {
         flexShrink: 0,
@@ -151,7 +152,9 @@ export default function UserManagement() {
     const classes = useStyles2();
     const dispatch = useDispatch();
     const userList = useSelector(state => state.fetchUserListReducer.data);
-    const err = useSelector(state => state.deleteUserReducer.err);
+    const addUserErr = useSelector(state => state.addUserReducer.err);
+    const deleteUserErr = useSelector(state => state.deleteUserReducer.err);
+    const updateUserErr = useSelector(state => state.updateUserReducer.err);
     const [page, setPage] = useState(0);
     const [handleAddUser, setHandleAddUser] = useState(false);
     const [userItem, setUserItem] = useState(false);
@@ -168,6 +171,23 @@ export default function UserManagement() {
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
+    const resetErrNotice = () => {
+        dispatch(setUserReset());
+    }
+    const renderErrNotice = () => {
+        if (addUserErr) {
+            setTimeout(resetErrNotice, 2000);
+            return <Alert severity="error">{addUserErr?.response?.data}</Alert>
+        }
+        if (deleteUserErr) {
+            setTimeout(resetErrNotice, 2000);
+            return <Alert severity="error">{deleteUserErr?.response?.data}</Alert>
+        }
+        if (updateUserErr) {
+            setTimeout(resetErrNotice, 2000);
+            return <Alert severity="error">{updateUserErr?.response?.data}</Alert>
+        }
+    }
     const handleEmptyRow = () => {
         if (userList) {
             const emptyRows = rowsPerPage - Math.min(rowsPerPage, userList.length - page * rowsPerPage);
@@ -209,13 +229,11 @@ export default function UserManagement() {
         e.preventDefault();
         dispatch(addUser(userItem));
         handlePopupAddUser();
-        setRender(!render);
     }
     const handleSubmitEditUser = (e) => {
         e.preventDefault();
         dispatch(updateUser(editUserItem));
         handlePopupEditUser();
-        setRender(!render);
     }
     const renderAddUser = () => {
         if (handleAddUser) {
@@ -458,6 +476,9 @@ export default function UserManagement() {
                     <IconButton color="inherit" onClick={() => { setHandleAddUser(true) }}>
                         <PlaylistAddIcon className={classes.addBtn} />
                     </IconButton>
+                </Grid>
+                <Grid item>
+                    {renderErrNotice()}
                 </Grid>
             </Grid>
             <TableContainer component={Paper}>

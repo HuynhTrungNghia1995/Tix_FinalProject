@@ -12,4 +12,4 @@ export const FETCH_CINEMA_FAILED = "cinemaReducer/FETCH_CINEMA_FAILED"
 
 export const ADD_SHOWTIME_REQUEST = "showtimeReducer/ADD_SHOWTIME_REQUEST"
 export const ADD_SHOWTIME_SUCCESS = "showtimeReducer/ADD_SHOWTIME_SUCCESS"
-export const ADD_SHOWTIME_FAILED = "showtimeReducer/ADD_SHOWTIME_REQUEST"
+export const ADD_SHOWTIME_FAILED = "showtimeReducer/ADD_SHOWTIME_FAILED"

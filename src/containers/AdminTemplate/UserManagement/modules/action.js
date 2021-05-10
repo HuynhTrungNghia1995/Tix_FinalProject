@@ -11,7 +11,6 @@ export const fetchUserList = (group) => {
                 dispatch(fetchUserListSuccess(res.data));
             })
             .catch((err) => {
-                alert(err.response.data);
                 dispatch(fetchUserListFailed(err));
             })
     }
@@ -104,11 +103,9 @@ export const deleteUser = (user) => {
             }
         })
             .then((res) => {
-                alert(res.data);
                 dispatch(deleteUserSuccess(res.data));
             })
             .catch((err) => {
-                alert(err.response.data);
                 dispatch(deleteUserFailed(err));
             })
     }
@@ -184,3 +181,23 @@ export const updateUserFailed = (err) => {
 
 }
 
+export const setUserReset = () => {
+    return (dispatch) => {
+        dispatch(
+            {
+                type: actionTypes.ADD_USER_RESET
+            }
+        )
+        dispatch(
+            {
+                type: actionTypes.DELETE_USER_RESET
+            }
+        )
+        dispatch(
+            {
+                type: actionTypes.UPDATE_USER_RESET
+
+            }
+        )
+    }
+}

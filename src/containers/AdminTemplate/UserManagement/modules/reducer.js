@@ -47,6 +47,11 @@ export const addUserReducer = (state = addUser, { payload, type, ...action }) =>
             state.data = null;
             state.err = payload;
             return { ...state };
+        case actionTypes.ADD_USER_RESET:
+            state.loading = false;
+            state.data = null;
+            state.err = null;
+            return { ...state };
         default: return { ...state };
     }
 }
@@ -72,6 +77,11 @@ export const deleteUserReducer = (state = deleteUser, { payload, type, ...action
             state.loading = false;
             state.data = null;
             state.err = payload;
+            return { ...state };
+        case actionTypes.DELETE_USER_RESET:
+            state.loading = false;
+            state.data = null;
+            state.err = null;
             return { ...state };
         default: return { ...state };
     }
@@ -99,6 +109,11 @@ export const updateUserReducer = (state = updateUser, { payload, type, ...action
             state.loading = false;
             state.data = null;
             state.err = payload;
+            return { ...state };
+        case actionTypes.UPDATE_USER_RESET:
+            state.loading = false;
+            state.data = null;
+            state.err = null;
             return { ...state };
         default: return { ...state };
     }

@@ -23,7 +23,7 @@ export default function TabPaneContent(props) {
             {item2.map((item3, index) => {
               return (
                 <a href="#" key={index}>
-                  <img src={item3.img} />
+                  <img src={item3.img} alt="" />
                   <p style={{ WebkitBoxOrient: "vertical" }}>{item3.title}</p>
                 </a>
               );
@@ -38,7 +38,7 @@ export default function TabPaneContent(props) {
         return (
           <div
             key={index}
-            className={index == 0 ? "row" : "row hide"}
+            className={index === 0 ? "row" : "row hide"}
             id={props.data.id + "-" + item1.id}
           >
             {renderCol(item1.arrayItemNews)};
