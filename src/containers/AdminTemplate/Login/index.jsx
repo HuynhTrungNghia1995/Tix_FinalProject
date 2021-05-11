@@ -106,10 +106,12 @@ export default function Login(props) {
         dispatch(fetchLogin(state, props.history));
         setRender(!render)
     }
-    const handleValidation = () => {
+    const handleValidationAccount = () => {
         if (state.taiKhoan === "") {
             setEmptyUsernameNotice(true)
         }
+    }
+    const handleValidationPassword = () => {
         if (state.matKhau === "") {
             setEmptyPasswordNotice(true)
         }
@@ -147,7 +149,7 @@ export default function Login(props) {
                         label="Tài Khoản"
                         name="taiKhoan"
                         onChange={handleChange}
-                        onBlur={handleValidation}
+                        onBlur={handleValidationAccount}
                     />
                     <TextField
                         variant="outlined"
@@ -158,7 +160,7 @@ export default function Login(props) {
                         label="Mật Khẩu"
                         type="password"
                         onChange={handleChange}
-                        onBlur={handleValidation}
+                        onBlur={handleValidationPassword}
                     />
                     <Button
                         type="submit"

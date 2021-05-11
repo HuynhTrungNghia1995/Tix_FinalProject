@@ -172,7 +172,7 @@ export default function Register() {
     const handleValidationNotice = () => {
         if (emptyFullNameNotice) {
             setTimeout(handleDisableNotice, 1500);
-            return <Alert severity="error">Tên đầy đủ không được để trống</Alert>
+            return <Alert severity="error">Họ Tên không được để trống</Alert>
         }
         if (isValidPhoneNumber) {
             setTimeout(handleDisableNotice, 1500);
@@ -220,7 +220,7 @@ export default function Register() {
                                     name="hoTen"
                                     variant="outlined"
                                     fullWidth
-                                    label="Tên Đầy Đủ"
+                                    label="Họ Tên"
                                     onChange={handleChangeRegister}
                                     onBlur={handleValidationEmptyFullName}
                                 />
