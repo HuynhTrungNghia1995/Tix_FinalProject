@@ -1,10 +1,10 @@
 import axios from "axios";
 import * as actionTypes from "./constants";
-export const fetchShowtimeFilm = (filmName) => {
+export const fetchShowtimeFilm = (filmId) => {
     return (dispatch) => {
         dispatch(fetchShowtimeFilmRequest())
         axios({
-            url: `https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${filmName}`,
+            url: `https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${filmId}`,
             method: "GET"
         })
             .then((res) => {
@@ -106,7 +106,7 @@ export const fetchCinemaFailed = (err) => {
     }
 }
 
-export const addShowTime = (showTime) => {
+export const addShowTime = (showTime, filmId) => {
     let accessToken = "";
     if (localStorage.getItem("User")) {
         if (JSON.parse(localStorage.getItem("User")).maLoaiNguoiDung === "QuanTri") {
@@ -124,9 +124,12 @@ export const addShowTime = (showTime) => {
             }
         })
             .then((res) => {
+                alert("Tạo lịch chiếu thành công")
+                dispatch(fetchShowtimeFilm(filmId))
                 dispatch(addShowTimeSuccess(res.data))
             })
             .catch((err) => {
+                alert(err.response.data)
                 dispatch(addShowTimeFailed(err))
             })
     }
@@ -135,18 +138,18 @@ export const addShowTime = (showTime) => {
 
 export const addShowTimeRequest = () => {
     return {
-        type: actionTypes.FETCH_CINEMA_REQUEST
+        type: actionTypes.ADD_SHOWTIME_REQUEST
     }
 }
 export const addShowTimeSuccess = (data) => {
     return {
-        type: actionTypes.FETCH_CINEMA_SUCCESS,
+        type: actionTypes.ADD_SHOWTIME_SUCCESS,
         payload: data
     }
 }
 export const addShowTimeFailed = (err) => {
     return {
-        type: actionTypes.FETCH_CINEMA_FAILED,
+        type: actionTypes.ADD_SHOWTIME_FAILED,
         payload: err
     }
 }
