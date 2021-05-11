@@ -227,12 +227,12 @@ export default function UserManagement() {
     }
     const handleSubmitAddUser = (e) => {
         e.preventDefault();
-        dispatch(addUser(userItem));
+        dispatch(addUser(userItem, userGroup));
         handlePopupAddUser();
     }
     const handleSubmitEditUser = (e) => {
         e.preventDefault();
-        dispatch(updateUser(editUserItem));
+        dispatch(updateUser(editUserItem, userGroup));
         handlePopupEditUser();
     }
     const renderAddUser = () => {
@@ -406,7 +406,7 @@ export default function UserManagement() {
                                     </IconButton>
                                 </Grid>
                                 <Grid item>
-                                    <IconButton color="inherit" onClick={() => { dispatch(deleteUser(row)); setRender(!render); }}>
+                                    <IconButton color="inherit" onClick={() => { dispatch(deleteUser(row, userGroup)); setRender(!render); }}>
                                         <DeleteForeverIcon color="secondary" />
                                     </IconButton>
                                 </Grid>

@@ -37,7 +37,7 @@ export const fetchUserListFailed = (err) => {
 }
 
 
-export const addUser = (user) => {
+export const addUser = (user, group) => {
     let accessToken = "";
 
     if (localStorage.getItem("User")) {
@@ -56,6 +56,8 @@ export const addUser = (user) => {
             }
         })
             .then((res) => {
+                alert("Thêm User Thành Công");
+                dispatch(fetchUserList(group))
                 dispatch(addUserSuccess(res.data));
             })
             .catch((err) => {
@@ -86,7 +88,7 @@ export const addUserFailed = (err) => {
 
 
 
-export const deleteUser = (user) => {
+export const deleteUser = (user, group) => {
     let accessToken = "";
     if (localStorage.getItem("User")) {
         if (JSON.parse(localStorage.getItem("User")).maLoaiNguoiDung === "QuanTri") {
@@ -103,6 +105,8 @@ export const deleteUser = (user) => {
             }
         })
             .then((res) => {
+                alert("Xoá User Thành Công");
+                dispatch(fetchUserList(group))
                 dispatch(deleteUserSuccess(res.data));
             })
             .catch((err) => {
@@ -132,7 +136,7 @@ export const deleteUserFailed = (err) => {
 }
 
 
-export const updateUser = (user) => {
+export const updateUser = (user, group) => {
 
     let accessToken = "";
 
@@ -152,10 +156,11 @@ export const updateUser = (user) => {
             }
         })
             .then((res) => {
+                alert("Cập Nhật User Thành Công")
+                dispatch(fetchUserList(group))
                 dispatch(updateUserSuccess(res.data));
             })
             .catch((err) => {
-                alert(err.response.data);
                 dispatch(updateUserFailed(err));
             })
     }
