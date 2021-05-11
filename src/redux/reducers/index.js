@@ -26,5 +26,4 @@ const store = combineReducers({
     addImageReducer,
     systemCinemaReducer,
 });
-
 export default store;
