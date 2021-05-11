@@ -215,13 +215,13 @@ export default function IntroFilm() {
     }
   };
 
-  const renderArrow = () => {
+  const renderArrow = (id) => {
     if (state.data && state.data.length > 0) {
       return (
         <React.Fragment>
           <a
             className="carousel-control-prev"
-            href="#carouselExampleInterval"
+            href={`#${id}`}
             role="button"
             data-slide="prev"
             style={{
@@ -242,7 +242,7 @@ export default function IntroFilm() {
           </a>
           <a
             className="carousel-control-next"
-            href="#carouselExampleInterval"
+            href={`#${id}`}
             role="button"
             data-slide="next"
             style={{
@@ -426,22 +426,22 @@ export default function IntroFilm() {
             role="tabpanel"
           >
             <div
-              id="carouselExampleInterval"
+              id="carousel_showing"
               className="carousel slide"
               data-ride="carousel"
             >
               <div className="carousel-inner pt-5 mt-5">{renderFilmList()}</div>
-              {renderArrow()}
+              {renderArrow("carousel_showing")}
             </div>
           </div>
           <div className="tab-pane fade" id="coming" role="tabpanel">
             <div
-              id="carouselInterval"
+              id="carousel_coming"
               className="carousel slide"
               data-ride="carousel"
             >
               <div className="carousel-inner pt-5 mt-5">{renderFilmList()}</div>
-              {renderArrow()}
+              {renderArrow("carousel_coming")}
             </div>
           </div>
         </div>
