@@ -13,6 +13,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, setResetRegister } from './modules/action';
 import { Alert } from '@material-ui/lab';
+import "./style.css"
 import Loading from '../Loading';
 
 function Copyright() {
@@ -195,6 +196,33 @@ export default function Register() {
         e.preventDefault();
         dispatch(registerUser(registerUserItem));
     }
+    if (registerSuccess) {
+        return (
+            <div id="card" className="animated fadeIn">
+                <div id="upper-side">
+                    {/*?xml version="1.0" encoding="utf-8"?*/}
+                    {/* Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  */}
+                    <div class="success-checkmark">
+                        <div class="check-icon">
+                            <span class="icon-line line-tip"></span>
+                            <span class="icon-line line-long"></span>
+                            <div class="icon-circle"></div>
+                            <div class="icon-fix"></div>
+                        </div>
+                    </div>
+                    <h3 id="status">
+                        Success
+    </h3>
+                </div>
+                <div id="lower-side">
+                    <p id="message">
+                        Congratulations, your account has been successfully created.
+    </p>
+                    <NavLink to={`/login`} id="contBtn">Login Now</NavLink>
+                </div>
+            </div>
+        )
+    }
     if (registerLoading) {
         return (<div className={classes.root}>
             <Loading />
@@ -290,6 +318,7 @@ export default function Register() {
                     </Box>
                 </div>
             </Container>
+
         </div>
     );
 }
