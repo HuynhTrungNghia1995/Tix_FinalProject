@@ -136,7 +136,7 @@ export default function IntroFilm() {
                       <iframe
                         width="1120"
                         height="630"
-                        src={`${trailer}?autoplay=1`}
+                        src={`${trailer}`}
                         title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -156,9 +156,8 @@ export default function IntroFilm() {
             </div>
             <div className="content-text">
               <div className="film-name">
-                <span className="btn red-age">{`C${
-                  Math.floor(Math.random() * 6) + 15
-                }`}</span>
+                <span className="btn red-age">{`C${Math.floor(Math.random() * 6) + 15
+                  }`}</span>
                 {` ${film.tenPhim}`}
               </div>
               <div className="time-film mt-1">

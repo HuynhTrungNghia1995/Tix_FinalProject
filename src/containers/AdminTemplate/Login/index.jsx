@@ -101,6 +101,10 @@ export default function Login(props) {
             setIsDisable(false);
         }
     }
+    const handleNotice = () => {
+        setEmptyUsernameNotice(false);
+        setEmptyPasswordNotice(false);
+    }
     const handleLogin = (e) => {
         e.preventDefault();
         dispatch(fetchLogin(state, props.history));
@@ -121,8 +125,14 @@ export default function Login(props) {
     }
     const renderNotice = () => {
         if (err) return <Alert severity="error">{err.response.data}</Alert>
-        if (emptyUsernameNotice) return <Alert severity="error">Tài khoản không được để trống</Alert>
-        if (emptyPasswordNotice) return <Alert severity="error">Mật khẩu không được để trống</Alert>
+        if (emptyUsernameNotice) {
+            setTimeout(handleNotice, 1500)
+            return <Alert severity="error">Tài khoản không được để trống</Alert>
+        }
+        if (emptyPasswordNotice) {
+            setTimeout(handleNotice, 1500)
+            return <Alert severity="error">Mật khẩu không được để trống</Alert>
+        }
     }
     if (loading) return (
         <div className={classes.root}>
