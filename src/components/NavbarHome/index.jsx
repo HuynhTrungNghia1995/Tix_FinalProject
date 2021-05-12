@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import React from "react";
 import "./style.css";
 
@@ -50,15 +51,15 @@ export default function NavbarHome() {
           </ul>
           <ul className="navbar-nav item-right col-md-5">
             <li className="nav-item login border-right">
-              <a className="nav-link d-flex" href="#header">
+              <NavLink className="nav-link d-flex" to="/login">
                 <i className="fa fa-user-circle user-icon" />
                 <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item register">
-              <a className="nav-link d-flex" href="#header">
+              <NavLink className="nav-link d-flex" to="/register">
                 <span className="mt-1 ml-1 px-1">Đăng Ký</span>
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>

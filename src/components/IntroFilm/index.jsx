@@ -9,17 +9,7 @@ import Fade from "@material-ui/core/Fade";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import Button from "@material-ui/core/Button";
 
-const useStylesButton = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
-}));
-
 export default function IntroFilm() {
-  const classesButton = useStylesButton();
-
   const [IDGroup, setIDGroup] = useState("GP01");
 
   const dispatch = useDispatch();
@@ -54,27 +44,36 @@ export default function IntroFilm() {
       alignItems: "center",
       justifyContent: "center",
     },
+    paper: {
+      backgroundColor: "transparent",
+      padding: theme.spacing(2, 4, 3),
+    },
   }));
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const [trailer, setTrailer] = useState();
-  const [id, setId] = useState();
+  const [stateFilm, setStateFilm] = useState({
+    id: null,
+    index: null,
+    trailer: null,
+  });
 
-  const handleOpen = (id) => {
+  const handleOpen = (id, idx) => {
     setOpen(true);
     let index = state.data.findIndex((film) => film.maPhim === id);
     if (index !== -1) {
-      setId(id);
-      setTrailer(state.data[index]?.trailer);
+      setStateFilm({
+        id: id,
+        index: idx,
+        trailer: state.data[index].trailer,
+      });
     }
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-
   const renderStars = (point) => {
     if (point > 0) {
       // Tao 1 mang de xet star tu diem danh gia
@@ -98,7 +97,10 @@ export default function IntroFilm() {
     }
   };
 
+  let count = 0;
+
   const renderFilm = (film) => {
+    let idx = count++;
     if (film) {
       return (
         <div className="col-xl-3 col-lg-3 col-md-3">
@@ -119,7 +121,7 @@ export default function IntroFilm() {
                 <button
                   className="play-trailer"
                   type="button"
-                  onClick={() => handleOpen(film.maPhim)}
+                  onClick={() => handleOpen(film.maPhim, idx)}
                 >
                   <img alt="" src="./images/play-video.png" />
                 </button>
@@ -127,7 +129,11 @@ export default function IntroFilm() {
                   aria-labelledby="transition-modal-title"
                   aria-describedby="transition-modal-description"
                   className={classes.modal}
-                  open={film.maPhim === id ? open : false}
+                  open={
+                    film.maPhim === stateFilm.id && idx === stateFilm.index
+                      ? open
+                      : false
+                  }
                   onClose={handleClose}
                   closeAfterTransition
                   BackdropComponent={Backdrop}
@@ -135,7 +141,13 @@ export default function IntroFilm() {
                     timeout: 500,
                   }}
                 >
-                  <Fade in={film.maPhim === id ? open : false}>
+                  <Fade
+                    in={
+                      film.maPhim === stateFilm.id && idx === stateFilm.index
+                        ? open
+                        : false
+                    }
+                  >
                     <div className={classes.paper}>
                       <button
                         type="button"
@@ -154,12 +166,11 @@ export default function IntroFilm() {
                       <iframe
                         width="1120"
                         height="630"
-                        src={`${trailer}?autoplay=1`}
+                        src={`${stateFilm.trailer}?autoplay=1`}
                         title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
-                        autoPlay="1"
                       ></iframe>
                     </div>
                   </Fade>
@@ -381,44 +392,36 @@ export default function IntroFilm() {
         </div>
       </div>
       <div className="list-film">
-        <div className={classesButton.root}>
-          <ul className="nav nav-tabs" id="myTab" role="tablist">
-            <li className="nav-item" role="presentation">
-              <a
-                className="nav-link active"
-                data-toggle="tab"
-                href="#showing"
-                role="tab"
+        <ul className="nav nav-tabs" id="myTab" role="tablist">
+          <li className="nav-item" role="presentation">
+            <a
+              className="nav-link active"
+              data-toggle="tab"
+              href="#showing"
+              role="tab"
+            >
+              <Button
+                type="button"
+                className="button-link"
+                onClick={() => checkTypeGroup("showing")}
               >
-                <Button
-                  type="button"
-                  className="button-link"
-                  onClick={() => checkTypeGroup("showing")}
-                >
-                  Đang Chiếu
-                </Button>
-                {/* Đang Chiếu */}
-              </a>
-            </li>
-            <li className="nav-item" role="presentation">
-              <a
-                className="nav-link"
-                data-toggle="tab"
-                href="#coming"
-                role="tab"
+                Đang Chiếu
+              </Button>
+            </a>
+          </li>
+          <li className="nav-item" role="presentation">
+            <a className="nav-link" data-toggle="tab" href="#coming" role="tab">
+              <Button
+                type="button"
+                className="button-link"
+                onClick={() => checkTypeGroup("coming")}
               >
-                <Button
-                  type="button"
-                  className="button-link"
-                  onClick={() => checkTypeGroup("coming")}
-                >
-                  Sắp Chiếu
-                </Button>
-                {/* Sắp Chiếu */}
-              </a>
-            </li>
-          </ul>
-        </div>
+                Sắp Chiếu
+              </Button>
+              {/* Sắp Chiếu */}
+            </a>
+          </li>
+        </ul>
         <div className="tab-content" id="myTabContent">
           <div
             className="tab-pane fade show active"

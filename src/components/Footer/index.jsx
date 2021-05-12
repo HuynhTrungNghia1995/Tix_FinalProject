@@ -118,7 +118,7 @@ export default function Footer() {
                     alt="app"
                   />
                 </a>
-                <a href="https://zalo.me/tixdatve" title="Zalo social">
+                <a href="#slider" title="Zalo social">
                   <img
                     className="iconApp"
                     src="./images/zalo-logo.png"
