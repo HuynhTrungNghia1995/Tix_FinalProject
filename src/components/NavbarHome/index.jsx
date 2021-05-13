@@ -1,8 +1,50 @@
 import { NavLink } from "react-router-dom";
-import React from "react";
+import React, { Fragment, useState } from "react";
 import "./style.css";
 
 export default function NavbarHome() {
+  const user = JSON.parse(localStorage.getItem("User"));
+  console.log(user);
+
+  const [login, setLogin] = useState(false);
+  if (user !== null) setLogin(true);
+
+  const renderStatus = () => {
+    if (login) {
+      return (
+        <Fragment>
+          <li className="nav-item login border-right">
+            <div className="nav-link d-flex">
+              <i className="fa fa-user-circle user-icon" />
+              <span className="mt-1 ml-1 px-1">{user.hoTen}</span>
+            </div>
+          </li>
+          <li className="nav-item register">
+            <div className="nav-link d-flex">
+              <span className="mt-1 ml-1 px-1">Đăng xuất</span>
+            </div>
+          </li>
+        </Fragment>
+      );
+    } else {
+      return (
+        <Fragment>
+          <li className="nav-item login border-right">
+            <NavLink className="nav-link d-flex" to="/login">
+              <i className="fa fa-user-circle user-icon" />
+              <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
+            </NavLink>
+          </li>
+          <li className="nav-item register">
+            <NavLink className="nav-link d-flex" to="/register">
+              <span className="mt-1 ml-1 px-1">Đăng Ký</span>
+            </NavLink>
+          </li>
+        </Fragment>
+      );
+    }
+  };
+
   return (
     <header id="header" className="header">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -50,7 +92,8 @@ export default function NavbarHome() {
             </li>
           </ul>
           <ul className="navbar-nav item-right col-md-5">
-            <li className="nav-item login border-right">
+            {renderStatus()}
+            {/* <li className="nav-item login border-right">
               <NavLink className="nav-link d-flex" to="/login">
                 <i className="fa fa-user-circle user-icon" />
                 <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
@@ -60,7 +103,7 @@ export default function NavbarHome() {
               <NavLink className="nav-link d-flex" to="/register">
                 <span className="mt-1 ml-1 px-1">Đăng Ký</span>
               </NavLink>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>
