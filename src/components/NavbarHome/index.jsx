@@ -1,16 +1,13 @@
 import { NavLink } from "react-router-dom";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import "./style.css";
 
 export default function NavbarHome() {
   const user = JSON.parse(localStorage.getItem("User"));
-  console.log(user);
 
-  const [login, setLogin] = useState(false);
-  if (user !== null) setLogin(true);
 
   const renderStatus = () => {
-    if (login) {
+    if (user) {
       return (
         <Fragment>
           <li className="nav-item login border-right">
@@ -26,23 +23,23 @@ export default function NavbarHome() {
           </li>
         </Fragment>
       );
-    } else {
-      return (
-        <Fragment>
-          <li className="nav-item login border-right">
-            <NavLink className="nav-link d-flex" to="/login">
-              <i className="fa fa-user-circle user-icon" />
-              <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
-            </NavLink>
-          </li>
-          <li className="nav-item register">
-            <NavLink className="nav-link d-flex" to="/register">
-              <span className="mt-1 ml-1 px-1">Đăng Ký</span>
-            </NavLink>
-          </li>
-        </Fragment>
-      );
     }
+    return (
+      <Fragment>
+        <li className="nav-item login border-right">
+          <NavLink className="nav-link d-flex" to="/login">
+            <i className="fa fa-user-circle user-icon" />
+            <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
+          </NavLink>
+        </li>
+        <li className="nav-item register">
+          <NavLink className="nav-link d-flex" to="/register">
+            <span className="mt-1 ml-1 px-1">Đăng Ký</span>
+          </NavLink>
+        </li>
+      </Fragment>
+    );
+
   };
 
   return (
