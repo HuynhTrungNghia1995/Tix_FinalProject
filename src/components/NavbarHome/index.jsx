@@ -1,7 +1,50 @@
-import React from "react";
+import { NavLink } from "react-router-dom";
+import React, { Fragment, useState } from "react";
 import "./style.css";
 
 export default function NavbarHome() {
+  const user = JSON.parse(localStorage.getItem("User"));
+  console.log(user);
+
+  const [login, setLogin] = useState(false);
+  if (user !== null) setLogin(true);
+
+  const renderStatus = () => {
+    if (login) {
+      return (
+        <Fragment>
+          <li className="nav-item login border-right">
+            <div className="nav-link d-flex">
+              <i className="fa fa-user-circle user-icon" />
+              <span className="mt-1 ml-1 px-1">{user.hoTen}</span>
+            </div>
+          </li>
+          <li className="nav-item register">
+            <div className="nav-link d-flex">
+              <span className="mt-1 ml-1 px-1">Đăng xuất</span>
+            </div>
+          </li>
+        </Fragment>
+      );
+    } else {
+      return (
+        <Fragment>
+          <li className="nav-item login border-right">
+            <NavLink className="nav-link d-flex" to="/login">
+              <i className="fa fa-user-circle user-icon" />
+              <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
+            </NavLink>
+          </li>
+          <li className="nav-item register">
+            <NavLink className="nav-link d-flex" to="/register">
+              <span className="mt-1 ml-1 px-1">Đăng Ký</span>
+            </NavLink>
+          </li>
+        </Fragment>
+      );
+    }
+  };
+
   return (
     <header id="header" className="header">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -38,7 +81,7 @@ export default function NavbarHome() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#header">
+              <a className="nav-link" href="#news">
                 Tin tức
               </a>
             </li>
@@ -49,64 +92,18 @@ export default function NavbarHome() {
             </li>
           </ul>
           <ul className="navbar-nav item-right col-md-5">
-            <li className="nav-item login border-right">
-              <a className="nav-link d-flex" href="#header">
+            {renderStatus()}
+            {/* <li className="nav-item login border-right">
+              <NavLink className="nav-link d-flex" to="/login">
                 <i className="fa fa-user-circle user-icon" />
-                <span className="mt-1 ml-1 px-1">Login</span>
-              </a>
+                <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
+              </NavLink>
             </li>
-            <li className="nav-item dropdown city-drop pl-1">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#header"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i className="fa fa-map-marker mr-1 pt-1" />
-                <span className>Hồ Chí Minh</span>
-              </a>
-              <div
-                className="dropdown-menu mt-2 ml-4"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a className="dropdown-item" href="#header">
-                  Hồ Chí Minh
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Hà Nội
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Đà Nẵng
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Hải Phòng
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Biên Hoà
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Nhà Trang
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Bình Dương
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Phan Thiết
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Hạ Long
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Cần Thơ
-                </a>
-                <a className="dropdown-item" href="#header">
-                  Vũng Tàu
-                </a>
-              </div>
-            </li>
+            <li className="nav-item register">
+              <NavLink className="nav-link d-flex" to="/register">
+                <span className="mt-1 ml-1 px-1">Đăng Ký</span>
+              </NavLink>
+            </li> */}
           </ul>
         </div>
       </nav>

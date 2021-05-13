@@ -7,12 +7,20 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
+import Button from "@material-ui/core/Button";
 
 export default function IntroFilm() {
+  const [IDGroup, setIDGroup] = useState("GP01");
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchFilmList("GP01"));
-  }, []);
+    dispatch(fetchFilmList(IDGroup));
+  }, [IDGroup]);
+
+  const checkTypeGroup = (type) => {
+    if (type === "showing") setIDGroup("GP01");
+    else if (type === "coming") setIDGroup("GP02");
+  };
 
   const state = useSelector((state) => state.fetchFilmListReducer);
   // Tao 1 mang 2 chieu danh sach phim, moi phan tu chua 8 film de lam thanh 1 slider
@@ -36,27 +44,36 @@ export default function IntroFilm() {
       alignItems: "center",
       justifyContent: "center",
     },
+    paper: {
+      backgroundColor: "transparent",
+      padding: theme.spacing(2, 4, 3),
+    },
   }));
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const [trailer, setTrailer] = useState();
-  const [id, setId] = useState();
+  const [stateFilm, setStateFilm] = useState({
+    id: null,
+    index: null,
+    trailer: null,
+  });
 
-  const handleOpen = (id) => {
+  const handleOpen = (id, idx) => {
     setOpen(true);
     let index = state.data.findIndex((film) => film.maPhim === id);
     if (index !== -1) {
-      setId(id);
-      setTrailer(state.data[index]?.trailer);
+      setStateFilm({
+        id: id,
+        index: idx,
+        trailer: state.data[index].trailer,
+      });
     }
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-
   const renderStars = (point) => {
     if (point > 0) {
       // Tao 1 mang de xet star tu diem danh gia
@@ -80,7 +97,10 @@ export default function IntroFilm() {
     }
   };
 
+  let count = 0;
+
   const renderFilm = (film) => {
+    let idx = count++;
     if (film) {
       return (
         <div className="col-xl-3 col-lg-3 col-md-3">
@@ -101,7 +121,7 @@ export default function IntroFilm() {
                 <button
                   className="play-trailer"
                   type="button"
-                  onClick={() => handleOpen(film.maPhim)}
+                  onClick={() => handleOpen(film.maPhim, idx)}
                 >
                   <img alt="" src="./images/play-video.png" />
                 </button>
@@ -109,7 +129,11 @@ export default function IntroFilm() {
                   aria-labelledby="transition-modal-title"
                   aria-describedby="transition-modal-description"
                   className={classes.modal}
-                  open={film.maPhim === id ? open : false}
+                  open={
+                    film.maPhim === stateFilm.id && idx === stateFilm.index
+                      ? open
+                      : false
+                  }
                   onClose={handleClose}
                   closeAfterTransition
                   BackdropComponent={Backdrop}
@@ -117,7 +141,13 @@ export default function IntroFilm() {
                     timeout: 500,
                   }}
                 >
-                  <Fade in={film.maPhim === id ? open : false}>
+                  <Fade
+                    in={
+                      film.maPhim === stateFilm.id && idx === stateFilm.index
+                        ? open
+                        : false
+                    }
+                  >
                     <div className={classes.paper}>
                       <button
                         type="button"
@@ -136,12 +166,11 @@ export default function IntroFilm() {
                       <iframe
                         width="1120"
                         height="630"
-                        src={`${trailer}`}
+                        src={`${stateFilm.trailer}?autoplay=1`}
                         title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
-                        autoPlay="1"
                       ></iframe>
                     </div>
                   </Fade>
@@ -156,8 +185,9 @@ export default function IntroFilm() {
             </div>
             <div className="content-text">
               <div className="film-name">
-                <span className="btn red-age">{`C${Math.floor(Math.random() * 6) + 15
-                  }`}</span>
+                <span className="btn red-age">{`C${
+                  Math.floor(Math.random() * 6) + 15
+                }`}</span>
                 {` ${film.tenPhim}`}
               </div>
               <div className="time-film mt-1">
@@ -196,57 +226,59 @@ export default function IntroFilm() {
     }
   };
 
-  const renderArrow = () => {
-    return (
-      <React.Fragment>
-        <a
-          className="carousel-control-prev"
-          href="#carouselExampleInterval"
-          role="button"
-          data-slide="prev"
-          style={{
-            justifyContent: "flex-end",
-          }}
-        >
-          <span className="sr-only">Previous</span>
-          <img
+  const renderArrow = (id) => {
+    if (state.data && state.data.length > 0) {
+      return (
+        <React.Fragment>
+          <a
+            className="carousel-control-prev"
+            href={`#${id}`}
+            role="button"
+            data-slide="prev"
             style={{
-              width: 50,
-              height: 50,
-              marginRight: -50,
+              justifyContent: "flex-end",
             }}
-            alt=""
-            src="./images/back-session.png"
-            className="back-img"
-          />
-        </a>
-        <a
-          className="carousel-control-next"
-          href="#carouselExampleInterval"
-          role="button"
-          data-slide="next"
-          style={{
-            justifyContent: "flex-start",
-          }}
-        >
-          <span className="sr-only">Next</span>
-          <img
+          >
+            <span className="sr-only">Previous</span>
+            <img
+              style={{
+                width: 50,
+                height: 50,
+                marginRight: -50,
+              }}
+              alt=""
+              src="./images/back-session.png"
+              className="back-img"
+            />
+          </a>
+          <a
+            className="carousel-control-next"
+            href={`#${id}`}
+            role="button"
+            data-slide="next"
             style={{
-              width: 50,
-              height: 50,
+              justifyContent: "flex-start",
             }}
-            alt=""
-            src="./images/next-session.png"
-            className="next-img"
-          />
-        </a>
-      </React.Fragment>
-    );
+          >
+            <span className="sr-only">Next</span>
+            <img
+              style={{
+                width: 50,
+                height: 50,
+              }}
+              alt=""
+              src="./images/next-session.png"
+              className="next-img"
+            />
+          </a>
+        </React.Fragment>
+      );
+    }
   };
 
   return (
     <section id="intro-film" className="intro-film">
-      <div class="container box-ticket">
+      <div className="container box-ticket">
         <div class="row border rounded py-4 order-ticker">
           <div class="col-xl-4">
             <div class="nav-item dropdown city-drop border-right">
@@ -368,12 +400,25 @@ export default function IntroFilm() {
               href="#showing"
               role="tab"
             >
-              Đang Chiếu
+              <Button
+                type="button"
+                className="button-link"
+                onClick={() => checkTypeGroup("showing")}
+              >
+                Đang Chiếu
+              </Button>
             </a>
           </li>
           <li className="nav-item" role="presentation">
             <a className="nav-link" data-toggle="tab" href="#coming" role="tab">
-              Sắp Chiếu
+              <Button
+                type="button"
+                className="button-link"
+                onClick={() => checkTypeGroup("coming")}
+              >
+                Sắp Chiếu
+              </Button>
+              {/* Sắp Chiếu */}
             </a>
           </li>
         </ul>
@@ -384,22 +429,22 @@ export default function IntroFilm() {
             role="tabpanel"
           >
             <div
-              id="carouselExampleInterval"
+              id="carousel_showing"
               className="carousel slide"
               data-ride="carousel"
             >
               <div className="carousel-inner pt-5 mt-5">{renderFilmList()}</div>
-              {renderArrow()}
+              {renderArrow("carousel_showing")}
             </div>
           </div>
           <div className="tab-pane fade" id="coming" role="tabpanel">
             <div
-              id="carouselInterval"
+              id="carousel_coming"
               className="carousel slide"
               data-ride="carousel"
             >
               <div className="carousel-inner pt-5 mt-5">{renderFilmList()}</div>
-              {renderArrow()}
+              {renderArrow("carousel_coming")}
             </div>
           </div>
         </div>

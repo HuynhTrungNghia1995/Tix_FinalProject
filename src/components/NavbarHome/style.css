@@ -16,19 +16,24 @@
 }
 
 .header .navbar-collapse .item-left .nav-item a:hover {
+  transition: 0.2s;
   color: #fb4226 !important;
 }
 
-.header .navbar-collapse .item-right .nav-item a .user-icon {
+.header .navbar-collapse .item-right .nav-item .user-icon {
   font-size: 2rem;
 }
 
-.header .navbar-collapse .item-right .nav-item a .fa-map-marker {
+.header .navbar-collapse .item-right .nav-item Link .fa-map-marker {
+  text-decoration: none;
   font-size: 1.5rem;
 }
 
-.header .navbar-collapse .item-right .nav-item a:hover {
-  color: rgba(0, 0, 0, 0.5);
+.header .navbar-collapse .item-right .nav-item span:hover {
+  color: #fb4226;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
 .header .navbar-collapse .item-right .city-drop:focus {

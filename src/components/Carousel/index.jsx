@@ -30,7 +30,6 @@ export default function Carousel() {
     if (index !== -1) {
       setId(id);
       setTrailer(sliders[index].trailer);
-      console.log("carousel_trailer", trailer);
     }
   };
 
@@ -42,17 +41,17 @@ export default function Carousel() {
     {
       maPhim: "001",
       hinhAnh: "./images/carousel_1.png",
-      trailer: "https://www.youtube.com/embed/sx1ROHCmY-4?autoplay=1",
+      trailer: "https://www.youtube.com/embed/sx1ROHCmY-4",
     },
     {
       maPhim: "002",
       hinhAnh: "./images/carousel_2.png",
-      trailer: "https://www.youtube.com/embed/UeyaR8jWl2c?autoplay=1",
+      trailer: "https://www.youtube.com/embed/UeyaR8jWl2c",
     },
     {
       maPhim: "003",
       hinhAnh: "./images/carousel_3.png",
-      trailer: "https://www.youtube.com/embed/uqJ9u7GSaYM?autoplay=1",
+      trailer: "https://www.youtube.com/embed/uqJ9u7GSaYM",
     },
   ];
 
@@ -99,7 +98,7 @@ export default function Carousel() {
                   <iframe
                     width="1120"
                     height="630"
-                    src={trailer}
+                    src={`${trailer}?autoplay=1`}
                     title="YouTube video player"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

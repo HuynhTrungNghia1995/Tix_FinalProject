@@ -33,21 +33,27 @@
   border: none;
 }
 
-.intro-film .list-film .nav-item .active {
-  border: none;
+.intro-film .list-film .nav-item .active .button-link {
   font-size: 1.6rem;
   color: #fa5238;
 }
 
 .intro-film .list-film .nav-item a {
+  border: none;
+}
+
+.intro-film .list-film .nav-item .button-link {
+  border: none;
   color: #000;
   font-size: 1.25rem;
   height: 1.6rem;
   line-height: 1.6rem;
-  font-weight: 500;
+  font-weight: 550;
+  background-color: none;
 }
 
-.intro-film .list-film .nav-item a:hover {
+.intro-film .list-film .nav-item .button-link:hover {
+  background-color: transparent !important;
   border: none;
   font-size: 1.6rem;
   transition: 0.2s;

@@ -35,7 +35,7 @@ export default function News() {
   };
   return (
     <Fragment>
-      <section class="news">
+      <section className="news" id="news">
         <div className="container">
           <div
             className="tab-nav nav-news"
