@@ -36,6 +36,15 @@
   transition: all 0.3s;
 }
 
+.header .navbar-collapse .item-right .nav-item .logout {
+  margin-top: -5px !important;
+  text-transform: none;
+}
+
+.header .navbar-collapse .item-right .nav-item .logout span:hover {
+  font-size: 16px;
+}
+
 .header .navbar-collapse .item-right .city-drop:focus {
   box-shadow: transparent;
 }
