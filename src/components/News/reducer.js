@@ -478,9 +478,39 @@ const initialState = [
     }
 ]
 const newsReducer = (state = initialState, action) => {
+    const { type, payload, more } = action;
+    switch (type) {
+        case "READ_MORE":
+            if (more) {
+                const data = payload;
+                // có nút xem thêm tức là countRow < 3
+                document.getElementById(
+                    `${data.id}-${data.listNews[data.countRow].id}`
+                ).style.display = "flex";
+                state.forEach((item) => {
+                    if (item.id === data.id) {
+                        item.countRow++;
+                    }
+                })
+            }
+
+            else {
+                const data = payload;
+                document.getElementById(
+                    `${data.id}-${data.listNews[data.countRow - 1].id}`
+                ).style.display = "none";
+                state.forEach((item) => {
+                    if (item.id === data.id) {
+                        item.countRow--;
+                    }
+                })
+
+            }
+            return [...state];
+        default: return [...state];
 
 
-    return [...state];
+    }
 
 }
 export default newsReducer;
