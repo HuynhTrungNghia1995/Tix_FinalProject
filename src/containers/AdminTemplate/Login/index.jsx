@@ -112,12 +112,14 @@ export default function Login(props) {
     }
     const handleValidationAccount = () => {
         if (state.taiKhoan === "") {
-            setEmptyUsernameNotice(true)
+            setEmptyUsernameNotice(true);
+            setIsDisable(true);
         }
     }
     const handleValidationPassword = () => {
         if (state.matKhau === "") {
-            setEmptyPasswordNotice(true)
+            setEmptyPasswordNotice(true);
+            setIsDisable(true);
         }
     }
     const handleReset = () => {
