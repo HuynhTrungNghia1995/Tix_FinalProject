@@ -7,18 +7,46 @@ export default function News() {
   const data = useSelector((state) => state.newsReducer);
   const dispatch = useDispatch();
   console.log(data);
-  const handleOnClick = (data) => {
-    return () => {
-      document.getElementById(
-        `${data.id}-${data.listNews[data.countRow].id}`
-      ).style.display = "flex";
-    };
+  const handleOnClick = (data, more = true) => {
+    return () =>
+      dispatch({
+        type: "READ_MORE",
+        payload: data,
+        more,
+      });
+    // return () => {
+    //   document.getElementById(
+    //     `${data.id}-${data.listNews[data.countRow].id}`
+    //   ).style.display = "flex";
+    // };
+  };
+  const renderButtonMore = (item) => {
+    if (item.countRow < 3) {
+      return (
+        <button onClick={handleOnClick(item)} className="btn more" id="more">
+          XEM THÊM
+        </button>
+      );
+    }
+  };
+  const renderButtonCollapse = (item) => {
+    if (item.countRow > 1) {
+      return (
+        <button
+          onClick={handleOnClick(item, false)}
+          className="btn more"
+          id="collapse"
+        >
+          THU GỌN
+        </button>
+      );
+    }
   };
   const renderTabPaneNews = () => {
     return data.map((item, index) => {
       return (
         <div
-          class={index == 0 ? "tab-pane fade show active" : "tab-pane fade"}
+          className={index == 0 ? "tab-pane fade show active" : "tab-pane fade"}
           id={"pills-" + item.id}
           key={index}
           role="tabpanel"
@@ -26,9 +54,10 @@ export default function News() {
         >
           <TabPaneContent data={item} />
 
-          <button onClick={handleOnClick(item)} className="btn more" id="more">
-            XEM THÊM
-          </button>
+          <div className="d-flex justify-content-center">
+            {renderButtonMore(item)}
+            {renderButtonCollapse(item)}
+          </div>
         </div>
       );
     });
