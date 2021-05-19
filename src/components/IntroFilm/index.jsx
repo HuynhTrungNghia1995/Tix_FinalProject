@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import { fetchFilmList } from "../../containers/AdminTemplate/FilmManagement/modules/action";
@@ -8,13 +8,20 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import Button from "@material-ui/core/Button";
+import AsyncCreatableSelect from "react-select/creatable";
+import { fetchShowtimeFilm } from "../../containers/AdminTemplate/ShowTimesManagement/modules/action";
 
 export default function IntroFilm() {
   const [IDGroup, setIDGroup] = useState("GP01");
+  const [valueFilm, setValueFilm] = useState(null);
+  console.log("value film", valueFilm);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchFilmList(IDGroup));
+    if (valueFilm) {
+      dispatch(fetchShowtimeFilm(valueFilm.id));
+    }
   }, [IDGroup]);
 
   const checkTypeGroup = (type) => {
@@ -22,20 +29,29 @@ export default function IntroFilm() {
     else if (type === "coming") setIDGroup("GP02");
   };
 
-  const state = useSelector((state) => state.fetchFilmListReducer);
+  const showtimeReducer = useSelector(
+    (showtimeReducer) => showtimeReducer.fetchShowtimeReducer
+  );
+  console.log("showtimeReducer", showtimeReducer);
+  const filmListReducer = useSelector(
+    (filmListReducer) => filmListReducer.fetchFilmListReducer
+  );
   // Tao 1 mang 2 chieu danh sach phim, moi phan tu chua 8 film de lam thanh 1 slider
   let filmList;
-  if (state.data && state.data.length > 0) {
-    filmList = new Array(Math.floor(state.data.length / 8) + 1);
+  if (filmListReducer.data && filmListReducer.data.length > 0) {
+    filmList = new Array(Math.floor(filmListReducer.data.length / 8) + 1);
     filmList.forEach((filmSlider) => {
       filmSlider = [];
     });
 
     for (let i = 0; i < filmList.length - 1; i++) {
-      filmList[i] = state.data.slice(i * 8, (i + 1) * 8);
+      filmList[i] = filmListReducer.data.slice(i * 8, (i + 1) * 8);
     }
     let beg = (filmList.length - 1) * 8;
-    filmList[filmList.length - 1] = state.data.slice(beg, state.data.length);
+    filmList[filmList.length - 1] = filmListReducer.data.slice(
+      beg,
+      filmListReducer.data.length
+    );
   }
 
   const useStyles = makeStyles((theme) => ({
@@ -61,12 +77,12 @@ export default function IntroFilm() {
 
   const handleOpen = (id, idx) => {
     setOpen(true);
-    let index = state.data.findIndex((film) => film.maPhim === id);
+    let index = filmListReducer.data.findIndex((film) => film.maPhim === id);
     if (index !== -1) {
       setStateFilm({
         id: id,
         index: idx,
-        trailer: state.data[index].trailer,
+        trailer: filmListReducer.data[index].trailer,
       });
     }
   };
@@ -226,7 +242,7 @@ export default function IntroFilm() {
   };
 
   const renderArrow = (id) => {
-    if (state.data && state.data.length > 0) {
+    if (filmListReducer.data && filmListReducer.data.length > 0) {
       return (
         <React.Fragment>
           <a
@@ -276,113 +292,83 @@ export default function IntroFilm() {
     }
   };
 
+  // Film Select Option
+  let optionFilms = [];
+  if (filmListReducer.data && filmListReducer.data.length > 0) {
+    filmListReducer.data.forEach((film, index) => {
+      optionFilms.push({
+        id: film.maPhim,
+        value: `${film.tenPhim}`,
+        label: `${film.tenPhim}`,
+      });
+    });
+  }
+
+  const handleChange = useCallback(
+    (inputValue) => setValueFilm(inputValue),
+    []
+  );
+
+  const loadOptions = (inputValue, callback) =>
+    setTimeout(() => {
+      callback(
+        optionFilms?.filter((item) =>
+          item.label.toLowerCase().includes(inputValue.toLowerCase())
+        )
+      );
+    }, 3000);
+
   return (
     <section id="intro-film" className="intro-film">
       <div className="container box-ticket">
         <div class="row border rounded py-4 order-ticker">
           <div class="col-xl-4">
-            <div class="nav-item dropdown city-drop border-right">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="text-span1">Phim</span>
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="#">
-                  Hồ Chí Minh
-                </a>
-                <a class="dropdown-item" href="#">
-                  Hà Nội
-                </a>
-              </div>
-            </div>
+            <AsyncCreatableSelect
+              isClearable
+              value={valueFilm}
+              options={optionFilms}
+              onChange={handleChange}
+              cacheOptions
+              loadOptions={loadOptions}
+              formatCreateLabel={() => undefined}
+              placeholder="Phim"
+            />
           </div>
           <div class="col-xl-2 pl-0">
-            <div class="nav-item dropdown city-drop border-right">
-              <a
-                class="nav-link dropdown-toggle text-decoration-none"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="text-span2">Rạp</span>
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="#">
-                  Hồ Chí Minh
-                </a>
-                <a class="dropdown-item" href="#">
-                  Hà Nội
-                </a>
-              </div>
-            </div>
+            <AsyncCreatableSelect
+              isClearable
+              value={valueFilm}
+              options={optionFilms}
+              onChange={handleChange}
+              cacheOptions
+              loadOptions={loadOptions}
+              formatCreateLabel={() => undefined}
+              placeholder="Rạp"
+            />
           </div>
           <div class="col-xl-2 pl-0">
-            <div class="nav-item dropdown city-drop border-right">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="text-span">Ngày Xem</span>
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="#">
-                  Hồ Chí Minh
-                </a>
-                <a class="dropdown-item" href="#">
-                  Hà Nội
-                </a>
-              </div>
-            </div>
+            <AsyncCreatableSelect
+              isClearable
+              value={valueFilm}
+              options={optionFilms}
+              onChange={handleChange}
+              cacheOptions
+              loadOptions={loadOptions}
+              formatCreateLabel={() => undefined}
+              placeholder="Ngày xem"
+            />
           </div>
           <div class="col-xl-2 pl-0">
-            <div class="nav-item dropdown city-drop border-right">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="text-span">Xuất Chiếu</span>
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="#">
-                  Hồ Chí Minh
-                </a>
-                <a class="dropdown-item" href="#">
-                  Hà Nội
-                </a>
-              </div>
-            </div>
+            <AsyncCreatableSelect
+              isClearable
+              value={valueFilm}
+              options={optionFilms}
+              onChange={handleChange}
+              cacheOptions
+              loadOptions={loadOptions}
+              formatCreateLabel={() => undefined}
+              placeholder="Xuất chiếu"
+            />{" "}
           </div>
           <div class="col-xl-2">
             <button type="button" class="btn px-3">
@@ -391,6 +377,7 @@ export default function IntroFilm() {
           </div>
         </div>
       </div>
+
       <div className="list-film">
         <ul className="nav nav-tabs" id="myTab" role="tablist">
           <li className="nav-item" role="presentation">
@@ -418,7 +405,6 @@ export default function IntroFilm() {
               >
                 Sắp Chiếu
               </Button>
-              {/* Sắp Chiếu */}
             </a>
           </li>
         </ul>
