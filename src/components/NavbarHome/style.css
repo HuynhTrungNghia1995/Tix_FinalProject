@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   opacity: 0.9;
-  z-index: 10;
+  z-index: 100;
 }
 
 .header .navbar-brand img {
@@ -16,8 +16,10 @@
 }
 
 .header .navbar-collapse .item-left .nav-item a:hover {
-  transition: 0.2s;
-  color: #fb4226 !important;
+  color: #fb4226;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
 .header .navbar-collapse .item-right .nav-item .user-icon {
@@ -34,6 +36,14 @@
   font-size: 18px;
   font-weight: 600;
   transition: all 0.3s;
+}
+
+.header .navbar-collapse .item-right .nav-item .logout {
+  text-transform: none;
+}
+
+.header .navbar-collapse .item-right .nav-item .logout span:hover {
+  font-size: 14px;
 }
 
 .header .navbar-collapse .item-right .city-drop:focus {
