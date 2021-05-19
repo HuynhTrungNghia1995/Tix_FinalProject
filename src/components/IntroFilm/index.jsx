@@ -103,11 +103,9 @@ export default function IntroFilm() {
     let idx = count++;
     if (film) {
       return (
-        <div className="col-xl-3 col-lg-3 col-md-3">
+        <div className="col-lg-3 col-md-4 col-6 pb-5">
           <div className="item">
             <img
-              width={215}
-              height={318}
               alt={film.biDanh}
               src={film.hinhAnh}
               className="film-poster border rounded"
@@ -163,15 +161,16 @@ export default function IntroFilm() {
                           }}
                         />
                       </button>
-                      <iframe
-                        width="1120"
-                        height="630"
-                        src={`${stateFilm.trailer}?autoplay=1`}
-                        title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
+                      <div className="trailer_container">
+                        <iframe
+                          className="responsive_iframe"
+                          src={`${stateFilm.trailer}?autoplay=1`}
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        ></iframe>
+                      </div>
                     </div>
                   </Fade>
                 </Modal>
@@ -244,7 +243,7 @@ export default function IntroFilm() {
               style={{
                 width: 50,
                 height: 50,
-                marginRight: -50,
+                marginRight: 20,
               }}
               alt=""
               src="./images/back-session.png"
@@ -265,6 +264,7 @@ export default function IntroFilm() {
               style={{
                 width: 50,
                 height: 50,
+                marginLeft: 20,
               }}
               alt=""
               src="./images/next-session.png"

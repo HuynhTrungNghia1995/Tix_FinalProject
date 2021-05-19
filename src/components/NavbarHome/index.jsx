@@ -1,7 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React, { Fragment, useState } from "react";
 import "./style.css";
-import { Button } from "@material-ui/core";
+import { Avatar, Button } from "@material-ui/core";
 
 export default function NavbarHome() {
   const user = JSON.parse(localStorage.getItem("User"));
@@ -11,13 +11,13 @@ export default function NavbarHome() {
     if (user) {
       return (
         <Fragment>
-          <li className="nav-item login border-right">
+          <li className="nav-item border-right">
             <div className="nav-link d-flex">
-              <i className="fa fa-user-circle user-icon" />
+              <Avatar src="https://i.pravatar.cc/32" alt="avatar" />
               <span className="mt-1 ml-1 px-1">{user.hoTen}</span>
             </div>
           </li>
-          <li className="nav-item register">
+          <li className="nav-item">
             <div className="nav-link d-flex">
               <Button
                 className="logout"
@@ -35,13 +35,13 @@ export default function NavbarHome() {
     } else {
       return (
         <Fragment>
-          <li className="nav-item login border-right">
+          <li className="nav-item border-right">
             <NavLink className="nav-link d-flex" to="/login">
               <i className="fa fa-user-circle user-icon" />
               <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
             </NavLink>
           </li>
-          <li className="nav-item register">
+          <li className="nav-item">
             <NavLink className="nav-link d-flex" to="/register">
               <span className="mt-1 ml-1 px-1">Đăng Ký</span>
             </NavLink>
@@ -54,12 +54,12 @@ export default function NavbarHome() {
   return (
     <header id="header" className="header">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a
+        <Link
           className="navbar-brand ml-3 col-sm-10 col-md-2 col-lg-3 col-xl-4"
-          href="#header"
+          to="/"
         >
           <img src="./images/logo.png" target="logo" alt="logo" />
-        </a>
+        </Link>
         <button
           className="navbar-toggler col-sm-1"
           type="button"
@@ -97,7 +97,12 @@ export default function NavbarHome() {
               </a>
             </li>
           </ul>
-          <ul className="navbar-nav item-right col-md-5">{renderStatus()}</ul>
+          <ul
+            className="navbar-nav item-right col-md-5"
+            style={{ justifyContent: "center" }}
+          >
+            {renderStatus()}
+          </ul>
         </div>
       </nav>
     </header>
