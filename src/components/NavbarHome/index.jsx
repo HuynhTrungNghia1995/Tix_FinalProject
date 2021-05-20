@@ -11,7 +11,7 @@ export default function NavbarHome() {
     if (user) {
       return (
         <Fragment>
-          <li className="nav-item border-right">
+          <li className="nav-item border-right user">
             <div className="nav-link d-flex">
               <Avatar src="https://i.pravatar.cc/32" alt="avatar" />
               <span className="mt-1 ml-1 px-1">{user.hoTen}</span>
@@ -53,15 +53,15 @@ export default function NavbarHome() {
 
   return (
     <header id="header" className="header">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-md navbar-light bg-light">
         <Link
-          className="navbar-brand ml-3 col-sm-10 col-md-2 col-lg-3 col-xl-4"
+          className="navbar-brand ml-3 col-5 col-md-2 col-lg-3 col-xl-4"
           to="/"
         >
           <img src="./images/logo.png" target="logo" alt="logo" />
         </Link>
         <button
-          className="navbar-toggler col-sm-1"
+          className="navbar-toggler col-1 mr-3"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNavDropdown"

@@ -11,6 +11,15 @@
   height: 2.5rem;
 }
 
+.header .navbar-light .navbar-toggler {
+  border-color: transparent !important;
+}
+
+.header .navbar-light .navbar-toggler-icon {
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
 .header .navbar-collapse .item-left .nav-item a {
   color: #000000;
 }
@@ -38,11 +47,18 @@
   transition: all 0.3s;
 }
 
+.header .navbar-collapse .item-right .user span:hover {
+  color: #3a3a3a;
+  font-size: 16px;
+  font-weight: normal;
+  transition: none;
+}
+
 .header .navbar-collapse .item-right .nav-item .logout {
   text-transform: none;
 }
 
-.header .navbar-collapse .item-right .nav-item .logout span:hover {
+.header .navbar-collapse .item-right .nav-item .logout:hover {
   font-size: 14px;
 }
 

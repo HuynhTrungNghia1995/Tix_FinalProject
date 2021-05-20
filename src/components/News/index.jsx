@@ -6,7 +6,7 @@ import "./style.css";
 export default function News() {
   const data = useSelector((state) => state.newsReducer);
   const dispatch = useDispatch();
-  console.log(data);
+  // console.log(data);
   const handleOnClick = (data, more = true) => {
     return () =>
       dispatch({

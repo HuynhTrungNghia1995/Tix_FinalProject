@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import { fetchFilmList } from "../../containers/AdminTemplate/FilmManagement/modules/action";
@@ -8,20 +8,15 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import Button from "@material-ui/core/Button";
-import AsyncCreatableSelect from "react-select/creatable";
-import { fetchShowtimeFilm } from "../../containers/AdminTemplate/ShowTimesManagement/modules/action";
+import FilmSelection from "../FilmSelection";
 
 export default function IntroFilm() {
   const [IDGroup, setIDGroup] = useState("GP01");
-  const [valueFilm, setValueFilm] = useState(null);
-  console.log("value film", valueFilm);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchFilmList(IDGroup));
-    if (valueFilm) {
-      dispatch(fetchShowtimeFilm(valueFilm.id));
-    }
   }, [IDGroup]);
 
   const checkTypeGroup = (type) => {
@@ -29,13 +24,10 @@ export default function IntroFilm() {
     else if (type === "coming") setIDGroup("GP02");
   };
 
-  const showtimeReducer = useSelector(
-    (showtimeReducer) => showtimeReducer.fetchShowtimeReducer
-  );
-  console.log("showtimeReducer", showtimeReducer);
   const filmListReducer = useSelector(
     (filmListReducer) => filmListReducer.fetchFilmListReducer
   );
+
   // Tao 1 mang 2 chieu danh sach phim, moi phan tu chua 8 film de lam thanh 1 slider
   let filmList;
   if (filmListReducer.data && filmListReducer.data.length > 0) {
@@ -163,21 +155,20 @@ export default function IntroFilm() {
                     }
                   >
                     <div className={classes.paper}>
-                      <button
-                        type="button"
-                        className="close"
-                        onClick={handleClose}
-                      >
-                        <HighlightOffOutlinedIcon
-                          style={{
-                            color: "white",
-                            fontSize: 50,
-                            marginTop: -30,
-                            marginLeft: -25,
-                          }}
-                        />
-                      </button>
                       <div className="trailer_container">
+                        <button
+                          type="button"
+                          className="close"
+                          onClick={handleClose}
+                        >
+                          <HighlightOffOutlinedIcon
+                            style={{
+                              color: "white",
+                              fontSize: 50,
+                            }}
+                          />
+                        </button>
+
                         <iframe
                           className="responsive_iframe"
                           src={`${stateFilm.trailer}?autoplay=1`}
@@ -193,20 +184,26 @@ export default function IntroFilm() {
               </div>
               <div className="background_hidden" />
               <button className="btn">
-                <a href="#slider" className="text-white">
+                <a
+                  href="#slider"
+                  className="text-white"
+                  style={{
+                    textDecoration: "none",
+                  }}
+                >
                   MUA VÉ
                 </a>
               </button>
             </div>
             <div className="content-text">
               <div className="film-name">
-                <span className="btn red-age">{`C${
-                  Math.floor(Math.random() * 6) + 15
+                <span className="btn red-age text-white">{`C${
+                  film.danhGia + 6
                 }`}</span>
                 {` ${film.tenPhim}`}
               </div>
               <div className="time-film mt-1">
-                {100 + Math.floor(Math.random() * 100)} phút
+                {50 + film.danhGia * 10} phút
               </div>
             </div>
           </div>
@@ -292,91 +289,10 @@ export default function IntroFilm() {
     }
   };
 
-  // Film Select Option
-  let optionFilms = [];
-  if (filmListReducer.data && filmListReducer.data.length > 0) {
-    filmListReducer.data.forEach((film, index) => {
-      optionFilms.push({
-        id: film.maPhim,
-        value: `${film.tenPhim}`,
-        label: `${film.tenPhim}`,
-      });
-    });
-  }
-
-  const handleChange = useCallback(
-    (inputValue) => setValueFilm(inputValue),
-    []
-  );
-
-  const loadOptions = (inputValue, callback) =>
-    setTimeout(() => {
-      callback(
-        optionFilms?.filter((item) =>
-          item.label.toLowerCase().includes(inputValue.toLowerCase())
-        )
-      );
-    }, 3000);
-
+  // render Intro-Film
   return (
     <section id="intro-film" className="intro-film">
-      <div className="container box-ticket">
-        <div class="row border rounded py-4 order-ticker">
-          <div class="col-xl-4">
-            <AsyncCreatableSelect
-              isClearable
-              value={valueFilm}
-              options={optionFilms}
-              onChange={handleChange}
-              cacheOptions
-              loadOptions={loadOptions}
-              formatCreateLabel={() => undefined}
-              placeholder="Phim"
-            />
-          </div>
-          <div class="col-xl-2 pl-0">
-            <AsyncCreatableSelect
-              isClearable
-              value={valueFilm}
-              options={optionFilms}
-              onChange={handleChange}
-              cacheOptions
-              loadOptions={loadOptions}
-              formatCreateLabel={() => undefined}
-              placeholder="Rạp"
-            />
-          </div>
-          <div class="col-xl-2 pl-0">
-            <AsyncCreatableSelect
-              isClearable
-              value={valueFilm}
-              options={optionFilms}
-              onChange={handleChange}
-              cacheOptions
-              loadOptions={loadOptions}
-              formatCreateLabel={() => undefined}
-              placeholder="Ngày xem"
-            />
-          </div>
-          <div class="col-xl-2 pl-0">
-            <AsyncCreatableSelect
-              isClearable
-              value={valueFilm}
-              options={optionFilms}
-              onChange={handleChange}
-              cacheOptions
-              loadOptions={loadOptions}
-              formatCreateLabel={() => undefined}
-              placeholder="Xuất chiếu"
-            />{" "}
-          </div>
-          <div class="col-xl-2">
-            <button type="button" class="btn px-3">
-              Mua Vé Ngay
-            </button>
-          </div>
-        </div>
-      </div>
+      <FilmSelection filmList={filmListReducer.data} />
 
       <div className="list-film">
         <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -419,7 +335,7 @@ export default function IntroFilm() {
               className="carousel slide"
               data-ride="carousel"
             >
-              <div className="carousel-inner pt-5 mt-5">{renderFilmList()}</div>
+              <div className="carousel-inner mt-5">{renderFilmList()}</div>
               {renderArrow("carousel_showing")}
             </div>
           </div>
@@ -429,7 +345,7 @@ export default function IntroFilm() {
               className="carousel slide"
               data-ride="carousel"
             >
-              <div className="carousel-inner pt-5 mt-5">{renderFilmList()}</div>
+              <div className="carousel-inner mt-5">{renderFilmList()}</div>
               {renderArrow("carousel_coming")}
             </div>
           </div>

@@ -150,3 +150,11 @@ export const addShowTimeFailed = (err) => {
     payload: err,
   };
 };
+
+export const setShowTimeReset = () => {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.FETCH_FILM_SHOWTIME_RESET,
+    });
+  };
+};
