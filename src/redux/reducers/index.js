@@ -1,6 +1,6 @@
 
 import { combineReducers } from 'redux';
-import authReducer from "../../containers/AdminTemplate/Login/modules/reducer"
+import authReducer from "../../containers/HomeTemplate/Login/modules/reducer"
 import registerUserReducer from "../../containers/HomeTemplate/Register/modules/reducer"
 import systemCinemaReducer from "../../components/Schedule/modules/reducer";
 import newsReducer from "../../components/News/reducer";

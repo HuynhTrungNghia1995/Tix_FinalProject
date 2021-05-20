@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, setResetRegister } from './modules/action';
 import { Alert } from '@material-ui/lab';
 import "./style.css"
-import Loading from '../Loading';
+import Loading from '../../../components/Loading';
 
 function Copyright() {
     return (
@@ -31,6 +31,7 @@ function Copyright() {
 const bg = process.env.PUBLIC_URL + "images/backapp.jpg";
 const useStyles = makeStyles((theme) => ({
     bgRoot: {
+        marginTop: theme.spacing(8),
         background: `url(${bg})`,
         height: "100vh"
     },
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         height: "100vh",
         background: "#fff",
-        padding: theme.spacing(8, 2, 2, 2),
+        padding: theme.spacing(4, 2, 2, 2),
 
     },
     avatar: {
@@ -229,96 +230,98 @@ export default function Register() {
         </div>)
     }
     return (
-        <div className={classes.bgRoot}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <Avatar className="p-1 mt-1" alt="Logo" src={logo} />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign up
+        <Fragment>
+            <div className={classes.bgRoot}>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline />
+                    <div className={classes.paper}>
+                        <Avatar className={classes.avatar}>
+                            <Avatar className="p-1 mt-1" alt="Logo" src={logo} />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign up
                     </Typography>
-                    {registerErr ? <Alert severity="error">{registerErr?.response.data}</Alert> : ""}
-                    {handleValidationNotice()}
-                    <form className={classes.form} onSubmit={handleRegisterUser} noValidate>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="hoTen"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Họ Tên"
-                                    onChange={handleChangeRegister}
-                                    onBlur={handleValidationEmptyFullName}
-                                />
+                        {registerErr ? <Alert severity="error">{registerErr?.response.data}</Alert> : ""}
+                        {handleValidationNotice()}
+                        <form className={classes.form} onSubmit={handleRegisterUser} noValidate>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="hoTen"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Họ Tên"
+                                        onChange={handleChangeRegister}
+                                        onBlur={handleValidationEmptyFullName}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="taiKhoan"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Tài Khoản"
+                                        onChange={handleChangeRegister}
+                                        onBlur={handleValidationEmptyUserName}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="email"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Email"
+                                        onChange={handleChangeRegister}
+                                        onBlur={handleValidationEmail}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        fullWidth
+                                        name="matKhau"
+                                        label="Mật Khẩu"
+                                        type="password"
+                                        onChange={handleChangeRegister}
+                                        onBlur={handleValidationEmptyPassword}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        name="soDt"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Số Điện Thoại"
+                                        onChange={handleChangeRegister}
+                                        onBlur={validationPhoneNumber}
+                                    />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="taiKhoan"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Tài Khoản"
-                                    onChange={handleChangeRegister}
-                                    onBlur={handleValidationEmptyUserName}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="email"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Email"
-                                    onChange={handleChangeRegister}
-                                    onBlur={handleValidationEmail}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    name="matKhau"
-                                    label="Mật Khẩu"
-                                    type="password"
-                                    onChange={handleChangeRegister}
-                                    onBlur={handleValidationEmptyPassword}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    name="soDt"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Số Điện Thoại"
-                                    onChange={handleChangeRegister}
-                                    onBlur={validationPhoneNumber}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            disabled={isDisable}
-                        >
-                            Sign Up
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                disabled={isDisable}
+                            >
+                                Sign Up
                         </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <NavLink to="/login" variant="body2" style={{ color: "#82ada9" }}>
-                                    Already have an account? Sign in
+                            <Grid container justify="flex-end">
+                                <Grid item>
+                                    <NavLink to="/login" variant="body2" style={{ color: "#82ada9" }}>
+                                        Already have an account? Sign in
               </NavLink>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </form>
-                    <Box>
-                        <Copyright />
-                    </Box>
-                </div>
-            </Container>
+                            <Box className="mt-4">
+                                <Copyright />
+                            </Box>
+                        </form>
 
-        </div>
+                    </div>
+                </Container>
+            </div>
+        </Fragment>
     );
 }
