@@ -1,7 +1,11 @@
 import React from "react";
 import { Route } from "react-router";
+import NavbarHome from '../../components/NavbarHome'
 function LayoutHome(props) {
-  return <>{props.children}</>;
+  return <>
+    <NavbarHome />
+    {props.children}
+  </>;
 }
 
 export default function HomeTemplate({ Component, ...props }) {
