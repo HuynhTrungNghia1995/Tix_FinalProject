@@ -24,6 +24,11 @@ export const fetchShowtimeReducer = (
       state.data = null;
       state.err = payload;
       return { ...state };
+    case actionTypes.FETCH_FILM_SHOWTIME_RESET:
+      state.loading = false;
+      state.data = null;
+      state.err = null;
+      return { ...state };
     default:
       return { ...state };
   }

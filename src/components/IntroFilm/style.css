@@ -1,32 +1,3 @@
-.intro-film .container .row {
-  position: relative;
-  left: 0;
-  bottom: 3rem;
-  background-color: white;
-}
-
-.intro-film .container .row a {
-  text-decoration: none;
-  color: #000;
-}
-
-.intro-film .container .row a .text-span1 {
-  padding-right: 80%;
-}
-
-.intro-film .container .row a .text-span2 {
-  padding-right: 65%;
-}
-
-.intro-film .container .row a .text-span {
-  padding-right: 25%;
-}
-
-.intro-film .container .row .btn {
-  background-color: #4a4a4a;
-  color: #fff;
-}
-
 .intro-film .list-film .nav-tabs {
   display: flex;
   justify-content: center;
@@ -448,8 +419,11 @@
   margin-bottom: 6rem;
 }
 
-.intro-film .box-ticket {
-  max-width: 1140px !important;
+.close {
+  position: absolute;
+  top: -25px;
+  z-index: 1;
+  right: -25px;
 }
 
 .trailer_container {
@@ -518,19 +492,9 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
-  .intro-film .hidden-content {
-    display: none !important;
-    opacity: 0;
-  }
-  .intro-film .content-text {
-    text-align: left !important;
-  }
-  .intro-film .item:hover .hidden-content {
-    visibility: hidden !important;
-    opacity: 0 !important;
-  }
-  .intro-film .item > img {
+@media only screen and (max-width: 767px) {
+  .intro-film .item > img,
+  .intro-film .hidden-content .background_hidden {
     width: 340px !important;
     height: 490px !important;
   }
@@ -539,12 +503,35 @@
   }
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 690px) {
+  .intro-film .item:hover .hidden-content {
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+  .intro-film .hidden-content {
+    display: none !important;
+    opacity: 0;
+  }
+  .intro-film .content-text {
+    text-align: left !important;
+  }
   .intro-film .rating {
-    left: 73% !important;
+    left: 68% !important;
   }
   .intro-film .item > img {
-    width: 290px !important;
-    height: 420px !important;
+    width: 100% !important;
+    height: 350px !important;
+  }
+  .intro-film .content-text {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .intro-film .item > img {
+    height: 250px !important;
+  }
+  .intro-film .rating {
+    display: none;
   }
 }

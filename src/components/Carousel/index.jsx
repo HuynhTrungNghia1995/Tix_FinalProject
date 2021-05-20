@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -84,18 +84,19 @@ export default function Carousel() {
             >
               <Fade in={slider.maPhim === id ? open : false}>
                 <div className={classes.paper}>
-                  <button type="button" className="close" onClick={handleClose}>
-                    <HighlightOffOutlinedIcon
-                      style={{
-                        color: "white",
-                        fontSize: 50,
-                        marginTop: -30,
-                        marginLeft: -25,
-                      }}
-                    />
-                  </button>
-
                   <div className="trailer_container">
+                    <button
+                      type="button"
+                      className="close"
+                      onClick={handleClose}
+                    >
+                      <HighlightOffOutlinedIcon
+                        style={{
+                          color: "white",
+                          fontSize: 50,
+                        }}
+                      />
+                    </button>
                     <iframe
                       className="responsive_iframe"
                       src={`${trailer}?autoplay=1`}
