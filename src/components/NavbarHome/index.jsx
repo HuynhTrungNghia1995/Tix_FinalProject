@@ -2,10 +2,55 @@ import { Link, NavLink } from "react-router-dom";
 import React, { Fragment, useState } from "react";
 import "./style.css";
 import { Avatar, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
 export default function NavbarHome() {
   const user = JSON.parse(localStorage.getItem("User"));
   const [render, setRender] = useState(false);
+
+  const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: "2px solid #000",
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+      borderRadius: 5,
+      textAlign: "center",
+      width: 500,
+    },
+  }));
+
+  const classes = useStyles();
+  const [openLogout, setOpenLogout] = React.useState(false);
+
+  const handleOpenLogout = () => {
+    setOpenLogout(true);
+  };
+
+  const handleCloseLogout = () => {
+    localStorage.clear();
+    setOpenLogout(false);
+  };
+
+  const [openCheckout, setOpenCheckout] = React.useState(false);
+
+  const handleOpenCheckout = () => {
+    setOpenCheckout(true);
+  };
+
+  const handleCloseCheckout = () => {
+    setOpenCheckout(false);
+  };
 
   const renderStatus = () => {
     if (user) {
@@ -19,15 +64,124 @@ export default function NavbarHome() {
           </li>
           <li className="nav-item">
             <div className="nav-link d-flex">
-              <Button
-                className="logout"
-                onClick={() => {
-                  localStorage.clear();
-                  setRender(true);
-                }}
-              >
-                Đăng Xuất
-              </Button>
+              {/* thong bao Modal kiem tra co dang xuat khong */}
+              <Fragment>
+                <Button
+                  type="button"
+                  className="logout"
+                  onClick={handleOpenCheckout}
+                >
+                  Đăng Xuất
+                </Button>
+                <Modal
+                  aria-labelledby="transition-modal-title"
+                  aria-describedby="transition-modal-description"
+                  className={classes.modal}
+                  open={openCheckout}
+                  onClose={handleCloseCheckout}
+                  closeAfterTransition
+                  BackdropComponent={Backdrop}
+                  BackdropProps={{
+                    timeout: 500,
+                  }}
+                >
+                  <Fade in={openCheckout}>
+                    <div className={classes.paper}>
+                      <HelpOutlineIcon
+                        style={{
+                          color: "rgb(165 194 187)",
+                          fontSize: 100,
+                          margin: "20px 0",
+                        }}
+                      />
+                      <h2
+                        style={{
+                          fontWeight: 600,
+                          marginBottom: 20,
+                        }}
+                      >
+                        Bạn có chắc chắn muốn đăng xuất ?
+                      </h2>
+
+                      <Button
+                        className="logout mr-5"
+                        variant="contained"
+                        size="large"
+                        color="primary"
+                        onClick={handleOpenLogout}
+                      >
+                        Đồng Ý
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        onClick={handleCloseCheckout}
+                      >
+                        Hủy
+                      </Button>
+                    </div>
+                  </Fade>
+                </Modal>
+              </Fragment>
+
+              {/* thong bao modal cam on vi su dung TIX */}
+              <Fragment>
+                <Modal
+                  aria-labelledby="transition-modal-title"
+                  aria-describedby="transition-modal-description"
+                  className={classes.modal}
+                  open={openLogout}
+                  onClose={handleCloseLogout}
+                  closeAfterTransition
+                  BackdropComponent={Backdrop}
+                  BackdropProps={{
+                    timeout: 500,
+                  }}
+                >
+                  <Fade in={openLogout}>
+                    <div className={classes.paper}>
+                      <CheckRoundedIcon
+                        style={{
+                          color: "rgb(95 216 95)",
+                          fontSize: 90,
+                          margin: "20px 0",
+                          border: "5px solid rgb(204 255 204)",
+                          borderRadius: "50%",
+                        }}
+                      />
+                      <h2
+                        style={{
+                          fontWeight: 600,
+                          marginBottom: 15,
+                        }}
+                      >
+                        Đã đăng xuất
+                      </h2>
+                      <p
+                        style={{
+                          fontSize: 20,
+                        }}
+                      >
+                        Cảm ơn bạn đã sử dụng TIX
+                      </p>
+                      <Button
+                        variant="contained"
+                        size="large"
+                        color="primary"
+                        style={{
+                          padding: "10px 30px",
+                        }}
+                        onClick={() => {
+                          setRender(true);
+                          localStorage.clear();
+                        }}
+                      >
+                        OK
+                      </Button>
+                    </div>
+                  </Fade>
+                </Modal>
+              </Fragment>
             </div>
           </li>
         </Fragment>
