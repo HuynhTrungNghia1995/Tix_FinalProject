@@ -487,23 +487,20 @@ const newsReducer = (state = initialState, action) => {
                 document.getElementById(
                     `${data.id}-${data.listNews[data.countRow].id}`
                 ).style.display = "flex";
-                state.forEach((item) => {
-                    if (item.id === data.id) {
-                        item.countRow++;
-                    }
-                })
+                data.countRow++;
             }
 
             else {
+                // collapse
                 const data = payload;
-                document.getElementById(
-                    `${data.id}-${data.listNews[data.countRow - 1].id}`
-                ).style.display = "none";
-                state.forEach((item) => {
-                    if (item.id === data.id) {
-                        item.countRow--;
-                    }
-                })
+                while (data.countRow > 1) {
+                    data.countRow--;
+                    document.getElementById(
+                        `${data.id}-${data.listNews[data.countRow].id}`
+                    ).style.display = "none";
+                }
+
+
 
             }
             return [...state];

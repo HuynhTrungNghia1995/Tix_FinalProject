@@ -2,6 +2,7 @@ import Home from "../containers/HomeTemplate/Home";
 import Dashboard from "../containers/AdminTemplate/DashBoard";
 import Login from "../containers/AdminTemplate/Login";
 import Register from "../containers/HomeTemplate/Register";
+import FilmDetail from "../containers/HomeTemplate/FilmDetail";
 
 const routeHome = [
   {
@@ -14,6 +15,11 @@ const routeHome = [
     path: "/register",
     component: Register,
   },
+  {
+    exact: false,
+    path: "/film-detail",
+    component: FilmDetail,
+  }
 ];
 
 const routeAdmin = [
