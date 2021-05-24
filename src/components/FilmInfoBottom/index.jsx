@@ -1,6 +1,8 @@
 import React from "react";
 import "./style.css";
-export default function FilmInfoBottom() {
+export default function FilmInfoBottom(props) {
+  const { film } = props;
+  const date = new Date(film.ngayKhoiChieu);
   return (
     <div className="detailFilmBottom">
       <section className="detailMain">
@@ -51,7 +53,13 @@ export default function FilmInfoBottom() {
                 <div class="col-sm-6 col-xs-12 film left">
                   <div class="row rowLeftInfo">
                     <p class="contentTitle">Ngày công chiếu</p>
-                    <p class="contentInfo ">30.04.2021</p>
+                    <p class="contentInfo ">
+                      {date.getDate() +
+                        "." +
+                        date.getMonth() +
+                        "." +
+                        date.getFullYear()}
+                    </p>
                   </div>
 
                   <div class="row rowLeftInfo">
@@ -66,7 +74,7 @@ export default function FilmInfoBottom() {
 
                   <div class="row rowLeftInfo">
                     <p class="contentTitle">Thể Loại</p>
-                    <p class="contentInfo ">hài hước</p>
+                    <p class="contentInfo ">Hài hước</p>
                   </div>
 
                   <div class="row rowLeftInfo">
@@ -86,12 +94,7 @@ export default function FilmInfoBottom() {
                   </div>
 
                   <div class="row rowLeftInfo">
-                    <p class="contentInfoFull description">
-                      Trạng Tí chuyển thể từ truyện tranh nổi tiếng Thần đồng
-                      đất Việt, xoay quanh Tí - cậu bé thông minh, láu lỉnh.
-                      Cùng các bạn Sửu, Dần, Mẹo, cậu nhiều lần giúp triều đình
-                      thoát khỏi các tình huống nguy hiểm, chống lại ngoại bang
-                    </p>
+                    <p class="contentInfoFull description">{film.moTa}</p>
                   </div>
 
                   <div class="row rowLeftInfo">
@@ -111,7 +114,7 @@ export default function FilmInfoBottom() {
                 <div className="row isFlex detailMainStyle">
                   <div className="col-sm-12 col-xs-12 dadInputReviewer newDesign">
                     <span className="imgReviewer">
-                      <img src="./images/avatar.png" />
+                      <img src="/images/avatar.png" />
                     </span>
                     <input
                       className="inputReviwer"
@@ -120,7 +123,7 @@ export default function FilmInfoBottom() {
                       readOnly="readonly"
                     />
                     <span className="imgReviewerStar">
-                      <img src="./images/listStar.png" />
+                      <img src="/images/listStar.png" />
                     </span>
                   </div>
                 </div>
@@ -153,23 +156,23 @@ export default function FilmInfoBottom() {
                           <div id={148039} className="star">
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                           </div>
                         </div>
@@ -188,7 +191,7 @@ export default function FilmInfoBottom() {
                           >
                             <img
                               className="iconFacebook postLikeCmt"
-                              src="./images/like.png"
+                              src="/images/like.png"
                             />
                             <span className="amount like">
                               <strong>2</strong> Thích
@@ -225,23 +228,23 @@ export default function FilmInfoBottom() {
                           <div id={148039} className="star">
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                           </div>
                         </div>
@@ -260,7 +263,7 @@ export default function FilmInfoBottom() {
                           >
                             <img
                               className="iconFacebook postLikeCmt"
-                              src="./images/like.png"
+                              src="/images/like.png"
                             />
                             <span className="amount like">
                               <strong>2</strong> Thích
@@ -297,19 +300,19 @@ export default function FilmInfoBottom() {
                           <div id={148039} className="star">
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                             <img
                               className="smallStar"
-                              src="./images/star1.png"
+                              src="/images/star1.png"
                             />
                           </div>
                         </div>
@@ -328,7 +331,7 @@ export default function FilmInfoBottom() {
                           >
                             <img
                               className="iconFacebook postLikeCmt"
-                              src="./images/like.png"
+                              src="/images/like.png"
                             />
                             <span className="amount like">
                               <strong>2</strong> Thích

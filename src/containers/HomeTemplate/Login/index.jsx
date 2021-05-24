@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,8 +13,7 @@ import Container from '@material-ui/core/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogin, resetAuth } from './modules/action';
 import { NavLink } from 'react-router-dom';
-import { LinearProgress } from '@material-ui/core';
-import Loading from '../../HomeTemplate/Loading';
+import Loading from '../../../components/Loading';
 
 function Copyright() {
     return (
@@ -31,7 +30,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(16),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -60,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
             marginTop: theme.spacing(2),
         },
     },
+    loginLayout: {
+        marginTop: theme.spacing(8)
+    }
 }));
 
 export default function Login(props) {
@@ -112,12 +114,14 @@ export default function Login(props) {
     }
     const handleValidationAccount = () => {
         if (state.taiKhoan === "") {
-            setEmptyUsernameNotice(true)
+            setEmptyUsernameNotice(true);
+            setIsDisable(true);
         }
     }
     const handleValidationPassword = () => {
         if (state.matKhau === "") {
-            setEmptyPasswordNotice(true)
+            setEmptyPasswordNotice(true);
+            setIsDisable(true);
         }
     }
     const handleReset = () => {

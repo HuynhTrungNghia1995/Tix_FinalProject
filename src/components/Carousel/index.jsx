@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -15,7 +15,6 @@ export default function Carousel() {
     },
     paper: {
       backgroundColor: "transparent",
-      padding: theme.spacing(2, 4, 3),
     },
   }));
 
@@ -63,7 +62,7 @@ export default function Carousel() {
           className={index === 0 ? "carousel-item active" : "carousel-item"}
         >
           <img src={slider.hinhAnh} className="d-block w-100" alt="..." />
-          <div className="carousel-caption d-none d-md-block">
+          <div className="carousel-caption">
             <button
               className="play-trailer"
               type="button"
@@ -85,25 +84,28 @@ export default function Carousel() {
             >
               <Fade in={slider.maPhim === id ? open : false}>
                 <div className={classes.paper}>
-                  <button type="button" className="close" onClick={handleClose}>
-                    <HighlightOffOutlinedIcon
-                      style={{
-                        color: "white",
-                        fontSize: 50,
-                        marginTop: -30,
-                        marginLeft: -25,
-                      }}
-                    />
-                  </button>
-                  <iframe
-                    width="1120"
-                    height="630"
-                    src={`${trailer}?autoplay=1`}
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                  <div className="trailer_container">
+                    <button
+                      type="button"
+                      className="close"
+                      onClick={handleClose}
+                    >
+                      <HighlightOffOutlinedIcon
+                        style={{
+                          color: "white",
+                          fontSize: 50,
+                        }}
+                      />
+                    </button>
+                    <iframe
+                      className="responsive_iframe"
+                      src={`${trailer}?autoplay=1`}
+                      title="YouTube video player"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
                 </div>
               </Fade>
             </Modal>

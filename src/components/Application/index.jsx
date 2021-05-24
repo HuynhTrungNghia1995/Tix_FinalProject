@@ -52,7 +52,7 @@ export default function Application() {
       }}
     >
       <div className="container">
-        <div className="row">
+        <div className="row mx-0">
           <div className="col-lg-6 left">
             <h1>
               Ứng dụng tiện lợi dành cho <br />

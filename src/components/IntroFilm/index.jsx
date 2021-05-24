@@ -8,11 +8,14 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import Button from "@material-ui/core/Button";
+import FilmSelection from "../FilmSelection";
+import { Link } from "react-router-dom";
 
 export default function IntroFilm() {
   const [IDGroup, setIDGroup] = useState("GP01");
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchFilmList(IDGroup));
   }, [IDGroup]);
@@ -22,20 +25,26 @@ export default function IntroFilm() {
     else if (type === "coming") setIDGroup("GP02");
   };
 
-  const state = useSelector((state) => state.fetchFilmListReducer);
+  const filmListReducer = useSelector(
+    (filmListReducer) => filmListReducer.fetchFilmListReducer
+  );
+  console.log(filmListReducer.data);
   // Tao 1 mang 2 chieu danh sach phim, moi phan tu chua 8 film de lam thanh 1 slider
   let filmList;
-  if (state.data && state.data.length > 0) {
-    filmList = new Array(Math.floor(state.data.length / 8) + 1);
+  if (filmListReducer.data && filmListReducer.data.length > 0) {
+    filmList = new Array(Math.floor(filmListReducer.data.length / 8) + 1);
     filmList.forEach((filmSlider) => {
       filmSlider = [];
     });
 
     for (let i = 0; i < filmList.length - 1; i++) {
-      filmList[i] = state.data.slice(i * 8, (i + 1) * 8);
+      filmList[i] = filmListReducer.data.slice(i * 8, (i + 1) * 8);
     }
     let beg = (filmList.length - 1) * 8;
-    filmList[filmList.length - 1] = state.data.slice(beg, state.data.length);
+    filmList[filmList.length - 1] = filmListReducer.data.slice(
+      beg,
+      filmListReducer.data.length
+    );
   }
 
   const useStyles = makeStyles((theme) => ({
@@ -61,12 +70,12 @@ export default function IntroFilm() {
 
   const handleOpen = (id, idx) => {
     setOpen(true);
-    let index = state.data.findIndex((film) => film.maPhim === id);
+    let index = filmListReducer.data.findIndex((film) => film.maPhim === id);
     if (index !== -1) {
       setStateFilm({
         id: id,
         index: idx,
-        trailer: state.data[index].trailer,
+        trailer: filmListReducer.data[index].trailer,
       });
     }
   };
@@ -103,95 +112,114 @@ export default function IntroFilm() {
     let idx = count++;
     if (film) {
       return (
-        <div className="col-xl-3 col-lg-3 col-md-3">
+        <div className="col-lg-3 col-md-4 col-6 pb-5">
           <div className="item">
-            <img
-              width={215}
-              height={318}
-              alt={film.biDanh}
-              src={film.hinhAnh}
-              className="film-poster border rounded"
-            />
-            <div className="rating">
-              <p>{film.danhGia} </p>
-              <div className="star">{renderStars(film.danhGia)}</div>
-            </div>
-            <div className="hidden-content">
-              <div>
-                <button
-                  className="play-trailer"
-                  type="button"
-                  onClick={() => handleOpen(film.maPhim, idx)}
-                >
-                  <img alt="" src="./images/play-video.png" />
-                </button>
-                <Modal
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
-                  className={classes.modal}
-                  open={
-                    film.maPhim === stateFilm.id && idx === stateFilm.index
-                      ? open
-                      : false
-                  }
-                  onClose={handleClose}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{
-                    timeout: 500,
-                  }}
-                >
-                  <Fade
-                    in={
+            <Link
+              className="filmThumbnail"
+              to={{
+                pathname: "/film-detail/" + film.maPhim,
+                state: {
+                  film,
+                  filmList: filmListReducer.data,
+                  idx,
+                },
+              }}
+            >
+              <img
+                alt={film.biDanh}
+                src={film.hinhAnh}
+                className="film-poster border rounded"
+                onClick={() => {
+                  return () => console.log(123);
+                }}
+              />
+              <div className="rating">
+                <p>{film.danhGia} </p>
+                <div className="star">{renderStars(film.danhGia)}</div>
+              </div>
+              <div className="hidden-content">
+                <div>
+                  <button
+                    className="play-trailer"
+                    type="button"
+                    onClick={() => handleOpen(film.maPhim, idx)}
+                  >
+                    <img alt="" src="./images/play-video.png" />
+                  </button>
+                  <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={
                       film.maPhim === stateFilm.id && idx === stateFilm.index
                         ? open
                         : false
                     }
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                      timeout: 500,
+                    }}
                   >
-                    <div className={classes.paper}>
-                      <button
-                        type="button"
-                        className="close"
-                        onClick={handleClose}
-                      >
-                        <HighlightOffOutlinedIcon
-                          style={{
-                            color: "white",
-                            fontSize: 50,
-                            marginTop: -30,
-                            marginLeft: -25,
-                          }}
-                        />
-                      </button>
-                      <iframe
-                        width="1120"
-                        height="630"
-                        src={`${stateFilm.trailer}?autoplay=1`}
-                        title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
-                    </div>
-                  </Fade>
-                </Modal>
+                    <Fade
+                      in={
+                        film.maPhim === stateFilm.id && idx === stateFilm.index
+                          ? open
+                          : false
+                      }
+                    >
+                      <div className={classes.paper}>
+                        <div className="trailer_container">
+                          <button
+                            type="button"
+                            className="close"
+                            onClick={handleClose}
+                          >
+                            <HighlightOffOutlinedIcon
+                              style={{
+                                color: "white",
+                                fontSize: 50,
+                              }}
+                            />
+                          </button>
+
+                          <iframe
+                            className="responsive_iframe"
+                            src={`${stateFilm.trailer}?autoplay=1`}
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                      </div>
+                    </Fade>
+                  </Modal>
+                </div>
+                <div className="background_hidden" />
+                <button className="btn">
+                  <a
+                    href="#slider"
+                    className="text-white"
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    MUA VÉ
+                  </a>
+                </button>
               </div>
-              <div className="background_hidden" />
-              <button className="btn">
-                <a href="#slider" className="text-white">
-                  MUA VÉ
-                </a>
-              </button>
-            </div>
+            </Link>
             <div className="content-text">
               <div className="film-name">
-                <span className="btn red-age">{`C${
-                  Math.floor(Math.random() * 6) + 15
+                <span className="btn red-age text-white">{`C${
+                  film.danhGia + 6
                 }`}</span>
                 {` ${film.tenPhim}`}
               </div>
               <div className="time-film mt-1">
-                {100 + Math.floor(Math.random() * 100)} phút
+                {50 + film.danhGia * 10} phút
               </div>
             </div>
           </div>
@@ -227,7 +255,7 @@ export default function IntroFilm() {
   };
 
   const renderArrow = (id) => {
-    if (state.data && state.data.length > 0) {
+    if (filmListReducer.data && filmListReducer.data.length > 0) {
       return (
         <React.Fragment>
           <a
@@ -244,7 +272,7 @@ export default function IntroFilm() {
               style={{
                 width: 50,
                 height: 50,
-                marginRight: -50,
+                marginRight: 20,
               }}
               alt=""
               src="./images/back-session.png"
@@ -265,6 +293,7 @@ export default function IntroFilm() {
               style={{
                 width: 50,
                 height: 50,
+                marginLeft: 20,
               }}
               alt=""
               src="./images/next-session.png"
@@ -276,121 +305,11 @@ export default function IntroFilm() {
     }
   };
 
+  // render Intro-Film
   return (
     <section id="intro-film" className="intro-film">
-      <div className="container box-ticket">
-        <div class="row border rounded py-4 order-ticker">
-          <div class="col-xl-4">
-            <div class="nav-item dropdown city-drop border-right">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="text-span1">Phim</span>
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="#">
-                  Hồ Chí Minh
-                </a>
-                <a class="dropdown-item" href="#">
-                  Hà Nội
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 pl-0">
-            <div class="nav-item dropdown city-drop border-right">
-              <a
-                class="nav-link dropdown-toggle text-decoration-none"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="text-span2">Rạp</span>
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="#">
-                  Hồ Chí Minh
-                </a>
-                <a class="dropdown-item" href="#">
-                  Hà Nội
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 pl-0">
-            <div class="nav-item dropdown city-drop border-right">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="text-span">Ngày Xem</span>
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="#">
-                  Hồ Chí Minh
-                </a>
-                <a class="dropdown-item" href="#">
-                  Hà Nội
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2 pl-0">
-            <div class="nav-item dropdown city-drop border-right">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="text-span">Xuất Chiếu</span>
-              </a>
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <a class="dropdown-item" href="#">
-                  Hồ Chí Minh
-                </a>
-                <a class="dropdown-item" href="#">
-                  Hà Nội
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-2">
-            <button type="button" class="btn px-3">
-              Mua Vé Ngay
-            </button>
-          </div>
-        </div>
-      </div>
+      <FilmSelection filmList={filmListReducer.data} />
+
       <div className="list-film">
         <ul className="nav nav-tabs" id="myTab" role="tablist">
           <li className="nav-item" role="presentation">
@@ -418,7 +337,6 @@ export default function IntroFilm() {
               >
                 Sắp Chiếu
               </Button>
-              {/* Sắp Chiếu */}
             </a>
           </li>
         </ul>
@@ -433,7 +351,7 @@ export default function IntroFilm() {
               className="carousel slide"
               data-ride="carousel"
             >
-              <div className="carousel-inner pt-5 mt-5">{renderFilmList()}</div>
+              <div className="carousel-inner mt-5">{renderFilmList()}</div>
               {renderArrow("carousel_showing")}
             </div>
           </div>
@@ -443,7 +361,7 @@ export default function IntroFilm() {
               className="carousel slide"
               data-ride="carousel"
             >
-              <div className="carousel-inner pt-5 mt-5">{renderFilmList()}</div>
+              <div className="carousel-inner mt-5">{renderFilmList()}</div>
               {renderArrow("carousel_coming")}
             </div>
           </div>
