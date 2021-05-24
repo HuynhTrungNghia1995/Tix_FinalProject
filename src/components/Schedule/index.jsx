@@ -69,9 +69,7 @@ export default function Schedule() {
         aria-labelledby="home-tab"
       >
         <ul className="agents nav nav-tabs" id="myTab2" role="tablist">
-          <Grid container>
-            {renderAgentsCinema(item)}
-          </Grid>
+          <Grid container>{renderAgentsCinema(item)}</Grid>
         </ul>
 
         <div className="tab-content" id="myTabContent2">
@@ -86,7 +84,7 @@ export default function Schedule() {
       <div
         className="container div-background"
         style={{
-          backgroundImage: "url(images/images/back-news.png)",
+          backgroundImage: "url(images/back-news.png)",
         }}
       />
       <div className="container container-flex">

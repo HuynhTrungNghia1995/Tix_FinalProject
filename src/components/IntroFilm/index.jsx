@@ -9,6 +9,7 @@ import Fade from "@material-ui/core/Fade";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import Button from "@material-ui/core/Button";
 import FilmSelection from "../FilmSelection";
+import { Link } from "react-router-dom";
 
 export default function IntroFilm() {
   const [IDGroup, setIDGroup] = useState("GP01");
@@ -27,7 +28,7 @@ export default function IntroFilm() {
   const filmListReducer = useSelector(
     (filmListReducer) => filmListReducer.fetchFilmListReducer
   );
-
+  console.log(filmListReducer.data);
   // Tao 1 mang 2 chieu danh sach phim, moi phan tu chua 8 film de lam thanh 1 slider
   let filmList;
   if (filmListReducer.data && filmListReducer.data.length > 0) {
@@ -113,88 +114,103 @@ export default function IntroFilm() {
       return (
         <div className="col-lg-3 col-md-4 col-6 pb-5">
           <div className="item">
-            <img
-              alt={film.biDanh}
-              src={film.hinhAnh}
-              className="film-poster border rounded"
-            />
-            <div className="rating">
-              <p>{film.danhGia} </p>
-              <div className="star">{renderStars(film.danhGia)}</div>
-            </div>
-            <div className="hidden-content">
-              <div>
-                <button
-                  className="play-trailer"
-                  type="button"
-                  onClick={() => handleOpen(film.maPhim, idx)}
-                >
-                  <img alt="" src="./images/play-video.png" />
-                </button>
-                <Modal
-                  aria-labelledby="transition-modal-title"
-                  aria-describedby="transition-modal-description"
-                  className={classes.modal}
-                  open={
-                    film.maPhim === stateFilm.id && idx === stateFilm.index
-                      ? open
-                      : false
-                  }
-                  onClose={handleClose}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{
-                    timeout: 500,
-                  }}
-                >
-                  <Fade
-                    in={
+            <Link
+              className="filmThumbnail"
+              to={{
+                pathname: "/film-detail/" + film.maPhim,
+                state: {
+                  film,
+                  filmList: filmListReducer.data,
+                  idx,
+                },
+              }}
+            >
+              <img
+                alt={film.biDanh}
+                src={film.hinhAnh}
+                className="film-poster border rounded"
+                onClick={() => {
+                  return () => console.log(123);
+                }}
+              />
+              <div className="rating">
+                <p>{film.danhGia} </p>
+                <div className="star">{renderStars(film.danhGia)}</div>
+              </div>
+              <div className="hidden-content">
+                <div>
+                  <button
+                    className="play-trailer"
+                    type="button"
+                    onClick={() => handleOpen(film.maPhim, idx)}
+                  >
+                    <img alt="" src="./images/play-video.png" />
+                  </button>
+                  <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={
                       film.maPhim === stateFilm.id && idx === stateFilm.index
                         ? open
                         : false
                     }
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                      timeout: 500,
+                    }}
                   >
-                    <div className={classes.paper}>
-                      <div className="trailer_container">
-                        <button
-                          type="button"
-                          className="close"
-                          onClick={handleClose}
-                        >
-                          <HighlightOffOutlinedIcon
-                            style={{
-                              color: "white",
-                              fontSize: 50,
-                            }}
-                          />
-                        </button>
+                    <Fade
+                      in={
+                        film.maPhim === stateFilm.id && idx === stateFilm.index
+                          ? open
+                          : false
+                      }
+                    >
+                      <div className={classes.paper}>
+                        <div className="trailer_container">
+                          <button
+                            type="button"
+                            className="close"
+                            onClick={handleClose}
+                          >
+                            <HighlightOffOutlinedIcon
+                              style={{
+                                color: "white",
+                                fontSize: 50,
+                              }}
+                            />
+                          </button>
 
-                        <iframe
-                          className="responsive_iframe"
-                          src={`${stateFilm.trailer}?autoplay=1`}
-                          title="YouTube video player"
-                          frameborder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        ></iframe>
+                          <iframe
+                            className="responsive_iframe"
+                            src={`${stateFilm.trailer}?autoplay=1`}
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
                       </div>
-                    </div>
-                  </Fade>
-                </Modal>
+                    </Fade>
+                  </Modal>
+                </div>
+                <div className="background_hidden" />
+                <button className="btn">
+                  <a
+                    href="#slider"
+                    className="text-white"
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    MUA VÉ
+                  </a>
+                </button>
               </div>
-              <div className="background_hidden" />
-              <button className="btn">
-                <a
-                  href="#slider"
-                  className="text-white"
-                  style={{
-                    textDecoration: "none",
-                  }}
-                >
-                  MUA VÉ
-                </a>
-              </button>
-            </div>
+            </Link>
             <div className="content-text">
               <div className="film-name">
                 <span className="btn red-age text-white">{`C${
