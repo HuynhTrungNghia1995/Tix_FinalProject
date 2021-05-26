@@ -124,13 +124,14 @@ export default function IntroFilm() {
             </div>
             <div className="hidden-content">
               <div>
-                <button
+                <Button
+                  style={{ borderRadius: "50%", padding: 0 }}
                   className="play-trailer"
                   type="button"
                   onClick={() => handleOpen(film.maPhim, idx)}
                 >
                   <img alt="" src="./images/play-video.png" />
-                </button>
+                </Button>
                 <Modal
                   aria-labelledby="transition-modal-title"
                   aria-describedby="transition-modal-description"
@@ -183,7 +184,7 @@ export default function IntroFilm() {
                 </Modal>
               </div>
               <div className="background_hidden" />
-              <button className="btn">
+              <Button className="btn">
                 <a
                   href="#slider"
                   className="text-white"
@@ -193,7 +194,7 @@ export default function IntroFilm() {
                 >
                   MUA VÉ
                 </a>
-              </button>
+              </Button>
             </div>
             <div className="content-text">
               <div className="film-name">

@@ -96,6 +96,8 @@ export default function FilmSelection(props) {
   let optionShowDates = [];
   if (valueCinema) {
     for (let date of valueCinema.lichChieu) {
+      let idSchedule = date.maLichChieu;
+
       let UTCdate = new Date(date.ngayChieuGioChieu).toLocaleDateString();
       let indexDuplicate = optionShowDates.findIndex(
         (sDate) => sDate.value === UTCdate
@@ -105,10 +107,18 @@ export default function FilmSelection(props) {
         optionShowDates.push({
           value: UTCdate,
           label: UTCdate,
-          showtimes: [UTCtime],
+          showtimes: [
+            {
+              idSchedule: idSchedule,
+              UTCtime: UTCtime,
+            },
+          ],
         });
       } else {
-        optionShowDates[indexDuplicate].showtimes.push(UTCtime);
+        optionShowDates[indexDuplicate].showtimes.push({
+          idSchedule: idSchedule,
+          UTCtime: UTCtime,
+        });
       }
     }
   }
@@ -135,18 +145,19 @@ export default function FilmSelection(props) {
   if (valueShowDate) {
     for (let time of valueShowDate.showtimes) {
       let indexDuplicate = optionShowtimes.findIndex(
-        (stime) => stime.value === time
+        (stime) => stime.value === time.UTCtime
       );
       if (indexDuplicate === -1) {
         optionShowtimes.push({
-          value: time,
-          label: time,
+          value: time.UTCtime,
+          label: time.UTCtime,
+          idSchedule: time.idSchedule,
         });
       }
     }
   }
   // console.log("optionShowtimes", optionShowtimes);
-  // console.log("valueShowtime", valueShowtime);
+  console.log("valueShowtime", valueShowtime);
 
   const handleChangeShowtime = useCallback(
     (inputValue) => setValueShowtime(inputValue),

@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css";
 import Slider from "react-slick";
+import { Button } from "@material-ui/core";
 
 export default function Application() {
   const settings = {
@@ -62,7 +63,7 @@ export default function Application() {
               Không chỉ đặt vé, bạn còn có thể bình luận phim, chấm điểm rạp và
               đổi quà hấp dẫn.
             </p>
-            <button className="btn d-block">App miễn phí - Tải về ngay</button>
+            <Button className="d-block">App miễn phí - Tải về ngay</Button>
             <span className="d-block">
               TIX có hai phiên bản <a href="#slider">iOS</a> &amp;
               <a href="#slider">Android</a>
