@@ -212,7 +212,7 @@ export default function NavbarHome() {
           className="navbar-brand ml-3 col-5 col-md-2 col-lg-3 col-xl-4"
           to="/"
         >
-          <img src="./images/logo.png" target="logo" alt="logo" />
+          <img src="/images/logo.png" target="logo" alt="logo" />
         </Link>
         <button
           className="navbar-toggler col-1 mr-3"
