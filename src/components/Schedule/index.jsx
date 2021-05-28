@@ -1,4 +1,3 @@
-import { Grid } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ListMovieAgents from "../ListMovieAgents";
@@ -69,7 +68,7 @@ export default function Schedule() {
         aria-labelledby="home-tab"
       >
         <ul className="agents nav nav-tabs" id="myTab2" role="tablist">
-          <Grid container>{renderAgentsCinema(item)}</Grid>
+          {renderAgentsCinema(item)}
         </ul>
 
         <div className="tab-content" id="myTabContent2">

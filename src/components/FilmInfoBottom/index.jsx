@@ -1,4 +1,5 @@
 import React from "react";
+import DetailScheduleFilm from "../DetailScheduleFilm";
 import "./style.css";
 export default function FilmInfoBottom(props) {
   const { film } = props;
@@ -16,6 +17,19 @@ export default function FilmInfoBottom(props) {
               <li className="nav-item">
                 <a
                   className="nav-link active"
+                  id="pills-home-tab"
+                  data-toggle="pill"
+                  href="#pills-lichChieu"
+                  role="tab"
+                  aria-controls="pills-home"
+                  aria-selected="true"
+                >
+                  Lịch chiếu
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
                   id="pills-home-tab"
                   data-toggle="pill"
                   href="#pills-thongTin"
@@ -45,6 +59,14 @@ export default function FilmInfoBottom(props) {
           <div class="tab-content" id="pills-tabContent">
             <div
               className="tab-pane fade show active"
+              id={"pills-" + "lichChieu"}
+              role="tabpanel"
+              aria-labelledby="pills-home-tab"
+            >
+              <DetailScheduleFilm />
+            </div>
+            <div
+              className="tab-pane fade"
               id={"pills-" + "thongTin"}
               role="tabpanel"
               aria-labelledby="pills-home-tab"
