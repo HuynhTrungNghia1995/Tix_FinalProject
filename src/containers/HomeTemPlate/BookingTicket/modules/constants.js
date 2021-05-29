@@ -1,0 +1,3 @@
+export const FETCH_ROOM_LIST_REQUEST = "roomReducer/FETCH_ROOM_LIST_REQUEST";
+export const FETCH_ROOM_LIST_SUCCESS = "roomReducer/FETCH_ROOM_LIST_SUCCESS";
+export const FETCH_ROOM_LIST_FAILED = "roomReducer/FETCH_ROOM_LIST_FAILED";

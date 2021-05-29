@@ -18,6 +18,7 @@ export default function NavbarHome() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      margin: 15,
     },
     paper: {
       backgroundColor: theme.palette.background.paper,
@@ -56,10 +57,10 @@ export default function NavbarHome() {
     if (user) {
       return (
         <Fragment>
-          <li className="nav-item border-right user">
-            <div className="nav-link d-flex">
+          <li className="nav-item border-right">
+            <div className="nav-link d-flex align-items-center">
               <Avatar src="https://i.pravatar.cc/32" alt="avatar" />
-              <span className="mt-1 ml-1 px-1">{user.hoTen}</span>
+              <span className="user ml-1 px-1">{user.hoTen}</span>
             </div>
           </li>
           <li className="nav-item">
@@ -104,7 +105,7 @@ export default function NavbarHome() {
                       </h2>
 
                       <Button
-                        className="logout mr-5"
+                        className="logout mr-4"
                         variant="contained"
                         size="large"
                         color="primary"
@@ -164,20 +165,22 @@ export default function NavbarHome() {
                       >
                         Cảm ơn bạn đã sử dụng TIX
                       </p>
-                      <Button
-                        variant="contained"
-                        size="large"
-                        color="primary"
-                        style={{
-                          padding: "10px 30px",
-                        }}
-                        onClick={() => {
-                          setRender(true);
-                          localStorage.clear();
-                        }}
-                      >
-                        OK
-                      </Button>
+                      <Link to="/">
+                        <Button
+                          variant="contained"
+                          size="large"
+                          color="primary"
+                          style={{
+                            padding: "10px 30px",
+                          }}
+                          onClick={() => {
+                            setRender(true);
+                            localStorage.clear();
+                          }}
+                        >
+                          OK
+                        </Button>
+                      </Link>
                     </div>
                   </Fade>
                 </Modal>

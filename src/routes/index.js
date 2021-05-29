@@ -3,6 +3,7 @@ import Dashboard from "../containers/AdminTemplate/DashBoard";
 import Login from "../containers/HomeTemplate/Login";
 import Register from "../containers/HomeTemplate/Register";
 import FilmDetail from "../containers/HomeTemplate/FilmDetail";
+import BookingTicket from "../containers/HomeTemplate/BookingTicket";
 
 const routeHome = [
   {
@@ -19,6 +20,11 @@ const routeHome = [
     exact: false,
     path: "/film-detail/:id",
     component: FilmDetail,
+  },
+  {
+    exact: false,
+    path: "/bookticket",
+    component: BookingTicket
   }
 ];
 
