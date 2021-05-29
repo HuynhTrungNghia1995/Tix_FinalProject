@@ -99,114 +99,15 @@
   top: 50%;
   transform: translateY(-50%);
 }
-.c100 {
-  position: relative;
-  font-size: 126px;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  margin: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-.c100:after {
-  position: absolute;
-  top: 0.06em;
-  left: 0.06em;
-  display: block;
-  content: " ";
-  border-radius: 50%;
-  background-color: transparent;
-  opacity: 0.6;
-  width: 0.88em;
-  height: 0.88em;
-  -webkit-transition-property: all;
-  -moz-transition-property: all;
-  -o-transition-property: all;
-  transition-property: all;
-  -webkit-transition-duration: 0.2s;
-  -moz-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-  transition-duration: 0.2s;
-  -webkit-transition-timing-function: ease-out;
-  -moz-transition-timing-function: ease-out;
-  -o-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-.c100 .circleBorder {
-  width: 111px;
-  height: 111px;
-  background: 0 0;
-  border: 7.5px solid #3a3a3a;
-  border-radius: 50%;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  position: absolute;
-}
-.c100 *,
-.c100 :after,
-.c100 :before {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-}
-.c100 .slice {
-  position: absolute;
-  width: 1em;
-  height: 1em;
-  clip: rect(0, 1em, 1em, 0.5em);
-}
-.c100.p62 .slice {
-  clip: rect(auto, auto, auto, auto);
-}
-.c100.p62 .bar {
-  -webkit-transform: rotate(223.20000000000002deg);
-  -moz-transform: rotate(223.20000000000002deg);
-  -ms-transform: rotate(223.20000000000002deg);
-  -o-transform: rotate(223.20000000000002deg);
-  transform: rotate(223.20000000000002deg);
-}
-.c100.p62 .fill {
-  transform: rotate(180deg);
-  position: absolute;
-  border: 0.06em solid #7ed321;
-  width: 0.88em;
-  height: 0.88em;
-  clip: rect(0, 0.5em, 1em, 0);
-  border-radius: 50%;
-  /* -webkit-transform: rotate(0);
-  -moz-transform: rotate(0);
-  -ms-transform: rotate(0);
-  -o-transform: rotate(0); */
-}
-.c100 > span {
-  position: absolute;
-  width: 100%;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  line-height: 2.4em;
-  font-size: 0.42em;
-  color: #fff;
-  display: block;
-  text-align: center;
-  white-space: nowrap;
-  -webkit-transition-property: all;
-  -moz-transition-property: all;
-  -o-transition-property: all;
-  transition-property: all;
-  -webkit-transition-duration: 0.2s;
-  -moz-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-  transition-duration: 0.2s;
-  -webkit-transition-timing-function: ease-out;
-  -moz-transition-timing-function: ease-out;
-  -o-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
+
 .detailMainTop .circleStar .star {
   align-items: center;
   justify-content: center;
 }
 .detailMainTop .circleStar .star img {
   max-width: 25px;
+}
+.CircularProgressbar-text {
+  dominant-baseline: middle;
+  text-anchor: middle;
 }

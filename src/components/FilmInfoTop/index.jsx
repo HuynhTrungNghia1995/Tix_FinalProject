@@ -1,6 +1,7 @@
 import { Fade, Modal } from "@material-ui/core";
 import React, { useState } from "react";
 import "./style.css";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
@@ -177,13 +178,20 @@ export default function FilmInfoTop(props) {
           </div>
         </div>
         <div className="col-sm-2 circleStar">
-          <div className="c100 p62" id="circlePercent">
-            <div className="circleBorder"></div>
-            <span>{film.danhGia}</span>
-            <div className="slice">
-              <div className="bar"></div>
-              <div className="fill"></div>
-            </div>
+          <div style={{ width: "130px", height: "130px", margin: "auto" }}>
+            <CircularProgressbar
+              value={Number(film.danhGia)}
+              maxValue={10}
+              text={Number(film.danhGia)}
+              strokeWidth={7}
+              styles={buildStyles({
+                strokeLinecap: "butt",
+                textColor: "white",
+                pathColor: "#44c020",
+                textSize: "38px",
+                backgroundColor: "rgba(0,0,0,.4)",
+              })}
+            />
           </div>
 
           <div className="row star" id="starMain" style={{ marginTop: 10 }}>
@@ -191,7 +199,7 @@ export default function FilmInfoTop(props) {
           </div>
           <div className="row star">
             <span className="detailMainInfo1" style={{ marginTop: 10 }}>
-              160 người đánh giá
+              3 người đánh giá
             </span>
           </div>
         </div>

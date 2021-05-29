@@ -366,3 +366,9 @@
   color: white;
   background-color: red;
 }
+.CircularProgressbar-text {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+}
