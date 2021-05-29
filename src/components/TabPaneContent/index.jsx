@@ -37,7 +37,7 @@ export default function TabPaneContent(props) {
       {props.data.listNews.map((item1, index) => {
         return (
           <div
-            key={index}
+            key={item1.id}
             className={index === 0 ? "row" : "row hide"}
             id={props.data.id + "-" + item1.id}
           >
