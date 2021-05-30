@@ -114,35 +114,37 @@ export default function IntroFilm() {
       return (
         <div className="col-lg-3 col-md-4 col-6 pb-5">
           <div className="item">
-            <Link
-              className="filmThumbnail"
-              to={{
-                pathname: "/film-detail/" + film.maPhim,
-                state: {
-                  film,
-                  filmList: filmListReducer.data,
-                  idx,
-                },
-              }}
-            >
-              <img
-                alt={film.biDanh}
-                src={film.hinhAnh}
-                className="film-poster border rounded"
-              />
+            <div className="filmThumbnail">
+              <Link
+                to={{
+                  pathname: "/film-detail/" + film.maPhim,
+                  state: {
+                    film,
+                    filmList: filmListReducer.data,
+                    idx,
+                  },
+                }}
+              >
+                <img
+                  alt={film.biDanh}
+                  src={film.hinhAnh}
+                  className="film-poster border rounded imgFilmThumbnail"
+                />
+              </Link>
+
               <div className="rating">
                 <p>{film.danhGia} </p>
                 <div className="star">{renderStars(film.danhGia)}</div>
               </div>
               <div className="hidden-content">
                 <div>
-                  <button
+                  <a
                     className="play-trailer"
                     type="button"
                     onClick={() => handleOpen(film.maPhim, idx)}
                   >
                     <img alt="" src="./images/play-video.png" />
-                  </button>
+                  </a>
                   <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -194,7 +196,18 @@ export default function IntroFilm() {
                     </Fade>
                   </Modal>
                 </div>
-                <div className="background_hidden" />
+                <Link
+                  to={{
+                    pathname: "/film-detail/" + film.maPhim,
+                    state: {
+                      film,
+                      filmList: filmListReducer.data,
+                      idx,
+                    },
+                  }}
+                  className="background_hidden"
+                  style={{ display: "block" }}
+                />
                 <button className="btn">
                   <a
                     href="#slider"
@@ -207,7 +220,7 @@ export default function IntroFilm() {
                   </a>
                 </button>
               </div>
-            </Link>
+            </div>
             <div className="content-text">
               <div className="film-name">
                 <span className="btn red-age text-white">{`C${

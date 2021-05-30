@@ -4,6 +4,7 @@ import Login from "../containers/HomeTemplate/Login";
 import Register from "../containers/HomeTemplate/Register";
 import FilmDetail from "../containers/HomeTemplate/FilmDetail";
 import BookingTicket from "../containers/HomeTemplate/BookingTicket";
+import UserAccountInfo from "../containers/HomeTemplate/UserAccountInfo";
 
 const routeHome = [
   {
@@ -25,7 +26,13 @@ const routeHome = [
     exact: false,
     path: "/bookticket",
     component: BookingTicket
-  }
+  },
+  {
+    exact: false,
+    path: "/account-info",
+    component: UserAccountInfo
+  },
+
 ];
 
 const routeAdmin = [
