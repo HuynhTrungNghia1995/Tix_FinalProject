@@ -68,6 +68,10 @@
   width: 100%;
 }
 
+.MuiButton-label {
+  padding: 0 !important;
+}
+
 @media screen and (max-width: 991px) {
   .application .container {
     padding: 100px 0 !important;
