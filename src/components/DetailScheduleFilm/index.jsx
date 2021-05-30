@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSystemCinema } from "../../components/Schedule/modules/action.js";
 import "./style.css";
+import { Link } from "react-router-dom";
 export default function DetailScheduleFilm(props) {
   const showTimesFilm = props.showTimesFilm;
-  console.log(showTimesFilm);
+  //console.log(showTimesFilm);
   const [notExistFilmOfDay, setnotExistFilmOfDay] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -12,9 +13,9 @@ export default function DetailScheduleFilm(props) {
   }, []);
   const listCinema = useSelector((rootState) => rootState.systemCinemaReducer);
   const clickButtonDay = (index) => {
-    console.log(notExistFilmOfDay);
+    //console.log(notExistFilmOfDay);
     return () => {
-      if (index % 3 == 1) {
+      if (index % 3 === 1) {
         setnotExistFilmOfDay(true);
       } else setnotExistFilmOfDay(false);
     };
@@ -23,14 +24,14 @@ export default function DetailScheduleFilm(props) {
     return (
       <li className="detail__listOfDay--item nav-item">
         <a
-          className={i == 0 ? "nav-link active" : "nav-link"}
+          className={i === 0 ? "nav-link active" : "nav-link"}
           onClick={clickButtonDay(i)}
           data-toggle="tab"
           role="tab"
           aria-selected="true"
         >
           <p className="dayOfWeek">
-            {dayOfWeek != 0 ? `Thứ ${dayOfWeek + 1}` : "Chủ Nhật"}
+            {dayOfWeek !== 0 ? `Thứ ${dayOfWeek + 1}` : "Chủ Nhật"}
           </p>
           <p className="date">{date}</p>
         </a>
@@ -52,11 +53,12 @@ export default function DetailScheduleFilm(props) {
     return listCinema.system.data?.map((cumRap, index) => {
       return (
         <div
-          className={index == 0 ? "logo__wrapper active" : "logo__wrapper"}
+          className={index === 0 ? "logo__wrapper active" : "logo__wrapper"}
           data-toggle="tab"
           role="tab"
           data-target={"#" + cumRap.maHeThongRap}
           aria-selected="true"
+          key={cumRap.maHeThongRap + 1000}
         >
           <div className="logo__detail">
             <img
@@ -93,7 +95,7 @@ export default function DetailScheduleFilm(props) {
     return showTimesFilm?.heThongRapChieu[indexRap].cumRapChieu.map((rap) => {
       const subName = rap.tenCumRap.split("-");
       return (
-        <div key={rap.maCumRap} className="wrapper__collapse ">
+        <div key={rap.maCumRap + 100} className="wrapper__collapse ">
           <div
             className="main__collapse"
             data-toggle="collapse"
@@ -118,30 +120,50 @@ export default function DetailScheduleFilm(props) {
               <div className="col-12" style={{ padding: "0 15px" }}>
                 2D Digital
               </div>
-              <div className="col-12">
-                <button className="btn btn-time">
-                  <span className="start">8:10</span> ~ 10:20
-                </button>
-                <button className="btn btn-time">
-                  <span className="start">13:10</span> ~ 15:20
-                </button>
-
-                <button className="btn btn-time">
-                  <span className="start">16:10</span> ~ 20:30
-                </button>
-                <button className="btn btn-time">
-                  <span className="start">20:10</span> ~ 22:10
-                </button>
-              </div>
+              <div className="col-12">{renderButtonTime(rap)}</div>
             </div>
           </div>
         </div>
       );
     });
   };
+  const renderButtonTime = (rap) => {
+    return rap.lichChieuPhim.map((lichChieu, index) => {
+      if (index < 8) {
+        // console.log(lichChieu.ngayChieuGioChieu);
+        const date_time = new Date(lichChieu.ngayChieuGioChieu);
+        const hour = date_time.getHours();
+        const minute = date_time.getMinutes();
+        const date_time_end = new Date(date_time);
+        date_time_end.setMinutes(
+          date_time_end.getMinutes() + lichChieu.thoiLuong
+        );
+        //console.log(date_time_end);
+        const hour1 = date_time_end.getHours();
+        const minute1 = date_time_end.getMinutes();
 
+        return (
+          <Link
+            to={{
+              pathname: "/bookticket",
+            }}
+            key={lichChieu.maLichChieu}
+          >
+            <button className="btn btn-time">
+              <span className="start">
+                {hour.toString().padStart(2, "0")}:
+                {minute.toString().padStart(2, "0")}
+              </span>{" "}
+              ~ {hour1.toString().padStart(2, "0")}:
+              {minute1.toString().padStart(2, "0")}
+            </button>
+          </Link>
+        );
+      }
+    });
+  };
   const renderLichChieuChiNhanh = () => {
-    if (showTimesFilm?.heThongRapChieu.length == 0)
+    if (showTimesFilm?.heThongRapChieu.length === 0)
       return (
         <div className="alert alert-info">
           Hiện không có lịch chiếu trên hệ thống rạp này
@@ -150,8 +172,11 @@ export default function DetailScheduleFilm(props) {
     return listCinema.system.data?.map((cumRap, index) => {
       return (
         <div
-          className={index == 0 ? "tab-pane fade active show" : "tab-pane fade"}
+          className={
+            index === 0 ? "tab-pane fade active show" : "tab-pane fade"
+          }
           id={cumRap.maHeThongRap}
+          key={cumRap.maHeThongRap}
         >
           {xuLyLichChieu(cumRap)}
         </div>

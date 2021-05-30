@@ -111,3 +111,32 @@
   dominant-baseline: middle;
   text-anchor: middle;
 }
+@media screen and (max-width: 900px) {
+}
+
+@media screen and (max-width: 700px) {
+  .detailMainTop .circleStar {
+    display: none;
+  }
+  .detailMainTop .infoMain {
+    position: relative;
+    transform: none;
+    top: 10px;
+    left: 10px;
+  }
+  .detailMainTop .detailMainInfo .posterMain {
+    padding: 180px 180px 180px;
+  }
+  .detailMainTop .posterMain .playTrailerDetail {
+    left: initial;
+  }
+  .detailMainTop .detailMainInfo1 {
+    font-size: 20px;
+  }
+  .detailMainTop .detailMainInfo2 .ageType.ageType-general {
+    margin-right: 35px;
+  }
+  .detailMain {
+    translate: none;
+  }
+}

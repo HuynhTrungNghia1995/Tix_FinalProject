@@ -24,9 +24,9 @@ export default function FilmInfoTop(props) {
 
       return arr.map((star, index) => {
         if (star !== -1) {
-          return <img key={index} alt="" src="/images/star1.png" />;
+          return <img key={index} alt="star" src="/images/star1.png" />;
         } else {
-          return <img key={index} alt="" src="/images/star1.2.png" />;
+          return <img key={index} alt="half star" src="/images/star1.2.png" />;
         }
       });
     }
@@ -70,7 +70,7 @@ export default function FilmInfoTop(props) {
       <div className="styleBlur">
         <img
           src={film.hinhAnh}
-          alt=""
+          alt="anh phim"
           className="posterLandscapeFilm"
           style={{ height: 620, backgroundSize: "contain" }}
         />
@@ -95,7 +95,7 @@ export default function FilmInfoTop(props) {
               type="button"
               onClick={() => handleOpen(film.maPhim, idx)}
             >
-              <img alt="" src="/images/play-video.png" />
+              <img alt="button play trailer" src="/images/play-video.png" />
             </button>
 
             <Modal
