@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSystemCinema } from "../../components/Schedule/modules/action.js";
 import "./style.css";
 export default function DetailScheduleFilm(props) {
   const showTimesFilm = props.showTimesFilm;
   console.log(showTimesFilm);
   const [notExistFilmOfDay, setnotExistFilmOfDay] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchSystemCinema());
+  }, []);
+  const listCinema = useSelector((rootState) => rootState.systemCinemaReducer);
   const clickButtonDay = (index) => {
     console.log(notExistFilmOfDay);
     return () => {
@@ -42,7 +49,7 @@ export default function DetailScheduleFilm(props) {
     return result;
   };
   const renderHeThongRap = () => {
-    return showTimesFilm?.heThongRapChieu.map((cumRap, index) => {
+    return listCinema.system.data?.map((cumRap, index) => {
       return (
         <div
           className={index == 0 ? "logo__wrapper active" : "logo__wrapper"}
@@ -65,23 +72,28 @@ export default function DetailScheduleFilm(props) {
     });
   };
   const xuLyLichChieu = (cumRap) => {
-    if (cumRap.cumRapChieu.length == 0)
+    const indexRap = showTimesFilm?.heThongRapChieu.findIndex(
+      (item) => cumRap.maHeThongRap === item.maHeThongRap
+    );
+    if (indexRap === -1) {
       return (
         <div className="alert alert-info">
-          Hiện không có lịch chiếu trên hệ thống rạp này
+          Tạm thời rạp chưa có lịch chiếu phim này
         </div>
       );
-    else if (notExistFilmOfDay)
+    }
+    if (notExistFilmOfDay) {
       return (
         <div className="alert alert-danger">
           Hiện ngày này không có lịch chiếu
         </div>
       );
+    }
 
-    return cumRap.cumRapChieu.map((rap, index) => {
+    return showTimesFilm?.heThongRapChieu[indexRap].cumRapChieu.map((rap) => {
       const subName = rap.tenCumRap.split("-");
       return (
-        <div className="wrapper__collapse ">
+        <div key={rap.maCumRap} className="wrapper__collapse ">
           <div
             className="main__collapse"
             data-toggle="collapse"
@@ -127,8 +139,15 @@ export default function DetailScheduleFilm(props) {
       );
     });
   };
+
   const renderLichChieuChiNhanh = () => {
-    return showTimesFilm?.heThongRapChieu.map((cumRap, index) => {
+    if (showTimesFilm?.heThongRapChieu.length == 0)
+      return (
+        <div className="alert alert-info">
+          Hiện không có lịch chiếu trên hệ thống rạp này
+        </div>
+      );
+    return listCinema.system.data?.map((cumRap, index) => {
       return (
         <div
           className={index == 0 ? "tab-pane fade active show" : "tab-pane fade"}
