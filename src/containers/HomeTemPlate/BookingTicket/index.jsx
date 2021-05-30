@@ -15,9 +15,19 @@ export default function BookingTicket() {
 
   // console.log("idSchedule", idSchedule);
 
+  const [render, setRender] = useState(false);
+
+  const handleRender = () => {
+    setRender(!render);
+    setState({
+      bookSeats: [],
+      totalMoney: 0,
+    });
+  };
+
   useEffect(() => {
     dispatch(fetchRoomList(idSchedule));
-  }, []);
+  }, [render]);
 
   const roomListReducer = useSelector((state) => state.fetchRoomListReducer);
 
@@ -91,18 +101,10 @@ export default function BookingTicket() {
     });
   };
 
-  // console.log("state", state);
+  console.log("state", state);
 
   return (
-    <section
-      className="container-fluid"
-      id="book_ticket"
-      // style={{
-      //   backgroundImage: `url(${
-      //     process.env.PUBLIC_URL + "images/backapp.jpg"
-      //   })`,
-      // }}
-    >
+    <section className="container-fluid" id="book_ticket">
       <div className="row">
         <div className="col-md-9 col-sm-12 left">
           <div className="info mb-2">
@@ -171,7 +173,7 @@ export default function BookingTicket() {
         </div>
 
         <div className="col-md-3 col-sm-12 right">
-          <Payment state={state} room={room} />
+          <Payment state={state} room={room} handleRender={handleRender} />
         </div>
       </div>
     </section>

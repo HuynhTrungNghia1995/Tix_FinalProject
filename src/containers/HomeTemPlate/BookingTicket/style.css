@@ -155,6 +155,9 @@
 }
 
 @media only screen and (max-width: 528px) {
+  #book_ticket .left {
+    height: 550px;
+  }
   #book_ticket .left .seat_list .seat {
     height: 18px;
     width: 18px;
@@ -163,6 +166,9 @@
 }
 
 @media only screen and (max-width: 420px) {
+  #book_ticket .left {
+    height: 450px;
+  }
   #book_ticket .left .seat_list .seat {
     height: 14px;
     width: 14px;

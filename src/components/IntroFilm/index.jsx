@@ -28,7 +28,7 @@ export default function IntroFilm() {
   const filmListReducer = useSelector(
     (filmListReducer) => filmListReducer.fetchFilmListReducer
   );
-  // console.log(filmListReducer.data);
+  //console.log(filmListReducer.data);
   // Tao 1 mang 2 chieu danh sach phim, moi phan tu chua 8 film de lam thanh 1 slider
   let filmList;
   if (filmListReducer.data && filmListReducer.data.length > 0) {
