@@ -9,7 +9,7 @@ footer .top .title {
   margin-bottom: 10px;
 }
 
-footer .top .col__left a {
+footer .top .col__left span {
   display: block;
   font-size: 12px;
   font-weight: 700;
@@ -19,7 +19,7 @@ footer .top .col__left a {
   text-decoration: none;
 }
 
-footer .top .col__left a:hover {
+footer .top .col__left span:hover {
   color: white;
 }
 
@@ -102,7 +102,7 @@ footer .bottom .info ul li {
   font-weight: 400;
 }
 
-footer .bottom .info ul a {
+footer .bottom .info ul span {
   color: #fb4226;
   text-decoration: none;
 }

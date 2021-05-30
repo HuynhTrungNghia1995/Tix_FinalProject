@@ -6,7 +6,7 @@ import IntroFilm from "../../../components/IntroFilm";
 import NavbarHome from "../../../components/NavbarHome";
 import "./style.css";
 import Schedule from "../../../components/Schedule";
-import ScrollTopArrow from "../../../components/ScrollTopArrow";
+// import ScrollTopArrow from "../../../components/ScrollTopArrow";
 import News from "../../../components/News";
 
 export default function Home(props) {
@@ -19,7 +19,7 @@ export default function Home(props) {
       <News />
       <Application />
       <Footer />
-      <ScrollTopArrow />
+      {/* <ScrollTopArrow /> */}
     </div>
   );
 }

@@ -7,6 +7,7 @@ import {
 import AsyncCreatableSelect from "react-select/creatable";
 import "./style.css";
 import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export default function FilmSelection(props) {
   const [valueFilm, setValueFilm] = useState(null); // lay phim user chon
@@ -157,7 +158,7 @@ export default function FilmSelection(props) {
     }
   }
   // console.log("optionShowtimes", optionShowtimes);
-  console.log("valueShowtime", valueShowtime);
+  // console.log("valueShowtime", valueShowtime);
 
   const handleChangeShowtime = useCallback(
     (inputValue) => setValueShowtime(inputValue),
@@ -179,8 +180,8 @@ export default function FilmSelection(props) {
   return (
     <section className="film_selection">
       <div className="container box-ticket">
-        <div class="row border rounded py-3 border-ticker">
-          <div class="col-sm-6 col-lg-4 px-2 py-2">
+        <div className="row border rounded py-3 border-ticker">
+          <div className="col-sm-6 col-lg-4 px-2 py-2">
             <AsyncCreatableSelect
               isClearable
               noOptionsMessage={() => "nothing found"}
@@ -194,7 +195,7 @@ export default function FilmSelection(props) {
               placeholder="Phim"
             />
           </div>
-          <div class="col-sm-6 col-lg-2 px-2 py-2">
+          <div className="col-sm-6 col-lg-2 px-2 py-2">
             <AsyncCreatableSelect
               pageSize={10}
               isClearable
@@ -209,7 +210,7 @@ export default function FilmSelection(props) {
               placeholder="Rạp"
             />
           </div>
-          <div class="col-sm-6 col-lg-2 px-2 py-2">
+          <div className="col-sm-6 col-lg-2 px-2 py-2">
             <AsyncCreatableSelect
               isClearable
               noOptionsMessage={() => "Vui lòng chọn phim và rạp"}
@@ -223,7 +224,7 @@ export default function FilmSelection(props) {
               placeholder="Ngày xem"
             />
           </div>
-          <div class="col-sm-6 col-lg-2 px-2 py-2">
+          <div className="col-sm-6 col-lg-2 px-2 py-2">
             <AsyncCreatableSelect
               isClearable
               noOptionsMessage={() => "Vui lòng chọn phim, rạp và ngày chiếu"}
@@ -237,15 +238,30 @@ export default function FilmSelection(props) {
               placeholder="Xuất chiếu"
             />{" "}
           </div>
-          <div class="col-lg-2 py-2 border-0" style={{ textAlign: "center" }}>
-            <Button
-              variant="contained"
-              size="large"
-              color="secondary"
-              disabled={disabled}
-            >
-              MUA VÉ
-            </Button>
+          <div
+            className="col-lg-2 py-2 border-0"
+            style={{ textAlign: "center" }}
+          >
+            <div className={disabled ? "no-drop" : "pointer"}>
+              <Button
+                variant="contained"
+                size="large"
+                color="secondary"
+                disabled={disabled}
+              >
+                <Link
+                  style={{ textDecoration: "none", color: "white" }}
+                  to={{
+                    pathname: "/bookticket",
+                    state: {
+                      idSchedule: valueShowtime?.idSchedule,
+                    },
+                  }}
+                >
+                  MUA VÉ
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

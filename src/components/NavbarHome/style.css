@@ -5,6 +5,7 @@
   width: 100%;
   opacity: 0.9;
   z-index: 100;
+  box-shadow: 0 5px 10px #cccccc;
 }
 
 .header .navbar-brand img {
@@ -47,11 +48,11 @@
   transition: all 0.3s;
 }
 
-.header .navbar-collapse .item-right .user span:hover {
-  color: #3a3a3a;
-  font-size: 16px;
-  font-weight: normal;
-  transition: none;
+.header .navbar-collapse .item-right .user:hover {
+  color: rgba(0, 0, 0, 0.7) !important;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  transition: none !important;
 }
 
 .header .navbar-collapse .item-right .nav-item .logout {
