@@ -2,7 +2,7 @@ import React from "react";
 import DetailScheduleFilm from "../DetailScheduleFilm";
 import "./style.css";
 export default function FilmInfoBottom(props) {
-  const { film } = props;
+  const { film, showTimesFilm } = props;
   const date = new Date(film.ngayKhoiChieu);
   return (
     <div className="detailFilmBottom">
@@ -63,7 +63,7 @@ export default function FilmInfoBottom(props) {
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-              <DetailScheduleFilm />
+              <DetailScheduleFilm showTimesFilm={showTimesFilm} />
             </div>
             <div
               className="tab-pane fade"
@@ -367,9 +367,9 @@ export default function FilmInfoBottom(props) {
                 </div>
               </div>
 
-              <div className="isFlex text-center ">
+              {/* <div className="isFlex text-center ">
                 <button className="btnViewMore">XEM THÊM</button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
