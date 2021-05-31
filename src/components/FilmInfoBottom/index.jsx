@@ -56,10 +56,10 @@ export default function FilmInfoBottom(props) {
             </ul>
           </div>
 
-          <div class="tab-content" id="pills-tabContent">
+          <div className="tab-content" id="pills-tabContent">
             <div
               className="tab-pane fade show active"
-              id={"pills-" + "lichChieu"}
+              id={"pills-lichChieu"}
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
@@ -67,15 +67,15 @@ export default function FilmInfoBottom(props) {
             </div>
             <div
               className="tab-pane fade"
-              id={"pills-" + "thongTin"}
+              id={"pills-thongTin"}
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
               <div className="row isFlex detailMainStyle">
-                <div class="col-sm-6 col-xs-12 film left">
-                  <div class="row rowLeftInfo">
-                    <p class="contentTitle">Ngày công chiếu</p>
-                    <p class="contentInfo ">
+                <div className="col-sm-6 col-xs-12 film left">
+                  <div className="row rowLeftInfo">
+                    <p className="contentTitle">Ngày công chiếu</p>
+                    <p className="contentInfo ">
                       {date.getDate() +
                         "." +
                         date.getMonth() +
@@ -84,59 +84,54 @@ export default function FilmInfoBottom(props) {
                     </p>
                   </div>
 
-                  <div class="row rowLeftInfo">
-                    <p class="contentTitle">Đạo diễn</p>
-                    <p class="contentInfo "> Phan Gia Nhật Linh </p>
+                  <div className="row rowLeftInfo">
+                    <p className="contentTitle">Đạo diễn</p>
+                    <p className="contentInfo "> Phan Gia Nhật Linh </p>
                   </div>
 
-                  <div class="row rowLeftInfo">
-                    <p class="contentTitle">Diễn viên</p>
-                    <p class="contentInfo ">Phan Gia Nhật Linh</p>
+                  <div className="row rowLeftInfo">
+                    <p className="contentTitle">Diễn viên</p>
+                    <p className="contentInfo ">Phan Gia Nhật Linh</p>
                   </div>
 
-                  <div class="row rowLeftInfo">
-                    <p class="contentTitle">Thể Loại</p>
-                    <p class="contentInfo ">Hài hước</p>
+                  <div className="row rowLeftInfo">
+                    <p className="contentTitle">Thể Loại</p>
+                    <p className="contentInfo ">Hài hước</p>
                   </div>
 
-                  <div class="row rowLeftInfo">
-                    <p class="contentTitle">Định dạng</p>
-                    <p class="contentInfo ">2D/Digital</p>
+                  <div className="row rowLeftInfo">
+                    <p className="contentTitle">Định dạng</p>
+                    <p className="contentInfo ">2D/Digital</p>
                   </div>
 
-                  <div class="row rowLeftInfo">
-                    <p class="contentTitle">Quốc Gia SX</p>
-                    <p class="contentInfo ">Việt Nam</p>
+                  <div className="row rowLeftInfo">
+                    <p className="contentTitle">Quốc Gia SX</p>
+                    <p className="contentInfo ">Việt Nam</p>
                   </div>
                 </div>
 
-                <div class="col-sm-6 col-xs-12 film right">
-                  <div class="row rowLeftInfo">
-                    <p class="contentTitle">Nội dung</p>
+                <div className="col-sm-6 col-xs-12 film right">
+                  <div className="row rowLeftInfo">
+                    <p className="contentTitle">Nội dung</p>
                   </div>
 
-                  <div class="row rowLeftInfo">
-                    <p class="contentInfoFull description">{film.moTa}</p>
+                  <div className="row rowLeftInfo">
+                    <p className="contentInfoFull description">{film.moTa}</p>
                   </div>
 
-                  <div class="row rowLeftInfo">
-                    <p class="contentInfoFull"></p>
+                  <div className="row rowLeftInfo">
+                    <p className="contentInfoFull"></p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div
-              id="showingReviewer"
-              className="tab-pane fade"
-              id={"pills-" + "danhGia"}
-              role="tabpanel"
-            >
+            <div className="tab-pane fade" id={"pills-danhGia"} role="tabpanel">
               <div id="detailReviewer">
                 <div className="row isFlex detailMainStyle">
                   <div className="col-sm-12 col-xs-12 dadInputReviewer newDesign">
                     <span className="imgReviewer">
-                      <img src="/images/avatar.png" />
+                      <img src="/images/avatar.png" alt="avatar" />
                     </span>
                     <input
                       className="inputReviwer"
@@ -145,7 +140,7 @@ export default function FilmInfoBottom(props) {
                       readOnly="readonly"
                     />
                     <span className="imgReviewerStar">
-                      <img src="/images/listStar.png" />
+                      <img src="/images/listStar.png" alt="listStar" />
                     </span>
                   </div>
                 </div>
@@ -164,6 +159,7 @@ export default function FilmInfoBottom(props) {
                             <img
                               ng-src="https://s120-ava-talk.zadn.vn/f/f/8/0/10/120/cbfa378291ca490da19c01ca03294f29.jpg"
                               src="https://s120-ava-talk.zadn.vn/f/f/8/0/10/120/cbfa378291ca490da19c01ca03294f29.jpg"
+                              alt="avatar-comment"
                             />
                           </div>
                           <div className="infoReviewerName">
@@ -179,22 +175,27 @@ export default function FilmInfoBottom(props) {
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                           </div>
                         </div>
@@ -214,6 +215,7 @@ export default function FilmInfoBottom(props) {
                             <img
                               className="iconFacebook postLikeCmt"
                               src="/images/like.png"
+                              alt="like"
                             />
                             <span className="amount like">
                               <strong>2</strong> Thích
@@ -236,7 +238,10 @@ export default function FilmInfoBottom(props) {
                             className="infoReviewerIcon"
                             data-user_id={1541521}
                           >
-                            <img src="https://s120-ava-talk.zadn.vn/e/1/1/f/5/120/560ec5a9a8c1a02d3b8c5c02c8cbbe8c.jpg" />
+                            <img
+                              src="https://s120-ava-talk.zadn.vn/e/1/1/f/5/120/560ec5a9a8c1a02d3b8c5c02c8cbbe8c.jpg"
+                              alt="avatar-comment"
+                            />
                           </div>
                           <div className="infoReviewerName">
                             <div>Liêu Văn Tuấn</div>
@@ -251,22 +256,27 @@ export default function FilmInfoBottom(props) {
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                           </div>
                         </div>
@@ -286,6 +296,7 @@ export default function FilmInfoBottom(props) {
                             <img
                               className="iconFacebook postLikeCmt"
                               src="/images/like.png"
+                              alt="like"
                             />
                             <span className="amount like">
                               <strong>2</strong> Thích
@@ -308,7 +319,10 @@ export default function FilmInfoBottom(props) {
                             className="infoReviewerIcon"
                             data-user_id={1541521}
                           >
-                            <img src="https://s120-ava-talk.zadn.vn/1/1/2/d/1/120/3fc0b0209c293a67c31cadc092a0589e.jpg" />
+                            <img
+                              src="https://s120-ava-talk.zadn.vn/1/1/2/d/1/120/3fc0b0209c293a67c31cadc092a0589e.jpg"
+                              alt="avatar-comment"
+                            />
                           </div>
                           <div className="infoReviewerName">
                             <div>Phát Lạc Lối</div>
@@ -323,18 +337,22 @@ export default function FilmInfoBottom(props) {
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                             <img
                               className="smallStar"
                               src="/images/star1.png"
+                              alt="1 star"
                             />
                           </div>
                         </div>

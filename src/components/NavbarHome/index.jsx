@@ -57,12 +57,12 @@ export default function NavbarHome() {
     if (user) {
       return (
         <Fragment>
-          <li className="nav-item border-right">
+          <a href={"/account-info"} className="nav-item border-right">
             <div className="nav-link d-flex align-items-center">
               <Avatar src="https://i.pravatar.cc/32" alt="avatar" />
               <span className="user ml-1 px-1">{user.hoTen}</span>
             </div>
-          </li>
+          </a>
           <li className="nav-item">
             <div className="nav-link d-flex">
               {/* thong bao Modal kiem tra co dang xuat khong */}

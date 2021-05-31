@@ -66,7 +66,13 @@
 .header .navbar-collapse .item-right .city-drop:focus {
   box-shadow: transparent;
 }
-
+.header .nav-item.border-right:hover {
+  color: red;
+  text-decoration: none;
+}
+.header .nav-item.border-right:hover > span {
+  color: red;
+}
 @media only screen and (min-width: 1400px) {
   .header .navbar-nav {
     padding-left: 5% !important;

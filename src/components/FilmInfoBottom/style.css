@@ -372,3 +372,37 @@
   text-align: center;
   display: flex;
 }
+@media screen and (max-width: 900px) {
+}
+
+@media screen and (max-width: 700px) {
+  .detailMain {
+    transform: none;
+  }
+  .detailMain .container .tab-nav {
+    display: block;
+  }
+  .detailMain .detailMainStyle .row {
+    margin: 0;
+  }
+  .detailMain .detailMainStyle .row.rowLeftInfo {
+    justify-content: center;
+  }
+  .detailMain .film {
+    padding: 0 15px;
+  }
+  #detailReviewer .row.reviewerContain {
+    margin: 15px 0;
+  }
+  #detailReviewer .reviewerContain .dadCommentReviewer {
+    padding: 0px;
+    margin: 20px 0;
+  }
+  #detailReviewer .row {
+    margin: 0;
+  }
+  #detailReviewer .imgReviewerStar img {
+    width: 100px;
+    height: 18px;
+  }
+}
