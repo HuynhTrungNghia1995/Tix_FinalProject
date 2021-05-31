@@ -59,7 +59,6 @@ export const bookTicket = (ticket) => {
             }
         })
             .then((res) => {
-                alert("success");
                 dispatch(bookTicketSuccess(res.data));
             })
             .catch((err) => {
