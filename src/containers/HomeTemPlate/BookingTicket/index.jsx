@@ -1,10 +1,16 @@
-import { Button } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { Button, makeStyles } from "@material-ui/core";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import Payment from "../../../components/Payment";
 import SeatList from "../../../components/seatList";
 import { fetchRoomList } from "./modules/action";
+import Countdown from "react-countdown";
+import { Link } from "react-router-dom";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import "./style.css";
 
 export default function BookingTicket() {
@@ -23,10 +29,15 @@ export default function BookingTicket() {
       bookSeats: [],
       totalMoney: 0,
     });
+    setCountdown(Date.now() + 10000);
   };
 
   useEffect(() => {
     dispatch(fetchRoomList(idSchedule));
+
+    setTimeout(() => {
+      handleOpenWarning();
+    }, 300000);
   }, [render]);
 
   const roomListReducer = useSelector((state) => state.fetchRoomListReducer);
@@ -101,7 +112,136 @@ export default function BookingTicket() {
     });
   };
 
-  console.log("state", state);
+  // book ticket confirm
+  const ticket = {
+    maLichChieu: idSchedule,
+    danhSachVe: [],
+    taiKhoanNguoiDung: "",
+  };
+
+  if (localStorage.getItem("User")) {
+    ticket.taiKhoanNguoiDung = JSON.parse(
+      localStorage.getItem("User")
+    ).taiKhoan;
+  }
+
+  state.bookSeats.forEach((seat) => {
+    ticket.danhSachVe.push({
+      maGhe: seat.maGhe,
+      giaVe: seat.giaVe,
+    });
+  });
+  // console.log("ticket", ticket);
+
+  // Countdown
+  const [countdown, setCountdown] = useState(Date.now() + 300000);
+
+  // Renderer callback with condition
+  const renderer = ({ minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a complete state
+      return <span>00:00</span>;
+    } else {
+      // Render a countdown
+      return (
+        <span>
+          0{minutes}:{seconds}
+        </span>
+      );
+    }
+  };
+
+  // render warning countdown
+  const useStyles = makeStyles((theme) => ({
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      margin: 15,
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: "2px solid #000",
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+      borderRadius: 5,
+      textAlign: "center",
+      width: 500,
+    },
+  }));
+
+  const classes = useStyles();
+
+  const [openWarning, setOpenWarning] = React.useState(false);
+
+  const handleOpenWarning = () => {
+    setOpenWarning(true);
+  };
+
+  const handleCloseWarning = () => {
+    setOpenWarning(false);
+    handleRender();
+  };
+
+  const renderModalWarning = () => {
+    return (
+      <Fragment>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={openWarning}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={openWarning}>
+            <div className={classes.paper}>
+              <InfoOutlinedIcon
+                style={{
+                  color: "#fd9411",
+                  fontSize: 90,
+                  margin: "20px 0",
+                }}
+              />
+              <h2
+                style={{
+                  fontWeight: 600,
+                  marginBottom: 15,
+                }}
+              >
+                Hết giờ!
+              </h2>
+              <p
+                style={{
+                  fontSize: 20,
+                }}
+              >
+                Bạn có muốn đặt vé lại
+              </p>
+              <Button
+                className="notify mr-4"
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={handleCloseWarning}
+              >
+                Đồng Ý
+              </Button>
+
+              <Link to="/" style={{ textDecoration: "none" }}>
+                <Button variant="contained" size="large">
+                  Hủy
+                </Button>
+              </Link>
+            </div>
+          </Fade>
+        </Modal>
+      </Fragment>
+    );
+  };
 
   return (
     <section className="container-fluid" id="book_ticket">
@@ -122,12 +262,18 @@ export default function BookingTicket() {
 
             <div className="time">
               <span>thời gian giữ ghế</span>
-              <p style={{ marginBottom: 0 }}>05:00</p>
+              <div>
+                <Countdown
+                  className="countdown"
+                  date={countdown}
+                  renderer={renderer}
+                />
+              </div>
             </div>
           </div>
 
           <div className="screen text-center">
-            <img src="./images/screen.png" alt="" />
+            <img src="/images/screen.png" alt="" />
           </div>
 
           <SeatList
@@ -141,6 +287,7 @@ export default function BookingTicket() {
               <Button
                 className="seat_type seat_normal"
                 variant="contained"
+                // onClick={handleOpenWarning}
               ></Button>
               <span>Ghế thường</span>
             </div>
@@ -173,9 +320,15 @@ export default function BookingTicket() {
         </div>
 
         <div className="col-md-3 col-sm-12 right">
-          <Payment state={state} room={room} handleRender={handleRender} />
+          <Payment
+            ticket={ticket}
+            state={state}
+            room={room}
+            handleRender={handleRender}
+          />
         </div>
       </div>
+      {renderModalWarning()}
     </section>
   );
 }

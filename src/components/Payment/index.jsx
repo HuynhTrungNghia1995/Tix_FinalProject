@@ -11,12 +11,12 @@ import Fade from "@material-ui/core/Fade";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import SyncIcon from "@material-ui/icons/Sync";
 import { Link } from "react-router-dom";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import "./style.css";
+import { bookTicket } from "../../containers/HomeTemplate/BookingTicket/modules/action";
 
 export default function Payment(props) {
-  const { room, state, handleRender } = props;
-  console.log(state.bookSeats);
+  const { room, state, ticket } = props;
+  // console.log("ticket", ticket);
 
   state.bookSeats.sort(function (a, b) {
     return parseInt(a.stt) - parseInt(b.stt);
@@ -160,6 +160,7 @@ export default function Payment(props) {
 
   const handleOpenSuccess = () => {
     handleCloseNotify();
+    bookTicket(ticket);
     setOpenSuccess(true);
   };
 
@@ -213,82 +214,6 @@ export default function Payment(props) {
                   onClick={handleCloseSuccess}
                 >
                   OK
-                </Button>
-              </Link>
-            </div>
-          </Fade>
-        </Modal>
-      </Fragment>
-    );
-  };
-
-  const [openWarning, setOpenWarning] = React.useState(false);
-
-  const handleOpenWarning = () => {
-    setOpenWarning(true);
-  };
-
-  const handleCloseWarning = () => {
-    setOpenWarning(false);
-    handleRender();
-    setValue("");
-  };
-
-  const renderModalWarning = () => {
-    return (
-      <Fragment>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={openWarning}
-          onClose={() => setOpenWarning(false)}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={openWarning}>
-            <div className={classes.paper}>
-              <InfoOutlinedIcon
-                style={{
-                  color: "#fd9411",
-                  fontSize: 90,
-                  margin: "20px 0",
-                }}
-              />
-              <h2
-                style={{
-                  fontWeight: 600,
-                  marginBottom: 15,
-                }}
-              >
-                Hết giờ!
-              </h2>
-              <p
-                style={{
-                  fontSize: 20,
-                }}
-              >
-                Bạn có muốn đặt vé lại
-              </p>
-              <Button
-                className="notify mr-4"
-                variant="contained"
-                size="large"
-                color="primary"
-                onClick={handleCloseWarning}
-              >
-                Đồng Ý
-              </Button>
-              <Link to="/" style={{ textDecoration: "none" }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={() => setOpenWarning(false)}
-                >
-                  Hủy
                 </Button>
               </Link>
             </div>
@@ -359,7 +284,7 @@ export default function Payment(props) {
                 control={<Radio color="primary" />}
                 label={
                   <div className="pay_option">
-                    <img src="./images/ATM.png" alt="ATM" />
+                    <img src="/images/ATM.png" alt="ATM" />
                     <span>Thẻ ATM nội địa</span>
                   </div>
                 }
@@ -369,7 +294,7 @@ export default function Payment(props) {
                 control={<Radio color="primary" />}
                 label={
                   <div className="pay_option">
-                    <img src="./images/visa_mastercard.png" alt="ATM" />
+                    <img src="/images/visa_mastercard.png" alt="Visa" />
                     <span>Visa, Master, JCB</span>
                   </div>
                 }
@@ -379,7 +304,7 @@ export default function Payment(props) {
                 control={<Radio color="primary" />}
                 label={
                   <div className="pay_option">
-                    <img src="./images/cash.png" alt="ATM" />
+                    <img src="/images/cash.png" alt="Cash" />
                     <span>Thanh toán tiền mặt</span>
                   </div>
                 }
@@ -405,7 +330,7 @@ export default function Payment(props) {
       {/* Modal */}
       {renderModalNotify()}
       {renderModalSuccess()}
-      {renderModalWarning()}
+      {/* {renderModalWarning()} */}
     </Fragment>
   );
 }

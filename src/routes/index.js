@@ -24,7 +24,7 @@ const routeHome = [
   },
   {
     exact: false,
-    path: "/bookticket",
+    path: "/bookticket/:id",
     component: BookingTicket
   },
   {

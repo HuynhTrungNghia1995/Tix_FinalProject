@@ -48,7 +48,8 @@
   text-align: center;
 }
 
-#book_ticket .left .time p {
+#book_ticket .left .time div > span {
+  margin-bottom: 0;
   font-size: 30px;
   font-weight: 600;
   color: red;

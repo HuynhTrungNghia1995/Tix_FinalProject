@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import React, { Fragment, useState } from "react";
 import "./style.css";
 import { Avatar, Button } from "@material-ui/core";
@@ -193,15 +193,15 @@ export default function NavbarHome() {
       return (
         <Fragment>
           <li className="nav-item border-right">
-            <NavLink className="nav-link d-flex" to="/login">
+            <Link className="nav-link d-flex" to="/login">
               <i className="fa fa-user-circle user-icon" />
               <span className="mt-1 ml-1 px-1">Đăng Nhập</span>
-            </NavLink>
+            </Link>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link d-flex" to="/register">
+            <Link className="nav-link d-flex" to="/register">
               <span className="mt-1 ml-1 px-1">Đăng Ký</span>
-            </NavLink>
+            </Link>
           </li>
         </Fragment>
       );
@@ -234,24 +234,24 @@ export default function NavbarHome() {
         >
           <ul className="navbar-nav item-left col-md-7">
             <li className="nav-item">
-              <a className="nav-link" href="#intro-film">
+              <Link className="nav-link" to="/#intro-film">
                 Lịch Chiếu
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#schedule">
+              <Link className="nav-link" to="/#schedule">
                 Cụm rạp
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#news">
+              <Link className="nav-link" to="/#news">
                 Tin tức
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#application">
+              <Link className="nav-link" to="/#application">
                 Ứng dụng
-              </a>
+              </Link>
             </li>
           </ul>
           <ul
