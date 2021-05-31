@@ -21,24 +21,13 @@ export default function BookingTicket() {
 
   // console.log("idSchedule", idSchedule);
 
-  const [render, setRender] = useState(false);
-
   const handleRender = () => {
-    setRender(!render);
-    setState({
-      bookSeats: [],
-      totalMoney: 0,
-    });
-    setCountdown(Date.now() + 10000);
+    window.location.reload();
   };
 
   useEffect(() => {
     dispatch(fetchRoomList(idSchedule));
-
-    setTimeout(() => {
-      handleOpenWarning();
-    }, 300000);
-  }, [render]);
+  }, []);
 
   const roomListReducer = useSelector((state) => state.fetchRoomListReducer);
 
@@ -267,6 +256,7 @@ export default function BookingTicket() {
                   className="countdown"
                   date={countdown}
                   renderer={renderer}
+                  onComplete={handleOpenWarning}
                 />
               </div>
             </div>
@@ -287,7 +277,6 @@ export default function BookingTicket() {
               <Button
                 className="seat_type seat_normal"
                 variant="contained"
-                // onClick={handleOpenWarning}
               ></Button>
               <span>Ghế thường</span>
             </div>

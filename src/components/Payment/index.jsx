@@ -13,10 +13,11 @@ import SyncIcon from "@material-ui/icons/Sync";
 import { Link } from "react-router-dom";
 import "./style.css";
 import { bookTicket } from "../../containers/HomeTemplate/BookingTicket/modules/action";
+import { useDispatch } from "react-redux";
 
 export default function Payment(props) {
+  const dispatch = useDispatch();
   const { room, state, ticket } = props;
-  // console.log("ticket", ticket);
 
   state.bookSeats.sort(function (a, b) {
     return parseInt(a.stt) - parseInt(b.stt);
@@ -160,7 +161,7 @@ export default function Payment(props) {
 
   const handleOpenSuccess = () => {
     handleCloseNotify();
-    bookTicket(ticket);
+    dispatch(bookTicket(ticket));
     setOpenSuccess(true);
   };
 
