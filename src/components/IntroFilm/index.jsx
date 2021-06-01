@@ -209,15 +209,22 @@ export default function IntroFilm() {
                   style={{ display: "block" }}
                 />
                 <button className="btn">
-                  <a
-                    href="#slider"
+                  <NavLink
+                    to={{
+                      pathname: "/film-detail/" + film.maPhim,
+                      state: {
+                        film,
+                        filmList: filmListReducer.data,
+                        idx,
+                      },
+                    }}
                     className="text-white"
                     style={{
                       textDecoration: "none",
                     }}
                   >
                     MUA VÉ
-                  </a>
+                  </NavLink>
                 </button>
               </div>
             </div>

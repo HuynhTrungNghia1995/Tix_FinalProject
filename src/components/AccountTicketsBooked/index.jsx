@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -26,34 +26,48 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(movie, cinema, seat, room, code) {
-  return { movie, cinema, seat, room, code };
-}
-const a = (
-  <div>
-    E07 <br /> E08
-  </div>
-);
-const rows = [
-  createData("Kiều aaaaaaaaaaaaaa", "CNS Quốc Thanh", a, "Rạp 1", "53080"),
-];
-
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
 });
+const renderSeats = (danhSachGhe) => {
+  const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+  const numSeatInRow = 16;
 
-export default function AccountTicketsBooked() {
+  return danhSachGhe.map((item, index) => {
+    let hangGhe = Math.floor(Number(item.tenGhe) / numSeatInRow);
+    let viTriGhe = Number(item.tenGhe) - numSeatInRow * hangGhe;
+    return (
+      <p style={{ marginBottom: 5 }} key={index}>
+        {rows[hangGhe]}
+        {viTriGhe.toString().padStart(2, "0")}
+      </p>
+    );
+  });
+};
+export default function AccountTicketsBooked(props) {
   const classes = useStyles();
+  const userInfo = props.userInfo.data;
+  console.log(userInfo);
+  const { loading } = props.userInfo;
+  if (loading) return <h1>Loading....</h1>;
+
   return (
     <div className="ticketInfo">
       <div className="container">
         {" "}
         <div className="info">
-          <h1>Hi Du!</h1>
+          <h1>
+            Hi <span className="name">{userInfo?.hoTen}</span>!
+          </h1>
           <h3>Your are the boss of your account </h3>
           <br></br>
+          <div className="detail">
+            <h3>Your email: {userInfo?.email}</h3>
+            <h3>Your phone: {userInfo?.soDT}</h3>
+            <h3>Your id: {userInfo?.taiKhoan}</h3>
+          </div>
           <h2>Here is your booking ticket : </h2>
         </div>
         <TableContainer component={Paper}>
@@ -68,17 +82,25 @@ export default function AccountTicketsBooked() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <StyledTableRow key={row.movie}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.movie}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{row.cinema}</StyledTableCell>
-                  <StyledTableCell align="right">{row.seat}</StyledTableCell>
-                  <StyledTableCell align="right">{row.room}</StyledTableCell>
-                  <StyledTableCell align="right">{row.code}</StyledTableCell>
-                </StyledTableRow>
-              ))}
+              {userInfo?.thongTinDatVe?.map((row) => {
+                return (
+                  <StyledTableRow key={row.maVe}>
+                    <StyledTableCell component="th" scope="row">
+                      {row.tenPhim}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.danhSachGhe[0].tenHeThongRap}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {renderSeats(row.danhSachGhe)}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.danhSachGhe[0].tenRap}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">{row.maVe}</StyledTableCell>
+                  </StyledTableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>

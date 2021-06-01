@@ -8,7 +8,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
-
+import { NavLink } from "react-router-dom";
 export default function NavbarHome() {
   const user = JSON.parse(localStorage.getItem("User"));
   const [render, setRender] = useState(false);
@@ -57,12 +57,18 @@ export default function NavbarHome() {
     if (user) {
       return (
         <Fragment>
-          <a href={"/account-info"} className="nav-item border-right">
+          <NavLink
+            to={{
+              pathname: "/account-info/" + user.taiKhoan,
+              state: user.taiKhoan,
+            }}
+            className="nav-item border-right"
+          >
             <div className="nav-link d-flex align-items-center">
               <Avatar src="https://i.pravatar.cc/32" alt="avatar" />
               <span className="user ml-1 px-1">{user.hoTen}</span>
             </div>
-          </a>
+          </NavLink>
           <li className="nav-item">
             <div className="nav-link d-flex">
               {/* thong bao Modal kiem tra co dang xuat khong */}

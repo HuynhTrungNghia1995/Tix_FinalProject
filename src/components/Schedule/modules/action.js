@@ -41,7 +41,7 @@ export const fetchSystemCinemaAgents = () => {
   return (dispatch) => {
     dispatch(fetchSystemCinemaAgentsRequest());
     axios({
-      url: `https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP01
+      url: `https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP03
                 `,
       method: "GET",
     })
