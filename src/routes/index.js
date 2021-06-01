@@ -29,7 +29,7 @@ const routeHome = [
   },
   {
     exact: false,
-    path: "/account-info",
+    path: "/account-info/:taiKhoan",
     component: UserAccountInfo
   },
 

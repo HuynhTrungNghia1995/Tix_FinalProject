@@ -8,6 +8,7 @@ import { fetchFilmListReducer, addFilmReducer, deleteFilmReducer, updateFilmRedu
 import { fetchUserListReducer, addUserReducer, deleteUserReducer, updateUserReducer } from "../../containers/AdminTemplate/UserManagement/modules/reducer";
 import { fetchShowtimeReducer, fetchCinemaSystemReducer, fetchCinemaReducer, addShowTimeReducer } from "../../containers/AdminTemplate/ShowTimesManagement/modules/reducer";
 import { fetchRoomListReducer, bookTicketReducer } from "../../containers/HomeTemplate/BookingTicket/modules/reducer";
+import userInfoReducer from '../../containers/HomeTemplate/UserAccountInfo/modules/reducer';
 
 const store = combineReducers({
     authReducer,
@@ -29,5 +30,6 @@ const store = combineReducers({
     systemCinemaReducer,
     fetchRoomListReducer,
     bookTicketReducer,
+    userInfoReducer,
 });
 export default store;

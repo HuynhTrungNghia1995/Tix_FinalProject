@@ -9,7 +9,7 @@ import Fade from "@material-ui/core/Fade";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import Button from "@material-ui/core/Button";
 import FilmSelection from "../FilmSelection";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function IntroFilm() {
   const [IDGroup, setIDGroup] = useState("GP03");
@@ -115,7 +115,7 @@ export default function IntroFilm() {
         <div className="col-lg-3 col-md-4 col-6 pb-5">
           <div className="item">
             <div className="filmThumbnail">
-              <Link
+              <NavLink
                 to={{
                   pathname: "/film-detail/" + film.maPhim,
                   state: {
@@ -130,7 +130,7 @@ export default function IntroFilm() {
                   src={film.hinhAnh}
                   className="film-poster border rounded imgFilmThumbnail"
                 />
-              </Link>
+              </NavLink>
 
               <div className="rating">
                 <p>{film.danhGia} </p>
@@ -209,15 +209,22 @@ export default function IntroFilm() {
                   style={{ display: "block" }}
                 />
                 <button className="btn">
-                  <a
-                    href="#slider"
+                  <NavLink
+                    to={{
+                      pathname: "/film-detail/" + film.maPhim,
+                      state: {
+                        film,
+                        filmList: filmListReducer.data,
+                        idx,
+                      },
+                    }}
                     className="text-white"
                     style={{
                       textDecoration: "none",
                     }}
                   >
                     MUA VÉ
-                  </a>
+                  </NavLink>
                 </button>
               </div>
             </div>

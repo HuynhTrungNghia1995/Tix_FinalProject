@@ -1,8 +1,21 @@
 .ticketInfo {
   padding: 30px 0 50px;
-  background-color: #1a5ab9;
+  background-color: rgba(29, 35, 43, 0.75);
+  font-family: "Open Sans";
 }
-.info {
+.ticketInfo .info {
   padding: 20px 30px 50px;
-  color: aliceblue;
+  color: white;
+}
+.ticketInfo .detail {
+  background-color: aqua;
+  padding: 20px 20px;
+  color: black;
+  margin-bottom: 15px;
+}
+.ticketInfo .detail h3 {
+  font-size: 22px;
+}
+.ticketInfo .name {
+  color: yellow;
 }
