@@ -75,7 +75,7 @@ export default function AccountTicketsBooked(props) {
             <TableHead>
               <TableRow>
                 <StyledTableCell>Movie</StyledTableCell>
-                <StyledTableCell align="right">Cinema</StyledTableCell>
+                <StyledTableCell>Cinema</StyledTableCell>
                 <StyledTableCell align="right">Seats</StyledTableCell>
                 <StyledTableCell align="right">Room</StyledTableCell>
                 <StyledTableCell align="right">Ticket Code</StyledTableCell>

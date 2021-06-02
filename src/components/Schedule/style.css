@@ -304,10 +304,14 @@
   object-fit: cover;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 980px) {
   .schedule #myTabContent1 {
     display: block;
     width: 100%;
+  }
+  .news {
+    padding-left: 10px;
+    padding-right: 25px;
   }
   .schedule #myTabContent1 .listMovie .movie {
     padding-left: 20px;
@@ -318,6 +322,9 @@
   }
   .schedule #myTabContent1 .listMovie .movie a .light {
     font-size: 16px;
+  }
+  .news .container .col-6-new .img-thumb img {
+    width: 90%;
   }
 }
 
