@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import Payment from "../../../components/Payment";
-import SeatList from "../../../components/seatList";
+import SeatList from "../../../components/SeatList";
 import { fetchRoomList } from "./modules/action";
 import Countdown from "react-countdown";
 import { Link } from "react-router-dom";
@@ -13,11 +13,12 @@ import Fade from "@material-ui/core/Fade";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import "./style.css";
 
-export default function BookingTicket() {
+export default function BookingTicket(props) {
   const dispatch = useDispatch();
-
-  const location = useLocation();
-  const { idSchedule } = location.state;
+  const { id } = props.match.params;
+  console.log(props.match.params);
+  // const location = useLocation();
+  // const { idSchedule } = location.state;
 
   // console.log("idSchedule", idSchedule);
 
@@ -26,7 +27,7 @@ export default function BookingTicket() {
   };
 
   useEffect(() => {
-    dispatch(fetchRoomList(idSchedule));
+    dispatch(fetchRoomList(id));
   }, []);
 
   const roomListReducer = useSelector((state) => state.fetchRoomListReducer);
@@ -103,7 +104,7 @@ export default function BookingTicket() {
 
   // book ticket confirm
   const ticket = {
-    maLichChieu: idSchedule,
+    maLichChieu: id,
     danhSachVe: [],
     taiKhoanNguoiDung: "",
   };
@@ -242,7 +243,7 @@ export default function BookingTicket() {
                 <img src={room?.thongTinPhim.hinhAnh} alt="" />
               </div>
               <div className="res-none">
-                <p style={{ marginBottom: 5 }}>
+                <p style={{ marginBottom: 5, color: "#000000" }}>
                   {room?.thongTinPhim.tenCumRap} - {room?.thongTinPhim.tenRap}
                 </p>
                 <span>{room?.thongTinPhim.diaChi}</span>
@@ -312,6 +313,7 @@ export default function BookingTicket() {
           <Payment
             ticket={ticket}
             state={state}
+            setState={setState}
             room={room}
             handleRender={handleRender}
           />

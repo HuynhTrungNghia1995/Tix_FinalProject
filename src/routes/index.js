@@ -14,6 +14,11 @@ const routeHome = [
   },
   {
     exact: false,
+    path: "/login",
+    component: Login,
+  },
+  {
+    exact: false,
     path: "/register",
     component: Register,
   },
@@ -36,11 +41,6 @@ const routeHome = [
 ];
 
 const routeAdmin = [
-  {
-    exact: false,
-    path: "/login",
-    component: Login,
-  },
   {
     exact: false,
     path: "/dashboard",

@@ -90,6 +90,7 @@ const renderSeats = (danhSachGhe) => {
 export default function AccountTicketsBooked(props) {
   const classes = useStyles();
   const userInfo = props.userInfo.data;
+<<<<<<< HEAD
   console.log(userInfo);
   const dispatch = useDispatch();
   const [modalStyle] = useState(getModalStyle);
@@ -119,6 +120,10 @@ export default function AccountTicketsBooked(props) {
   const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
   const [isEmailFormatNotice, setIsEmailFormatNotice] = useState(false);
   const [emptyFullNameNotice, setEmptyFullNameNotice] = useState(false);
+=======
+  const { loading } = props.userInfo;
+  if (loading) return <h1>Loading....</h1>;
+>>>>>>> main
 
   const [registerUserItem, setRegisterUserItem] = useState({
     hoTen: userInfo?.hoTen,

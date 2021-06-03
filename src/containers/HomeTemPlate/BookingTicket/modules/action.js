@@ -51,7 +51,7 @@ export const bookTicket = (ticket) => {
     return (dispatch) => {
         dispatch(bookTicketRequest());
         axios({
-            url: `https://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/ThongTinTaiKhoan`,
+            url: `https://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/DatVe`,
             method: "POST",
             data: ticket,
             headers: {

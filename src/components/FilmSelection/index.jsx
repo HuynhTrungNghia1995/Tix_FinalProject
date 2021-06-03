@@ -164,7 +164,51 @@ export default function FilmSelection(props) {
     (inputValue) => setValueShowtime(inputValue),
     []
   );
-
+  const handleBookSeatButton = () => {
+    const user = JSON.parse(localStorage.getItem("User"));
+    if (user) {
+      return (
+        <Button
+          variant="contained"
+          size="large"
+          color="secondary"
+          disabled={disabled}
+        >
+          <Link
+            style={{ textDecoration: "none", color: "white" }}
+            to={{
+              pathname: "/bookticket/" + valueShowtime?.idSchedule,
+              state: {
+                idSchedule: valueShowtime?.idSchedule,
+              },
+            }}
+          >
+            MUA VÉ
+            </Link>
+        </Button>
+      )
+    }
+    return (
+      <Button
+        variant="contained"
+        size="large"
+        color="secondary"
+        disabled={disabled}
+      >
+        <Link
+          style={{ textDecoration: "none", color: "white" }}
+          to={{
+            pathname: "/login/" + valueShowtime?.idSchedule,
+            state: {
+              idSchedule: valueShowtime?.idSchedule,
+            },
+          }}
+        >
+          MUA VÉ
+        </Link>
+      </Button>
+    )
+  }
   const loadOptionShowtimes = (inputValue, callback) =>
     setTimeout(() => {
       callback(
@@ -243,24 +287,7 @@ export default function FilmSelection(props) {
             style={{ textAlign: "center" }}
           >
             <div className={disabled ? "no-drop" : "pointer"}>
-              <Button
-                variant="contained"
-                size="large"
-                color="secondary"
-                disabled={disabled}
-              >
-                <Link
-                  style={{ textDecoration: "none", color: "white" }}
-                  to={{
-                    pathname: "/bookticket/" + valueShowtime?.idSchedule,
-                    state: {
-                      idSchedule: valueShowtime?.idSchedule,
-                    },
-                  }}
-                >
-                  MUA VÉ
-                </Link>
-              </Button>
+              {handleBookSeatButton()}
             </div>
           </div>
         </div>
