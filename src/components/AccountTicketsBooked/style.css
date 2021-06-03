@@ -1,6 +1,6 @@
 .ticketInfo {
   padding: 30px 0 50px;
-  background-color: rgba(29, 35, 43, 0.75);
+  background-color: rgba(46, 61, 80, 0.75);
   font-family: "Open Sans";
 }
 .ticketInfo .info {
@@ -8,9 +8,9 @@
   color: white;
 }
 .ticketInfo .detail {
-  background-color: aqua;
+  background-color: rgb(245, 246, 247);
   padding: 20px 20px;
-  color: black;
+  color: #101111;
   margin-bottom: 15px;
   margin-right: 100px;
 }
@@ -22,6 +22,13 @@
 }
 .ticketInfo .MuiTableContainer-root {
   max-height: 600px;
+}
+.ticketInfo .account-label {
+  color: rgb(243, 7, 7);
+}
+.ticketInfo .info .detail {
+  display: flex;
+  justify-content: space-between;
 }
 @media screen and (max-width: 1000px) {
   .ticketInfo {

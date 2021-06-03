@@ -14,6 +14,8 @@ export default function UserAccountInfo() {
   }, []);
   const userInfo = useSelector((state) => state.userInfoReducer);
   //console.log(userInfo);
+  const { loading } = userInfo;
+  if (loading) return <h1>Loading....</h1>;
   return (
     <div className="userAccountInfo">
       <AccountTicketsBooked userInfo={userInfo} />
