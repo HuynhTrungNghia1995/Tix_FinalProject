@@ -49,7 +49,6 @@ const renderSeats = (danhSachGhe) => {
 export default function AccountTicketsBooked(props) {
   const classes = useStyles();
   const userInfo = props.userInfo.data;
-  console.log(userInfo);
   const { loading } = props.userInfo;
   if (loading) return <h1>Loading....</h1>;
 
