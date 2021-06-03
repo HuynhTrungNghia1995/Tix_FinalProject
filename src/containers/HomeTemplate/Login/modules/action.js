@@ -9,13 +9,8 @@ export const fetchLogin = (user, history) => {
             data: user,
         })
             .then((res) => {
-                dispatch(actAuthSuccess(res.data));
                 localStorage.setItem("User", JSON.stringify(res.data));
-                if (res.data.maLoaiNguoiDung === "QuanTri") {
-                    history.replace("/dashboard");
-                } else {
-                    history.replace("/");
-                }
+                dispatch(actAuthSuccess(res.data));
             })
             .catch((err) => {
                 dispatch(actAuthFailed(err));
