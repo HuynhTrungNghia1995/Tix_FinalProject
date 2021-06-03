@@ -14,6 +14,11 @@ const routeHome = [
   },
   {
     exact: false,
+    path: "/login",
+    component: Login,
+  },
+  {
+    exact: false,
     path: "/register",
     component: Register,
   },
@@ -29,18 +34,13 @@ const routeHome = [
   },
   {
     exact: false,
-    path: "/account-info",
+    path: "/account-info/:taiKhoan",
     component: UserAccountInfo
   },
 
 ];
 
 const routeAdmin = [
-  {
-    exact: false,
-    path: "/login",
-    component: Login,
-  },
   {
     exact: false,
     path: "/dashboard",

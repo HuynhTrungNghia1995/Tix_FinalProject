@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogin, resetAuth } from './modules/action';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import Loading from '../../../components/Loading';
 
 function Copyright() {
@@ -68,16 +68,19 @@ export default function Login(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const logo = process.env.PUBLIC_URL + "images/logo.png";
+    const data = useSelector(state => state.authReducer.data);
     const loading = useSelector(state => state.authReducer.loading);
     const err = useSelector(state => state.authReducer.err);
     const [render, setRender] = useState(false);
     const [isDisable, setIsDisable] = useState(true);
     const [emptyUsernameNotice, setEmptyUsernameNotice] = useState(false);
     const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
+    const location = useLocation();
     const [state, setState] = useState({
         taiKhoan: "",
         matKhau: ""
     });
+    console.log();
     useEffect(() => {
         setTimeout(handleReset, 2000);
         setState({
@@ -136,6 +139,15 @@ export default function Login(props) {
         if (emptyPasswordNotice) {
             setTimeout(handleNotice, 1500)
             return <Alert severity="error">Mật khẩu không được để trống</Alert>
+        }
+    }
+    if (data) {
+        if (data.maLoaiNguoiDung === "QuanTri") {
+            props.history.replace("/dashboard");
+        } else if (location?.state?.idSchedule) {
+            props.history.replace(`/bookticket/${location?.state?.idSchedule}`);
+        } else {
+            props.history.replace("/");
         }
     }
     if (loading) return (

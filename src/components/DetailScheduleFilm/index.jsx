@@ -145,7 +145,10 @@ export default function DetailScheduleFilm(props) {
         return (
           <Link
             to={{
-              pathname: "/bookticket",
+              pathname: "/bookticket/" + lichChieu.maLichChieu,
+              state: {
+                idSchedule: lichChieu.maLichChieu,
+              },
             }}
             key={lichChieu.maLichChieu}
           >

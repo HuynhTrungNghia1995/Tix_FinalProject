@@ -13,11 +13,12 @@ import Fade from "@material-ui/core/Fade";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import "./style.css";
 
-export default function BookingTicket() {
+export default function BookingTicket(props) {
   const dispatch = useDispatch();
-
-  const location = useLocation();
-  const { idSchedule } = location.state;
+  const { id } = props.match.params;
+  console.log(props.match.params);
+  // const location = useLocation();
+  // const { idSchedule } = location.state;
 
   // console.log("idSchedule", idSchedule);
 
@@ -26,7 +27,7 @@ export default function BookingTicket() {
   };
 
   useEffect(() => {
-    dispatch(fetchRoomList(idSchedule));
+    dispatch(fetchRoomList(id));
   }, []);
 
   const roomListReducer = useSelector((state) => state.fetchRoomListReducer);
@@ -103,7 +104,7 @@ export default function BookingTicket() {
 
   // book ticket confirm
   const ticket = {
-    maLichChieu: idSchedule,
+    maLichChieu: id,
     danhSachVe: [],
     taiKhoanNguoiDung: "",
   };
