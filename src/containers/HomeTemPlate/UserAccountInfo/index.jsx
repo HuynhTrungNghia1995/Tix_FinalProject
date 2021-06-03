@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import AccountTicketsBooked from "../../../components/AccountTicketsBooked";
 import Footer from "../../../components/Footer";
-import NavbarHome from "../../../components/NavbarHome";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import { fetchUserInfo } from "./modules/action";
@@ -16,8 +15,7 @@ export default function UserAccountInfo() {
   const userInfo = useSelector((state) => state.userInfoReducer);
   //console.log(userInfo);
   return (
-    <div class="userAccountInfo">
-      <NavbarHome />
+    <div className="userAccountInfo">
       <AccountTicketsBooked userInfo={userInfo} />
       <Footer />
     </div>
