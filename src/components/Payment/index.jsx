@@ -14,10 +14,17 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import { bookTicket } from "../../containers/HomeTemplate/BookingTicket/modules/action";
 import { useDispatch } from "react-redux";
+import ComboList from "../ComboList";
 
 export default function Payment(props) {
   const dispatch = useDispatch();
-  const { room, state, ticket } = props;
+  const { room, state, ticket, setState } = props;
+
+  const convertMoney = (money) => {
+    return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VND";
+  };
+
+  const [comboMoney, setComboMoney] = useState(0);
 
   state.bookSeats.sort(function (a, b) {
     return parseInt(a.stt) - parseInt(b.stt);
@@ -83,6 +90,7 @@ export default function Payment(props) {
 
   const classes = useStyles();
 
+  // modal notify
   const [openNotify, setOpenNotify] = React.useState(false);
 
   const handleOpenNotify = () => {
@@ -157,6 +165,7 @@ export default function Payment(props) {
     );
   };
 
+  // modal success
   const [openSuccess, setOpenSuccess] = React.useState(false);
 
   const handleOpenSuccess = () => {
@@ -224,10 +233,15 @@ export default function Payment(props) {
     );
   };
 
+  // modal combo
+  const [openCombo, setOpenCombo] = React.useState(false);
+
   return (
     <Fragment>
       <div className="box">
-        <div className="item">{bill}</div>
+        <div className="item" style={{ textAlign: "center" }}>
+          {bill}
+        </div>
 
         <div className="item">
           <span>Phim:</span>
@@ -256,10 +270,10 @@ export default function Payment(props) {
           <div className="text-right">{renderBookSeats()}</div>
         </div>
 
-        <div className="item">
+        <Button className="item combo" onClick={() => setOpenCombo(true)}>
           <span style={{ color: "red", fontWeight: 700 }}>Chọn Combo:</span>
-          <p style={{ color: "#00d200" }}>0 VND</p>
-        </div>
+          <p style={{ color: "#00d200" }}>{convertMoney(comboMoney)}</p>
+        </Button>
 
         <div className="item">
           <span>Ưu đãi:</span>
@@ -331,7 +345,15 @@ export default function Payment(props) {
       {/* Modal */}
       {renderModalNotify()}
       {renderModalSuccess()}
-      {/* {renderModalWarning()} */}
+      <ComboList
+        state={state}
+        setState={setState}
+        classes={classes}
+        openCombo={openCombo}
+        setOpenCombo={setOpenCombo}
+        comboMoney={comboMoney}
+        setComboMoney={setComboMoney}
+      />
     </Fragment>
   );
 }

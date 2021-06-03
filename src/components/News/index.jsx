@@ -113,7 +113,7 @@ export default function News() {
             </ul>
           </div>
 
-          <div class="tab-content" id="pills-tabContent">
+          <div className="tab-content" id="pills-tabContent">
             {renderTabPaneNews()}
           </div>
         </div>

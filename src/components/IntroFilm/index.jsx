@@ -12,7 +12,7 @@ import FilmSelection from "../FilmSelection";
 import { Link } from "react-router-dom";
 
 export default function IntroFilm() {
-  const [IDGroup, setIDGroup] = useState("GP03");
+  const [IDGroup, setIDGroup] = useState("GP01");
 
   const dispatch = useDispatch();
 
@@ -21,8 +21,8 @@ export default function IntroFilm() {
   }, [IDGroup]);
 
   const checkTypeGroup = (type) => {
-    if (type === "showing") setIDGroup("GP03");
-    else if (type === "coming") setIDGroup("GP01");
+    if (type === "showing") setIDGroup("GP01");
+    else if (type === "coming") setIDGroup("GP03");
   };
 
   const filmListReducer = useSelector(

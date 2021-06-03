@@ -7,19 +7,19 @@ export default function TabPaneContent(props) {
     return arr.map((item2, index) => {
       if (index < 2) {
         return (
-          <div key={index} class="col-md-6 col-12 col-6-new">
+          <div key={index} className="col-md-6 col-12 col-6-new">
             <CardNews data={item2} />
           </div>
         );
       } else if (index < 4) {
         return (
-          <div key={index} class="col-md-4 col-12 col-6-new">
+          <div key={index} className="col-md-4 col-12 col-6-new">
             <CardNews data={item2} />
           </div>
         );
       } else
         return (
-          <div class="col-md-4 col-12 col-12-new">
+          <div key={index} className="col-md-4 col-12 col-12-new">
             {item2.map((item3, index) => {
               return (
                 <a href="#" key={index}>
