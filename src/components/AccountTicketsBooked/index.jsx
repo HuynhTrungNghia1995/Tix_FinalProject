@@ -397,7 +397,7 @@ export default function AccountTicketsBooked(props) {
           <h1>
             Hi <span className="name">{userInfoStorage?.hoTen}</span>!
           </h1>
-          <h3>Your are the boss of your account </h3>
+          <h3>You are the boss of your account </h3>
           <br></br>
           <div className="detail">
             <div className="account-inf">

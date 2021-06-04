@@ -16,7 +16,7 @@ import "./style.css";
 export default function BookingTicket(props) {
   const dispatch = useDispatch();
   const { id } = props.match.params;
-  console.log(props.match.params);
+  // console.log(props.match.params);
   // const location = useLocation();
   // const { idSchedule } = location.state;
 
