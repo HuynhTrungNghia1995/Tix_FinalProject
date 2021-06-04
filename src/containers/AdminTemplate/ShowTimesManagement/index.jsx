@@ -8,7 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button, FormControl, Grid, InputLabel, Select, TextField } from '@material-ui/core';
+import { Button, FormControl, Grid, InputLabel, LinearProgress, Select, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFilmList } from "../FilmManagement/modules/action"
 import { addShowTime, fetchCinema, fetchCinemaSystem, fetchShowtimeFilm } from './modules/action';
@@ -55,6 +55,8 @@ export default function ShowTimesManagement() {
     const [filmGroup, setFilmGroup] = useState("GP01");
     const [filmId, setFilmId] = useState("");
     const filmList = useSelector(state => state.fetchFilmListReducer.data);
+    const fetchFilmLoading = useSelector(state => state.fetchFilmListReducer.loading);
+    const addShowTimeLoading = useSelector(state => state.addShowTimeReducer.loading);
     const [cinemaSystemItem, setCinemaSystemItem] = useState("");
     const [cinemaItem, setCinemaItem] = useState("");
     const [cinemaRoom, setCinemaRoom] = useState("");
@@ -67,6 +69,9 @@ export default function ShowTimesManagement() {
     const cinemaSystem = useSelector(state => state.fetchCinemaSystemReducer.data);
     const cinemaList = useSelector(state => state.fetchCinemaReducer.data);
     const showTimesFilm = useSelector(state => state.fetchShowtimeReducer.data);
+    const fetchCinemaSystemLoading = useSelector(state => state.fetchCinemaSystemReducer.loading);
+    const fetchCinemaListLoading = useSelector(state => state.fetchCinemaReducer.loading);
+    const fetchShowTimesFilmLoading = useSelector(state => state.fetchShowtimeReducer.loading);
     const [showTimeItem, setShowTimeItem] = useState({
         maPhim: 0,
         ngayChieuGioChieu: "",
@@ -194,8 +199,46 @@ export default function ShowTimesManagement() {
         handleAfterEvent();
         setRender(!render);
     }
+    const handleLoading = () => {
+        if (fetchFilmLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (fetchCinemaSystemLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (fetchCinemaListLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (fetchShowTimesFilmLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (addShowTimeLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+    }
     return (
         <div>
+            {handleLoading()}
             <FormControl variant="outlined" style={{ width: 100 }}>
                 <Select
                     native

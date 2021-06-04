@@ -18,12 +18,13 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import { Button, FormControl, Grid, Select, TableHead, TextField } from '@material-ui/core';
+import { Button, CircularProgress, FormControl, Grid, LinearProgress, Select, TableHead, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { addFilm, fetchFilmList, deleteFilm, updateFilm, setFilmReset } from "./modules/action";
 import { Alert } from '@material-ui/lab';
+import Loading from '../../../components/Loading';
 const useStyles1 = makeStyles((theme) => ({
     root: {
         flexShrink: 0,
@@ -149,6 +150,12 @@ const useStyles2 = makeStyles((theme) => ({
     input: {
         display: 'none',
     },
+    loadingRoot: {
+        width: '100%',
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
 }));
 
 export default function FilmManagement() {
@@ -159,6 +166,10 @@ export default function FilmManagement() {
     const deleteFilmErr = useSelector(state => state.deleteFilmReducer.err);
     const updateFilmErr = useSelector(state => state.updateFilmReducer.err);
     const addImageErr = useSelector(state => state.addImageReducer.err);
+    const fetchFilmLoading = useSelector(state => state.fetchFilmListReducer.loading);
+    const addFilmLoading = useSelector(state => state.addFilmReducer.loading);
+    const deleteFilmLoading = useSelector(state => state.deleteFilmReducer.loading);
+    const updateFilmLoading = useSelector(state => state.updateFilmReducer.loading);
     const [page, setPage] = useState(0);
     const [handleAddFilm, setHandleAddFilm] = useState(false);
     const [isEditFilm, setIsEditFilm] = useState(false);
@@ -575,11 +586,43 @@ export default function FilmManagement() {
         setFilmGroup(value);
         setRender(!render);
     }
+    const handleLoading = () => {
+        if (fetchFilmLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (deleteFilmLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (addFilmLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (updateFilmLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+    }
+
     return (
         <div >
             <Grid container directions="row" alignItems="center" className="mb-3">
                 <Grid item md={4} xs={12}>
                     <h4>Manage Film</h4>
+
                 </Grid>
                 <Grid item md={4} xs={12}>
                     <FormControl variant="outlined">
@@ -609,6 +652,7 @@ export default function FilmManagement() {
                     {renderErrNotice()}
                 </Grid>
             </Grid>
+            {handleLoading()}
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="custom pagination table">
                     <TableHead>

@@ -27,13 +27,14 @@ import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
 import UserManagement from '../UserManagement';
 import ShowTimesManagement from '../ShowTimesManagement';
+import { useSelector } from 'react-redux';
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {"Copyright © "}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+            <Link color="inherit" href="https://cybersoft.edu.vn/">
+                CyberSoft
       </Link>{" "}
             {new Date().getFullYear()}
             {"."}
