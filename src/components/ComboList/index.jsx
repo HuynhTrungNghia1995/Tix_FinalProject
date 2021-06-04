@@ -16,6 +16,8 @@ export default function ComboList(props) {
     setComboMoney,
     state,
     setState,
+    quantities,
+    setQuantities,
   } = props;
   // data combo
   const combos = [
@@ -114,8 +116,22 @@ export default function ComboList(props) {
     },
   ];
 
+  let countIdx = 0;
+
+  let cloneQuantities = [];
+
+  for (let group of combos) {
+    for (let combo of group.items) {
+      cloneQuantities.push(0);
+    }
+  }
+
+  if (quantities.length === 0) setQuantities(cloneQuantities);
+
   const renderComboGroup = (group) => {
     return group.items.map((combo) => {
+      let index = countIdx++;
+
       return (
         <Fragment key={combo.idCombo}>
           <ComboItem
@@ -124,6 +140,9 @@ export default function ComboList(props) {
             setComboMoney={setComboMoney}
             state={state}
             setState={setState}
+            quantities={quantities}
+            setQuantities={setQuantities}
+            index={index}
           />
         </Fragment>
       );

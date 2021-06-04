@@ -236,6 +236,9 @@ export default function Payment(props) {
   // modal combo
   const [openCombo, setOpenCombo] = React.useState(false);
 
+  // quantity for each combo choosing
+  const [quantities, setQuantities] = useState([]);
+
   return (
     <Fragment>
       <div className="box">
@@ -353,6 +356,8 @@ export default function Payment(props) {
         setOpenCombo={setOpenCombo}
         comboMoney={comboMoney}
         setComboMoney={setComboMoney}
+        quantities={quantities}
+        setQuantities={setQuantities}
       />
     </Fragment>
   );
