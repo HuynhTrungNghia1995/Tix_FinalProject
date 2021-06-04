@@ -132,13 +132,12 @@ export const updateUser = (user, group) => {
   let accessToken = "";
 
   if (localStorage.getItem("User")) {
-    if (
-      JSON.parse(localStorage.getItem("User")).maLoaiNguoiDung === "QuanTri"
-    ) {
-      accessToken = JSON.parse(localStorage.getItem("User")).accessToken;
-    }
+
+    accessToken = JSON.parse(localStorage.getItem("User")).accessToken;
+
   }
   return (dispatch) => {
+
     dispatch(updateUserRequest());
     axios({
       url: `https://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`,
