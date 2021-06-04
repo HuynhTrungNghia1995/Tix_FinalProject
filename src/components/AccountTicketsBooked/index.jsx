@@ -11,7 +11,7 @@ import Modal from "@material-ui/core/Modal";
 import "./style.css";
 import { Avatar, Button, Grid, TextField, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../containers/AdminTemplate/UserManagement/modules/action";
 
 const StyledTableCell = withStyles((theme) => ({
@@ -81,8 +81,8 @@ const renderSeats = (danhSachGhe) => {
     let viTriGhe = Number(item.tenGhe) - numSeatInRow * hangGhe;
     return (
       <p style={{ marginBottom: 5 }} key={index}>
-        {rows[hangGhe]}
-        {viTriGhe.toString().padStart(2, "0")}
+        {viTriGhe === 0 ? rows[hangGhe - 1] : rows[hangGhe]}
+        {viTriGhe === 0 ? "16" : viTriGhe.toString().padStart(2, "0")}
       </p>
     );
   });
@@ -125,7 +125,7 @@ export default function AccountTicketsBooked(props) {
   const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
   const [isEmailFormatNotice, setIsEmailFormatNotice] = useState(false);
   const [emptyFullNameNotice, setEmptyFullNameNotice] = useState(false);
-  const [userGroup, setUserGroup] = useState(userInfoStorage.maNhom);
+  const [userGroup] = useState(userInfoStorage.maNhom);
   const [editUserItem, setEditUserItem] = useState({
     taiKhoan: userInfoStorage?.taiKhoan,
     matKhau: userInfo?.matKhau,
@@ -401,7 +401,7 @@ export default function AccountTicketsBooked(props) {
           <br></br>
           <div className="detail">
             <div className="account-inf">
-              <h1 class="account-label">Account Info</h1>
+              <h1 className="account-label">Account Info</h1>
               <h3>Your user name: {userInfoStorage?.taiKhoan}</h3>
               <h3>Your email: {userInfoStorage?.email}</h3>
               <h3>Your phone: {userInfoStorage?.soDT}</h3>

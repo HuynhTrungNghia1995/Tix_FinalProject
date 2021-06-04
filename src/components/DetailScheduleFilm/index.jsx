@@ -10,7 +10,7 @@ export default function DetailScheduleFilm(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchSystemCinema());
-  }, []);
+  }, [dispatch]);
   const listCinema = useSelector((rootState) => rootState.systemCinemaReducer);
   const clickButtonDay = (index) => {
     //console.log(notExistFilmOfDay);
@@ -28,6 +28,7 @@ export default function DetailScheduleFilm(props) {
           onClick={clickButtonDay(i)}
           data-toggle="tab"
           role="tab"
+          href="#"
           aria-selected="true"
         >
           <p className="dayOfWeek">

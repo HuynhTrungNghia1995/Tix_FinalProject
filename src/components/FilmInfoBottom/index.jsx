@@ -373,6 +373,7 @@ export default function FilmInfoBottom(props) {
                             <img
                               className="iconFacebook postLikeCmt"
                               src="/images/like.png"
+                              alt="icon fb"
                             />
                             <span className="amount like">
                               <strong>2</strong> Thích
