@@ -11,7 +11,8 @@ import Modal from "@material-ui/core/Modal";
 import "./style.css";
 import { Avatar, Button, Grid, TextField, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../containers/AdminTemplate/UserManagement/modules/action";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -90,8 +91,7 @@ const renderSeats = (danhSachGhe) => {
 export default function AccountTicketsBooked(props) {
   const classes = useStyles();
   const userInfo = props.userInfo.data;
-<<<<<<< HEAD
-  console.log(userInfo);
+  //console.log(userInfo);
   const dispatch = useDispatch();
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
@@ -99,40 +99,41 @@ export default function AccountTicketsBooked(props) {
   const handleOpen = () => {
     setOpen(true);
   };
-
+  let userInfoStorage;
+  if (localStorage.getItem("User")) {
+    userInfoStorage = JSON.parse(localStorage.getItem("User"));
+    if (userInfoStorage.matKhau === "")
+      userInfoStorage.matKhau = userInfo.matKhau;
+  }
   const handleClose = () => {
     setOpen(false);
-    setRegisterUserItem({
-      hoTen: userInfo?.hoTen,
-      taiKhoan: userInfo?.taiKhoan,
-      email: userInfo?.email,
-      matKhau: userInfo?.matKhau,
-      maNhom: "GP01",
-      maLoaiNguoiDung: "KhachHang",
-      soDt: userInfo?.soDT,
+    setEditUserItem({
+      taiKhoan: userInfoStorage?.taiKhoan,
+      matKhau: userInfoStorage?.matKhau,
+      email: userInfoStorage?.email,
+      soDt: userInfoStorage?.soDT,
+      maLoaiNguoiDung: userInfoStorage?.maLoaiNguoiDung,
+      hoTen: userInfoStorage?.hoTen,
+      maNhom: userInfoStorage?.maNhom,
     });
   };
 
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
   const [isDisable, setIsDisable] = useState(true);
-  const [validEmail, setValidEmail] = useState(false);
-  const [validPhone, setValidPhone] = useState(false);
+  const [validEmail, setValidEmail] = useState(true);
+  const [validPhone, setValidPhone] = useState(true);
   const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
   const [isEmailFormatNotice, setIsEmailFormatNotice] = useState(false);
   const [emptyFullNameNotice, setEmptyFullNameNotice] = useState(false);
-=======
-  const { loading } = props.userInfo;
-  if (loading) return <h1>Loading....</h1>;
->>>>>>> main
-
-  const [registerUserItem, setRegisterUserItem] = useState({
-    hoTen: userInfo?.hoTen,
-    taiKhoan: userInfo?.taiKhoan,
-    email: userInfo?.email,
+  const [userGroup, setUserGroup] = useState(userInfoStorage.maNhom);
+  const [editUserItem, setEditUserItem] = useState({
+    taiKhoan: userInfoStorage?.taiKhoan,
     matKhau: userInfo?.matKhau,
-    maNhom: "GP01",
-    maLoaiNguoiDung: "KhachHang",
-    soDt: userInfo?.soDT,
+    email: userInfoStorage?.email,
+    soDt: userInfoStorage?.soDT,
+    maLoaiNguoiDung: userInfoStorage?.maLoaiNguoiDung,
+    hoTen: userInfoStorage?.hoTen,
+    maNhom: userInfoStorage?.maNhom,
   });
   const handleDisableNotice = () => {
     setIsValidPhoneNumber(false);
@@ -140,32 +141,36 @@ export default function AccountTicketsBooked(props) {
     setIsEmailFormatNotice(false);
     setEmptyFullNameNotice(false);
   };
-  const handleChangeRegister = (e) => {
+  const handleChangeEdit = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setRegisterUserItem({
-      ...registerUserItem,
+    setEditUserItem({
+      ...editUserItem,
       [name]: value,
     });
-    if (registerUserItem.matKhau !== "") {
+    if (editUserItem.matKhau !== "") {
       setEmptyPasswordNotice(false);
     }
-    if (registerUserItem.hoTen !== "") {
+    if (editUserItem.hoTen !== "") {
       setEmptyFullNameNotice(false);
     }
     if (
-      registerUserItem.taiKhoan !== "" &&
-      registerUserItem.matKhau !== "" &&
-      registerUserItem.hoTen !== "" &&
+      editUserItem.taiKhoan !== "" &&
+      editUserItem.matKhau !== "" &&
+      editUserItem.hoTen !== "" &&
       validEmail === true &&
       validPhone === true
     ) {
+      //console.log(editUserItem.taiKhoan);
       setIsDisable(false);
+    } else {
+      console.log(editUserItem.taiKhoan);
+      setIsDisable(true);
     }
   };
   const validationPhoneNumber = () => {
     let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    if (vnf_regex.test(registerUserItem.soDt)) {
+    if (vnf_regex.test(editUserItem.soDt)) {
       setIsValidPhoneNumber(false);
       setValidPhone(true);
     } else {
@@ -175,19 +180,21 @@ export default function AccountTicketsBooked(props) {
     }
   };
   const handleValidationEmptyPassword = () => {
-    if (registerUserItem.matKhau === "") {
+    if (editUserItem.matKhau === "") {
       setEmptyPasswordNotice(true);
+      setIsDisable(true);
     }
   };
   const handleValidationEmptyFullName = () => {
-    if (registerUserItem.hoTen === "") {
+    if (editUserItem.hoTen === "") {
       setEmptyFullNameNotice(true);
+      setIsDisable(true);
     }
   };
   const handleValidationEmail = () => {
     const mailFormat =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (registerUserItem.email.match(mailFormat)) {
+    if (editUserItem.email.match(mailFormat)) {
       setIsEmailFormatNotice(false);
       setValidEmail(true);
     } else {
@@ -198,26 +205,50 @@ export default function AccountTicketsBooked(props) {
   };
   useEffect(() => {
     if (
-      registerUserItem.taiKhoan !== "" &&
-      registerUserItem.matKhau !== "" &&
-      registerUserItem.hoTen !== "" &&
+      editUserItem.taiKhoan !== "" &&
+      editUserItem.matKhau !== "" &&
+      editUserItem.hoTen !== "" &&
       validEmail === true &&
       validPhone === true
     ) {
       setIsDisable(false);
-    }
+    } else setIsDisable(true);
   }, [validPhone]);
   useEffect(() => {
     if (
-      registerUserItem.taiKhoan !== "" &&
-      registerUserItem.matKhau !== "" &&
-      registerUserItem.hoTen !== "" &&
+      editUserItem.taiKhoan !== "" &&
+      editUserItem.matKhau !== "" &&
+      editUserItem.hoTen !== "" &&
       validEmail === true &&
       validPhone === true
     ) {
       setIsDisable(false);
-    }
+    } else setIsDisable(true);
   }, [validEmail]);
+
+  useEffect(() => {
+    if (
+      editUserItem.taiKhoan !== "" &&
+      editUserItem.matKhau !== "" &&
+      editUserItem.hoTen !== "" &&
+      validEmail === true &&
+      validPhone === true
+    ) {
+      setIsDisable(false);
+    } else setIsDisable(true);
+  }, [setEmptyFullNameNotice]);
+
+  useEffect(() => {
+    if (
+      editUserItem.taiKhoan !== "" &&
+      editUserItem.matKhau !== "" &&
+      editUserItem.hoTen !== "" &&
+      validEmail === true &&
+      validPhone === true
+    ) {
+      setIsDisable(false);
+    } else setIsDisable(true);
+  }, [setEmptyPasswordNotice]);
   const handleValidationNotice = () => {
     if (emptyFullNameNotice) {
       setTimeout(handleDisableNotice, 2500);
@@ -252,9 +283,21 @@ export default function AccountTicketsBooked(props) {
       );
     }
   };
-  const handleRegisterUser = (e) => {
+  const handleSubmitEditUser = (e) => {
     e.preventDefault();
-    dispatch();
+    dispatch(updateUser(editUserItem, userGroup));
+    userInfoStorage = {
+      accessToken: userInfoStorage.accessToken,
+      email: editUserItem.email,
+      hoTen: editUserItem.hoTen,
+      maLoaiNguoiDung: editUserItem.maLoaiNguoiDung,
+      maNhom: userGroup,
+      soDT: editUserItem.soDt,
+      taiKhoan: editUserItem.taiKhoan,
+      matKhau: editUserItem.matKhau,
+    };
+    localStorage.setItem("User", JSON.stringify(userInfoStorage));
+    handleClose();
   };
   const body = (
     <div className={classes.paper} style={modalStyle}>
@@ -265,7 +308,7 @@ export default function AccountTicketsBooked(props) {
         Edit User Info
       </Typography>
       {handleValidationNotice()}
-      <form className={classes.form} onSubmit={handleRegisterUser} noValidate>
+      <form className={classes.form} onSubmit={handleSubmitEditUser} noValidate>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -274,7 +317,7 @@ export default function AccountTicketsBooked(props) {
               fullWidth
               label="Tài Khoản"
               disabled
-              value={registerUserItem.taiKhoan}
+              value={editUserItem.taiKhoan}
             />
           </Grid>
           <Grid item xs={12}>
@@ -283,8 +326,8 @@ export default function AccountTicketsBooked(props) {
               variant="outlined"
               fullWidth
               label="Họ Tên"
-              value={registerUserItem.hoTen}
-              onChange={handleChangeRegister}
+              value={editUserItem.hoTen}
+              onChange={handleChangeEdit}
               onBlur={handleValidationEmptyFullName}
             />
           </Grid>
@@ -294,9 +337,9 @@ export default function AccountTicketsBooked(props) {
               variant="outlined"
               fullWidth
               label="Email"
-              onChange={handleChangeRegister}
+              onChange={handleChangeEdit}
               onBlur={handleValidationEmail}
-              value={registerUserItem.email}
+              value={editUserItem.email}
             />
           </Grid>
           <Grid item xs={12}>
@@ -306,7 +349,8 @@ export default function AccountTicketsBooked(props) {
               name="matKhau"
               label="Mật Khẩu"
               type="password"
-              onChange={handleChangeRegister}
+              value={editUserItem.matKhau}
+              onChange={handleChangeEdit}
               onBlur={handleValidationEmptyPassword}
             />
           </Grid>
@@ -316,8 +360,8 @@ export default function AccountTicketsBooked(props) {
               variant="outlined"
               fullWidth
               label="Số Điện Thoại"
-              value={registerUserItem.soDt}
-              onChange={handleChangeRegister}
+              value={editUserItem.soDt}
+              onChange={handleChangeEdit}
               onBlur={validationPhoneNumber}
             />
           </Grid>
@@ -351,16 +395,16 @@ export default function AccountTicketsBooked(props) {
         {" "}
         <div className="info">
           <h1>
-            Hi <span className="name">{userInfo?.hoTen}</span>!
+            Hi <span className="name">{userInfoStorage?.hoTen}</span>!
           </h1>
           <h3>Your are the boss of your account </h3>
           <br></br>
           <div className="detail">
             <div className="account-inf">
               <h1 class="account-label">Account Info</h1>
-              <h3>Your email: {userInfo?.email}</h3>
-              <h3>Your phone: {userInfo?.soDT}</h3>
-              <h3>Your id: {userInfo?.taiKhoan}</h3>
+              <h3>Your user name: {userInfoStorage?.taiKhoan}</h3>
+              <h3>Your email: {userInfoStorage?.email}</h3>
+              <h3>Your phone: {userInfoStorage?.soDT}</h3>
             </div>
             <div className="account-edit">
               <button className="btn btn-success" onClick={handleOpen}>
