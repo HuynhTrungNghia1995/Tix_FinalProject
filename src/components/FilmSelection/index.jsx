@@ -198,7 +198,7 @@ export default function FilmSelection(props) {
         <Link
           style={{ textDecoration: "none", color: "white" }}
           to={{
-            pathname: "/login/" + valueShowtime?.idSchedule,
+            pathname: "/login",
             state: {
               idSchedule: valueShowtime?.idSchedule,
             },

@@ -141,6 +141,11 @@ export default function Login(props) {
             return <Alert severity="error">Mật khẩu không được để trống</Alert>
         }
     }
+    if (loading) return (
+        <div className={classes.root}>
+            <Loading />
+        </div>
+    );
     if (data) {
         if (data.maLoaiNguoiDung === "QuanTri") {
             props.history.replace("/dashboard");
@@ -150,11 +155,6 @@ export default function Login(props) {
             props.history.replace("/");
         }
     }
-    if (loading) return (
-        <div className={classes.root}>
-            <Loading />
-        </div>
-    );
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
