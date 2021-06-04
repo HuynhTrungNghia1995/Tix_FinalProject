@@ -12,20 +12,20 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import "./style.css";
+import Loading from "../../../components/Loading";
 
 export default function BookingTicket(props) {
   const dispatch = useDispatch();
   const { id } = props.match.params;
-  console.log(props.match.params);
+  // console.log(props.match.params);
   // const location = useLocation();
   // const { idSchedule } = location.state;
 
   // console.log("idSchedule", idSchedule);
-
+  const bookSeatLoading = useSelector(state => state.bookTicketReducer.loading);
   const handleRender = () => {
     window.location.reload();
   };
-
   useEffect(() => {
     dispatch(fetchRoomList(id));
   }, []);
@@ -232,7 +232,13 @@ export default function BookingTicket(props) {
       </Fragment>
     );
   };
-
+  if (roomListReducer?.loading ?? bookSeatLoading) {
+    return (
+      <div className={classes.root}>
+        <Loading />
+      </div>
+    );
+  }
   return (
     <section className="container-fluid" id="book_ticket">
       <div className="row">

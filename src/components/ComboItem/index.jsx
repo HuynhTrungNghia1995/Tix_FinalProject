@@ -3,7 +3,16 @@ import React, { useState } from "react";
 import "./style.css";
 
 export default function ComboItem(props) {
-  const { combo, comboMoney, setComboMoney, state, setState } = props;
+  const {
+    combo,
+    comboMoney,
+    setComboMoney,
+    state,
+    setState,
+    quantities,
+    setQuantities,
+    index,
+  } = props;
 
   const totalMoney = state.totalMoney;
 
@@ -11,21 +20,25 @@ export default function ComboItem(props) {
     return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VND";
   };
 
-  const [quantity, setQuantity] = useState(0);
+  const quantity = quantities[index];
 
   const handleIncrease = () => {
     if (quantity < 10) {
-      setQuantity(quantity + 1);
       setComboMoney(comboMoney + combo.price);
       setState({ ...state, totalMoney: totalMoney + combo.price });
+      let cloneQuantities = [...quantities];
+      cloneQuantities[index] = quantity + 1;
+      setQuantities(cloneQuantities);
     }
   };
 
   const handleDecrease = () => {
     if (quantity > 0) {
-      setQuantity(quantity - 1);
       setComboMoney(comboMoney - combo.price);
       setState({ ...state, totalMoney: totalMoney - combo.price });
+      let cloneQuantities = [...quantities];
+      cloneQuantities[index] = quantity - 1;
+      setQuantities(cloneQuantities);
     }
   };
 

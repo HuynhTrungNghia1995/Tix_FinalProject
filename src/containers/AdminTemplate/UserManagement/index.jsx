@@ -17,7 +17,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import { FormControl, Grid, InputLabel, Select, TableHead, TextField } from '@material-ui/core';
+import { FormControl, Grid, InputLabel, LinearProgress, Select, TableHead, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
@@ -155,6 +155,10 @@ export default function UserManagement() {
     const addUserErr = useSelector(state => state.addUserReducer.err);
     const deleteUserErr = useSelector(state => state.deleteUserReducer.err);
     const updateUserErr = useSelector(state => state.updateUserReducer.err);
+    const fetchUserLoading = useSelector(state => state.fetchUserListReducer.loading);
+    const addUserLoading = useSelector(state => state.addUserReducer.loading);
+    const deleteUserLoading = useSelector(state => state.deleteUserReducer.loading);
+    const updateUserLoading = useSelector(state => state.updateUserReducer.loading);
     const [page, setPage] = useState(0);
     const [handleAddUser, setHandleAddUser] = useState(false);
     const [userItem, setUserItem] = useState(false);
@@ -448,6 +452,36 @@ export default function UserManagement() {
         const value = e.target.value;
         setSearchUserName(value);
     }
+    const handleLoading = () => {
+        if (fetchUserLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (deleteUserLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (addUserLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+        if (updateUserLoading) {
+            return (
+                <div className={classes.loadingRoot}>
+                    <LinearProgress color="secondary" />
+                </div>
+            );
+        }
+    }
     return (
         <div >
             <Grid container directions="row" alignItems="center" className="mb-3">
@@ -481,6 +515,7 @@ export default function UserManagement() {
                     {renderErrNotice()}
                 </Grid>
             </Grid>
+            {handleLoading()}
             <TableContainer component={Paper}>
 
                 <Table className={classes.table} aria-label="custom pagination table">
