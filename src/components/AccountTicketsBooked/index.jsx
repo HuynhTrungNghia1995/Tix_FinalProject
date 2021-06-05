@@ -11,7 +11,7 @@ import Modal from "@material-ui/core/Modal";
 import "./style.css";
 import { Avatar, Button, Grid, TextField, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../containers/AdminTemplate/UserManagement/modules/action";
 
 const StyledTableCell = withStyles((theme) => ({

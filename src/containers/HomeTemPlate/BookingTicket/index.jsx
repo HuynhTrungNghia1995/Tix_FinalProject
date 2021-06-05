@@ -1,7 +1,6 @@
 import { Button, makeStyles } from "@material-ui/core";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
 import Payment from "../../../components/Payment";
 import SeatList from "../../../components/SeatList";
 import { fetchRoomList } from "./modules/action";
@@ -77,7 +76,7 @@ export default function BookingTicket(props) {
     if (index !== -1) return;
 
     cloneBookSeats.push(seat);
-    let total = state.totalMoney + seat.giaVe;
+    let total = state.totalMoney + Math.floor(seat.giaVe);
 
     setState({
       bookSeats: cloneBookSeats,
@@ -94,7 +93,7 @@ export default function BookingTicket(props) {
     if (index === -1) return;
 
     cloneBookSeats.splice(index, 1);
-    let total = state.totalMoney - seat.giaVe;
+    let total = state.totalMoney - Math.floor(seat.giaVe);
 
     setState({
       bookSeats: cloneBookSeats,
