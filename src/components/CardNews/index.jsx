@@ -5,10 +5,10 @@ export default function CardNews(props) {
   const { img, title, description, like, comment } = props.data;
   return (
     <Fragment>
-      <a href="#carousel" className="img-thumb">
+      <a href="#slider" className="img-thumb">
         <img src={img} alt="cai gi quen roi" />
       </a>
-      <a href="#carousel" className="header-thumb">
+      <a href="#slider" className="header-thumb">
         <h3 style={{ WebkitBoxOrient: "vertical" }}>{title}</h3>
       </a>
       <p>{description}</p>
