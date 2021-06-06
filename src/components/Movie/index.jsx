@@ -27,13 +27,13 @@ export default function Movie(props) {
         </div>
       </div>
       <h1>2D Digital</h1>
-      <a href="#a" className="session">
+      <a href="#slider" className="session">
         <span className="light">9:15</span>~10:55
       </a>
-      <a href="#a" className="session">
+      <a href="#slider" className="session">
         <span className="light">14:35</span>~16:15
       </a>
-      <a href="#a" className="session">
+      <a href="#slider" className="session">
         <span className="light">15:40</span>~17:20
       </a>
     </div>
