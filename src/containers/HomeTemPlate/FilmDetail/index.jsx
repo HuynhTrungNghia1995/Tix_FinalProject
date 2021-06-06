@@ -9,8 +9,19 @@ import NavbarHome from "../../../components/NavbarHome";
 import ScrollTopArrow from "../../../components/ScrollTopArrow";
 import { fetchShowtimeFilm } from "../../AdminTemplate/ShowTimesManagement/modules/action";
 import "./style.css";
+import { makeStyles } from "@material-ui/core";
+import Loading from "../../../components/Loading";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}))
 export default function FilmDetail() {
   // const { film, filmList, idx } = useLocation().state;
+  const classes = useStyles()
   const dispatch = useDispatch();
   const dataPass = useLocation().state;
   const { film, filmList, idx } = dataPass;
@@ -18,6 +29,13 @@ export default function FilmDetail() {
     dispatch(fetchShowtimeFilm(film.maPhim));
   }, []);
   const showTimesFilm = useSelector((state) => state.fetchShowtimeReducer);
+  const { loading } = showTimesFilm;
+  if (loading) {
+    return (
+      <div className={classes.root}>
+        <Loading />
+      </div>)
+  }
   return (
     <div className="film-detail">
       <NavbarHome />
