@@ -50,9 +50,8 @@
   + FilmDetail
   + UserAccountInfo
 - Page Home:
-  +Component Schedule
-  +Component News
-
+  + Component Schedule
+  + Component News
 - Page FilmDetail:
   + Component FilmInfoTop 
   + Component FilmInfoBottom
