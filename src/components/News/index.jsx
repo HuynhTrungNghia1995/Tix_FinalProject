@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TabPaneContent from "../TabPaneContent";
@@ -46,7 +46,9 @@ export default function News() {
     return data.map((item, index) => {
       return (
         <div
-          className={index == 0 ? "tab-pane fade show active" : "tab-pane fade"}
+          className={
+            index === 0 ? "tab-pane fade show active" : "tab-pane fade"
+          }
           id={"pills-" + item.id}
           key={index}
           role="tabpanel"

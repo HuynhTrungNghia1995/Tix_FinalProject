@@ -20,6 +20,7 @@ export default function FilmSelection(props) {
     } else {
       dispatch(setShowTimeReset());
     }
+    //eslint-disable-next-line
   }, [valueFilm]);
 
   const showtimeReducer = useSelector(
@@ -184,9 +185,9 @@ export default function FilmSelection(props) {
             }}
           >
             MUA VÉ
-            </Link>
+          </Link>
         </Button>
-      )
+      );
     }
     return (
       <Button
@@ -207,8 +208,8 @@ export default function FilmSelection(props) {
           MUA VÉ
         </Link>
       </Button>
-    )
-  }
+    );
+  };
   const loadOptionShowtimes = (inputValue, callback) =>
     setTimeout(() => {
       callback(

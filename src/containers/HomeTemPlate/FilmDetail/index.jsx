@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router";
+import { useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import FilmInfoBottom from "../../../components/FilmInfoBottom";
 import FilmInfoTop from "../../../components/FilmInfoTop";
@@ -27,6 +27,7 @@ export default function FilmDetail() {
   const { film, filmList, idx } = dataPass;
   useEffect(() => {
     dispatch(fetchShowtimeFilm(film.maPhim));
+    //eslint-disable-next-line
   }, []);
   const showTimesFilm = useSelector((state) => state.fetchShowtimeReducer);
   const { loading } = showTimesFilm;

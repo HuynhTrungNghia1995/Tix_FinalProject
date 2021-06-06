@@ -4,7 +4,7 @@ import "./style.css";
 export default function FilmInfoBottom(props) {
   const { film, showTimesFilm } = props;
   const date = new Date(film.ngayKhoiChieu);
-  console.log(showTimesFilm);
+  //console.log(showTimesFilm);
   return (
     <div className="detailFilmBottom">
       <section className="detailMain">

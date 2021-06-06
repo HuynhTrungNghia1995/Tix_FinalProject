@@ -164,7 +164,7 @@ export default function AccountTicketsBooked(props) {
       //console.log(editUserItem.taiKhoan);
       setIsDisable(false);
     } else {
-      console.log(editUserItem.taiKhoan);
+      //console.log(editUserItem.taiKhoan);
       setIsDisable(true);
     }
   };
@@ -213,6 +213,7 @@ export default function AccountTicketsBooked(props) {
     ) {
       setIsDisable(false);
     } else setIsDisable(true);
+    // eslint-disable-next-line
   }, [validPhone]);
   useEffect(() => {
     if (
@@ -224,31 +225,9 @@ export default function AccountTicketsBooked(props) {
     ) {
       setIsDisable(false);
     } else setIsDisable(true);
+    // eslint-disable-next-line
   }, [validEmail]);
 
-  useEffect(() => {
-    if (
-      editUserItem.taiKhoan !== "" &&
-      editUserItem.matKhau !== "" &&
-      editUserItem.hoTen !== "" &&
-      validEmail === true &&
-      validPhone === true
-    ) {
-      setIsDisable(false);
-    } else setIsDisable(true);
-  }, [setEmptyFullNameNotice]);
-
-  useEffect(() => {
-    if (
-      editUserItem.taiKhoan !== "" &&
-      editUserItem.matKhau !== "" &&
-      editUserItem.hoTen !== "" &&
-      validEmail === true &&
-      validPhone === true
-    ) {
-      setIsDisable(false);
-    } else setIsDisable(true);
-  }, [setEmptyPasswordNotice]);
   const handleValidationNotice = () => {
     if (emptyFullNameNotice) {
       setTimeout(handleDisableNotice, 2500);

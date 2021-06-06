@@ -18,6 +18,7 @@ export default function IntroFilm() {
 
   useEffect(() => {
     dispatch(fetchFilmList(IDGroup));
+    //eslint-disable-next-line
   }, [IDGroup]);
 
   const checkTypeGroup = (type) => {
@@ -138,13 +139,13 @@ export default function IntroFilm() {
               </div>
               <div className="hidden-content">
                 <div>
-                  <a
+                  <button
                     className="play-trailer"
                     type="button"
                     onClick={() => handleOpen(film.maPhim, idx)}
                   >
                     <img alt="" src="./images/play-video.png" />
-                  </a>
+                  </button>
                   <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -187,7 +188,7 @@ export default function IntroFilm() {
                             className="responsive_iframe"
                             src={`${stateFilm.trailer}?autoplay=1`}
                             title="YouTube video player"
-                            frameborder="0"
+                            frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                           ></iframe>
