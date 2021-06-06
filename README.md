@@ -46,5 +46,21 @@
 
 3. Võ Hoàng Vũ:
 
-- Component: AccountTicketBooked, CardNews, DetailScheduleFilm, FilmInfoBottom, FilmInfoTop, ListMovieAgents, Movie, News,Schedule, TabPaneContent
-- Page: FilmDetail, AccountUserInfo
+- HomeTemplate:
+  + FilmDetail
+  + UserAccountInfo
+- Page Home:
+  +Component Schedule
+  +Component News
+
+- Page FilmDetail:
+  +Component FilmInfoTop 
+  +Component FilmInfoBottom
+  +Component DetailScheduleFilm
+- Page UserAccountInfo:
+  +Component AccountTicketsBooked
+- Component:
+	+ CardNews
+	+ ListMovieAgents	
+  + Movie	
+  + TabPaneContent
