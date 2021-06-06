@@ -143,11 +143,33 @@ export default function DetailScheduleFilm(props) {
         //console.log(date_time_end);
         const hour1 = date_time_end.getHours();
         const minute1 = date_time_end.getMinutes();
-
+        const user = JSON.parse(localStorage.getItem("User"));
+ if (user) {
+          return (
+            <Link
+              to={{
+                pathname: "/bookticket/" + lichChieu.maLichChieu,
+                state: {
+                  idSchedule: lichChieu.maLichChieu,
+                },
+              }}
+              key={lichChieu.maLichChieu}
+            >
+              <button className="btn btn-time">
+                <span className="start">
+                  {hour.toString().padStart(2, "0")}:
+                {minute.toString().padStart(2, "0")}
+                </span>{" "}
+              ~ {hour1.toString().padStart(2, "0")}:
+              {minute1.toString().padStart(2, "0")}
+              </button>
+            </Link>
+          );
+        }
         return (
           <Link
             to={{
-              pathname: "/bookticket/" + lichChieu.maLichChieu,
+              pathname: "/login",
               state: {
                 idSchedule: lichChieu.maLichChieu,
               },
@@ -162,8 +184,7 @@ export default function DetailScheduleFilm(props) {
               ~ {hour1.toString().padStart(2, "0")}:
               {minute1.toString().padStart(2, "0")}
             </button>
-          </Link>
-        );
+          </Link>)
       });
   };
   const renderLichChieuChiNhanh = () => {
