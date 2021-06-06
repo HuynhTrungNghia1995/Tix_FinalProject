@@ -4,7 +4,7 @@ export const fetchFilmList = (group) => {
     return (dispatch) => {
         dispatch(fetchFilmListRequest())
         axios({
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=${group}`,
+            url: `https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=${group}`,
             method: "GET",
         })
             .then((res) => {
