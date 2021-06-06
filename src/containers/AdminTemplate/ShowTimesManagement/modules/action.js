@@ -8,6 +8,10 @@ export const fetchShowtimeFilm = (filmId) => {
       method: "GET",
     })
       .then((res) => {
+        res.data.hinhAnh = res.data.hinhAnh.replace(/http/i, 'https');
+        res.data.heThongRapChieu.forEach((item) => {
+          item.logo = item.logo.replace(/http/i, 'https');
+        })
         dispatch(fetchShowtimeFilmSuccess(res.data));
       })
       .catch((err) => {
@@ -42,6 +46,9 @@ export const fetchCinemaSystem = () => {
       method: "GET",
     })
       .then((res) => {
+       res.data.forEach((item) => {
+          item.logo = item.logo.replace(/http/i, 'https');
+        })
         dispatch(fetchCinemaSystemSuccess(res.data));
       })
       .catch((err) => {
