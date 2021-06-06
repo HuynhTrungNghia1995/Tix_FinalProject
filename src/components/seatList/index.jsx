@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import classNames from "classnames";
-import { Button } from "@material-ui/core";
+import React from "react";
+
 import Seat from "../Seat";
 
 export default function SeatList(props) {

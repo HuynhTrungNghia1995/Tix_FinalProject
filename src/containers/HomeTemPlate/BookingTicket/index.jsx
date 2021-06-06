@@ -21,12 +21,15 @@ export default function BookingTicket(props) {
   // const { idSchedule } = location.state;
 
   // console.log("idSchedule", idSchedule);
-  const bookSeatLoading = useSelector(state => state.bookTicketReducer.loading);
+  const bookSeatLoading = useSelector(
+    (state) => state.bookTicketReducer.loading
+  );
   const handleRender = () => {
     window.location.reload();
   };
   useEffect(() => {
     dispatch(fetchRoomList(id));
+    //eslint-disable-next-line
   }, []);
 
   const roomListReducer = useSelector((state) => state.fetchRoomListReducer);
@@ -123,7 +126,7 @@ export default function BookingTicket(props) {
   // console.log("ticket", ticket);
 
   // Countdown
-  const [countdown, setCountdown] = useState(Date.now() + 300000);
+  const [countdown] = useState(Date.now() + 300000);
 
   // Renderer callback with condition
   const renderer = ({ minutes, seconds, completed }) => {

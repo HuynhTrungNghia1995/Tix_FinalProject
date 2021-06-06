@@ -121,7 +121,7 @@ export default function ComboList(props) {
   let cloneQuantities = [];
 
   for (let group of combos) {
-    for (let combo of group.items) {
+    for (let i = 0; i < group.items.length; i++) {
       cloneQuantities.push(0);
     }
   }

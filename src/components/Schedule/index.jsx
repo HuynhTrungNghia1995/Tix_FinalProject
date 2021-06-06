@@ -8,6 +8,7 @@ export default function Schedule() {
   useEffect(() => {
     dispatch(fetchSystemCinema());
     dispatch(fetchSystemCinemaAgents());
+    //eslint-disable-next-line
   }, []);
   const state = useSelector((rootState) => rootState.systemCinemaReducer);
   const renderLogos = () => {
@@ -16,7 +17,7 @@ export default function Schedule() {
         <a
           className={index === 0 ? "nav-link active" : "nav-link"}
           data-toggle="tab"
-          href={"#" + `${item.maHeThongRap}`}
+          href={`#${item.maHeThongRap}`}
           role="tab"
           aria-selected="true"
         >
@@ -33,11 +34,11 @@ export default function Schedule() {
         <li key={index} className="nav-item">
           <a
             className={
-              index == 0
+              index === 0
                 ? "nav-link agent-cinestar active"
                 : "nav-link agent-cinestar"
             }
-            href={"#" + `${item.maCumRap}`}
+            href={`#${item.maCumRap}`}
             data-toggle="tab"
             // href="#" + {item.ma}
             role="tab"
@@ -61,7 +62,7 @@ export default function Schedule() {
     return state.agents.data?.map((item, index) => (
       // arr : 6 phan tu tuong ung 6 rap
       <div
-        className={index == 0 ? "tab-pane fade show active" : "tab-pane fade"}
+        className={index === 0 ? "tab-pane fade show active" : "tab-pane fade"}
         id={item.maHeThongRap}
         key={index}
         role="tabpanel"

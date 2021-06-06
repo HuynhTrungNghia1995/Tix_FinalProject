@@ -11,6 +11,7 @@ export default function UserAccountInfo() {
   const taiKhoan = useLocation().state;
   useEffect(() => {
     dispatch(fetchUserInfo({ taiKhoan: taiKhoan }));
+    //eslint-disable-next-line
   }, []);
   const userInfo = useSelector((state) => state.userInfoReducer);
   //console.log(userInfo);

@@ -8,7 +8,7 @@ import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 export default function FilmInfoTop(props) {
   const { film, filmList, idx } = props;
   const date = new Date(film.ngayKhoiChieu);
-  console.log(film);
+  //console.log(film);
   const renderStars = (point) => {
     if (point > 0) {
       // Tao 1 mang de xet star tu diem danh gia
@@ -140,7 +140,7 @@ export default function FilmInfoTop(props) {
                       className="responsive_iframe"
                       src={`${stateFilm.trailer}?autoplay=1`}
                       title="YouTube video player"
-                      frameborder="0"
+                      frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     ></iframe>

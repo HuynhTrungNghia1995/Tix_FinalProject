@@ -179,6 +179,7 @@ export default function Register() {
     ) {
       setIsDisable(false);
     }
+    //eslint-disable-next-line
   }, [validPhone]);
   useEffect(() => {
     if (
@@ -190,6 +191,7 @@ export default function Register() {
     ) {
       setIsDisable(false);
     }
+    //eslint-disable-next-line
   }, [validEmail]);
   const handleValidationNotice = () => {
     if (emptyFullNameNotice) {

@@ -11,6 +11,7 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import { NavLink } from "react-router-dom";
 export default function NavbarHome() {
   const user = JSON.parse(localStorage.getItem("User"));
+  // eslint-disable-next-line
   const [render, setRender] = useState(false);
 
   const useStyles = makeStyles((theme) => ({

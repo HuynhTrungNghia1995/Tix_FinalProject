@@ -7,7 +7,7 @@ import "./style.css";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 
 export default function Carousel() {
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(() => ({
     modal: {
       display: "flex",
       alignItems: "center",
@@ -101,7 +101,7 @@ export default function Carousel() {
                       className="responsive_iframe"
                       src={`${trailer}?autoplay=1`}
                       title="YouTube video player"
-                      frameborder="0"
+                      frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     ></iframe>

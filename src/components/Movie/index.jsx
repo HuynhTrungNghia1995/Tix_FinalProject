@@ -13,6 +13,7 @@ export default function Movie(props) {
               ? "./images/chi-muoi-ba-2-16061875740652_60x60.png"
               : props.movie.hinhAnh
           }
+          alt=""
         />
         <div className="content">
           <p>
@@ -26,13 +27,13 @@ export default function Movie(props) {
         </div>
       </div>
       <h1>2D Digital</h1>
-      <a href="#" className="session">
+      <a href="#a" className="session">
         <span className="light">9:15</span>~10:55
       </a>
-      <a href="#" className="session">
+      <a href="#a" className="session">
         <span className="light">14:35</span>~16:15
       </a>
-      <a href="#" className="session">
+      <a href="#a" className="session">
         <span className="light">15:40</span>~17:20
       </a>
     </div>
