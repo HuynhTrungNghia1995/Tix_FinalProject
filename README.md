@@ -54,13 +54,13 @@
   +Component News
 
 - Page FilmDetail:
-  +Component FilmInfoTop 
-  +Component FilmInfoBottom
-  +Component DetailScheduleFilm
+  + Component FilmInfoTop 
+  + Component FilmInfoBottom
+  + Component DetailScheduleFilm
 - Page UserAccountInfo:
-  +Component AccountTicketsBooked
+  + Component AccountTicketsBooked
 - Component:
-	+ CardNews
-	+ ListMovieAgents	
+  + CardNews
+  + ListMovieAgents	
   + Movie	
   + TabPaneContent
