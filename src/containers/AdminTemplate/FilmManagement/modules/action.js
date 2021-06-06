@@ -8,6 +8,9 @@ export const fetchFilmList = (group) => {
             method: "GET",
         })
             .then((res) => {
+             res.data.forEach((item) => {
+                    item.hinhAnh = item.hinhAnh.replace(/http/i, 'https');
+                })
                 dispatch(fetchFilmListSuccess(res.data));
             })
             .catch((err) => {
